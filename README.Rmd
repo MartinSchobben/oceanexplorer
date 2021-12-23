@@ -1,0 +1,112 @@
+---
+output: github_document
+bibliography: "man/packages.bib"
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+
+```{r pkgs, echo=FALSE, message=FALSE, eval=FALSE}
+# following code for loading and writing the bibtex references for the used pkgs
+pkgs <- c("dplyr", "tibble", "stringr", "magrittr",
+          "ggplot2", "rlang", "purrr", "devtools", 
+          "roxygen2", "testthat", "knitr", "rmarkdown", "stars", "sf", 
+          "thematic", "bslib", "shiny", "ncmeta" , "waiter")  
+# Get the R reference
+rref <- citation()
+# Create ref key
+rref$key <- "rversion"
+hadley1 <- bibentry(
+  key = "Wickham2015",
+  bibtype = "Book",
+  title = "R packages: organize, test, document, and share your code",
+  author =  person("Hadley","Wickham"),
+  year = "2015",
+  publisher = " O'Reilly Media, Inc.",
+  url = "https://r-pkgs.org/"
+  )
+hadley2 <- bibentry(
+  key = "Wickham2020",
+  bibtype = "Book",
+  title = "Mastering Shiny: Build Interactive Apps, Reports & Dashboards.",
+  author =  person("Hadley","Wickham"),
+  year = "2020",
+  publisher = " O'Reilly Media, Inc.",
+  url = "https://mastering-shiny.org/"
+  )
+knitr::write_bib(pkgs, "man/packages.bib", prefix = "")
+pkgs <- bibtex::read.bib("man/packages.bib")
+bibtex::write.bib(
+  purrr::reduce(list(rref, hadley1, hadley2, pkgs), append), 
+  file = "man/packages.bib"
+  )
+```
+
+
+# The oceanexplorer
+
+<!-- badges: start -->
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
+[![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
+<!-- badges: end -->
+
+The goal of oceanexplorer is to enable ease access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
+
+
+## Credits
+
+The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
+
+Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], *stringr* [@stringr], *magrittr* [@magrittr], and *rlang* [@rlang].
+
+In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf], *stars* [@stars], and *ncmeta* [@ncmeta].
+
+The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020]. was a great help in learning how to develop such applications. Furthermore, the packages *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
+
+
+## Installation
+
+You can install the development version of oceanexplorer from GitHub
+
+``` r
+# Install oceanexplorer from GitHub: 
+# install.packages("devtools")
+devtools::install_github("oceanexplorer")
+```
+
+
+## Example
+
+The package allows extraction of global databases of several physical and chemical parameteres of the ocean from the NOAA WORLD OCEAN ATLAS.
+
+```{r example}
+library(oceanexplorer)
+# obtain the NOAA world ocean atlas for oxygen content
+(oxy_global <- get_NOAA("oxygen", 1, "annual", 2001))
+```
+
+In addition, the data can be plotted, like so:
+
+```{r oxygen}
+# plot the NOAA world ocean atlas for oxygen content
+plot_NOAA(oxy_global)
+```
+
+Lastly the package can launch a Shiny app for interactive exploration of the datasets.
+
+```{r pressure, eval = FALSE}
+# launch an interactive shiny session
+NOAA_app()
+```
+
+# References
