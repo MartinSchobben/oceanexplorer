@@ -81,7 +81,7 @@ You can install the development version of oceanexplorer from GitHub
 ``` r
 # Install oceanexplorer from GitHub: 
 # install.packages("devtools")
-devtools::install_github("oceanexplorer")
+devtools::install_github("UtrechtUniversity/oceanexplorer")
 ```
 
 
