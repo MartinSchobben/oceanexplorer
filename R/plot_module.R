@@ -5,13 +5,7 @@
 #'
 #' @return Shiny module.
 #' @export
-plot_ui <- function(id) {
-
-  tagList(
-    plotOutput(NS(id,  "plot"))
-    )
-
-}
+plot_ui <- function(id) {tagList(plotOutput(NS(id,  "plot")))}
 #' @rdname plot_ui
 #'
 #' @export
@@ -21,8 +15,6 @@ plot_server <- function(id, NOAA) {
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
-
     output$plot <- renderPlot(plot_NOAA(NOAA()))
-
   })
 }

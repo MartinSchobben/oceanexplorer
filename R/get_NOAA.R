@@ -3,8 +3,8 @@
 #' @param var The chemical or physical variable of interest.
 #' @param spat_res Spatial resolution, either 1 or 5 degree grid-cells (numeric)
 #'  .
-#' @param temp_res Temporal resolution, either `"annual"` and `"monthly"`.
-#' @param year Year of publication (numeric).
+#' @param av_period Temporal resolution, either `"annual"`, specific seasons
+#'  (e.g. `"winter"`), or month (e.g. `"August"`).
 #'
 #' @return Star object.
 #' @export
@@ -18,6 +18,8 @@ get_NOAA <- function(var, spat_res, av_period) {
   # abbreviate variable
   if (var == "silicate") {
     v <- strsplit(var, "")[[1]][2]
+  } else if (var == "density") {
+    v <- "I"
   } else {
     v <- strsplit(var, "")[[1]][1]
   }
@@ -44,18 +46,23 @@ url_parser <- function(var, spat_res, av_period) {
 
   # grouped variables
   chem <- c("phosphate", "nitrate", "silicate", "oxygen")
-  phys <- c("temperature")
+  misc <- c("temperature", "salinity", "density")
 
   # see https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf for metadata names
   # recording range
   if (var %in% chem) {
-
     deca <- "all"
-  } else if (var %in% phys) {
+  } else if (var %in% misc) {
     deca <- "decav"
   }
-  # variable
-  v <- if (var == "silicate") strsplit(var, "")[[1]][2] else strsplit(var, "")[[1]][1]
+  # abbreviate variable
+  if (var == "silicate") {
+    v <- strsplit(var, "")[[1]][2]
+  } else if (var == "density") {
+    v <- "I"
+  } else {
+    v <- strsplit(var, "")[[1]][1]
+  }
   # averaging period
   tp <- stringr::str_which(averaging_periods, stringr::regex(av_period, ignore_case = TRUE)) - 1
   tp <- sprintf(fmt = "%02.0f", tp)

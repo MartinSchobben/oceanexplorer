@@ -11,7 +11,7 @@ NOAA_app <- function() {
     mainPanel(
       filter_ui("depth"),
       plot_ui("worldmap"),
-      tags$caption("Averaged variable over a time span ranging from 1955 to 2017.")
+      tags$caption("Variable averaged over a time span ranging from 1955 to 2017.")
       )
     )
   )

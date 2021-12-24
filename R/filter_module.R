@@ -12,7 +12,7 @@ filter_ui <- function(id) {
       NS(id, "depth"),
       h5("depth (meter below sealevel)"),
       min = 0,
-      max = 1000,
+      max = 3000,
       value = 0,
       width = "100%"
     )

@@ -21,6 +21,12 @@ plot_NOAA <- function(NOAA) {
   if (var %in% c("t")) {
     sc <- list(ggplot2::scale_fill_viridis_c(expression('Temp ('*degree~C*')')))
   }
+  if (var %in% c("s")) {
+    sc <- list(ggplot2::scale_fill_viridis_c("Salinity"))
+  }
+  if (var %in% c("I")) {
+    sc <- list(ggplot2::scale_fill_viridis_c(expression("Density (kg m"^{"-3"}*")")))
+  }
   ggplot2::ggplot() +
     stars::geom_stars(data = NOAA [1]) +
     ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
