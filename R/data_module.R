@@ -11,7 +11,7 @@ input_ui <- function(id) {
     selectInput(
       NS(id, "var"),
       h5("Variable"),
-      choices = c("phosphate", "nitrate", "silicate", "oxygen")
+      choices = c("temperature", "phosphate", "nitrate", "silicate", "oxygen")
     ),
     selectInput(
       NS(id, "spat"),
@@ -20,8 +20,8 @@ input_ui <- function(id) {
     ),
     selectInput(
       NS(id, "temp"),
-      h5("Temporal resolution"),
-      choices = c("annual", "monthly", "daily")
+      h5("Averaging period"),
+      choices = c("annual", month.name, "winter", "spring", "summer", "autumn")
     ),
     tags$br(),
     tags$br(),
@@ -54,7 +54,7 @@ input_server <- function(id) {
       waiter$show()
       on.exit(waiter$hide())
 
-      get_NOAA(input$var, input$spat, input$temp, 2016)
+      get_NOAA(input$var, input$spat, input$temp)
     })
   })
 }

@@ -13,15 +13,19 @@ plot_NOAA <- function(NOAA) {
 
   # get species / parameter names
   var <- stringr::str_sub(attributes(NOAA)$names, 1, 1)
-  element <- c(i = "SiO", p = "PO", o = "O", n = "NO")
-  index <- c(i = 2, p = 4, o = 2, n = 3)
-
+  if (var %in% c("i", "p", "o", "n")) {
+    element <- c(i = "SiO", p = "PO", o = "O", n = "NO")
+    index <- c(i = 2, p = 4, o = 2, n = 3)
+    sc <- list(ggplot2::scale_fill_viridis_c(substitute(a[b]~"("*mu*"mol kg"^{"-"}*")", list(a = element[var], b = index[var]))))
+  }
+  if (var %in% c("t")) {
+    sc <- list(ggplot2::scale_fill_viridis_c(expression('Temp ('*degree~C*')')))
+  }
   ggplot2::ggplot() +
     stars::geom_stars(data = NOAA [1]) +
     ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
     ggplot2::scale_x_discrete(expand = c(0, 0)) +
     ggplot2::scale_y_discrete(expand = c(0, 0)) +
-    ggplot2::scale_fill_viridis_c(substitute(a[b]~"("*mu*"mol kg"^{"-"}*")", list(a = element[var], b = index[var]))) +
-    # ggplot2::guides(fill = ggplot2::guide_colourbar(barwidth = 5, barheight = 0.5)) +
+    sc +
     ggplot2::labs(x = NULL, y = NULL)
 }

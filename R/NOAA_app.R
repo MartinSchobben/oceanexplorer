@@ -10,7 +10,8 @@ NOAA_app <- function() {
     sidebarLayout(sidebarPanel(input_ui("NOAA")),
     mainPanel(
       filter_ui("depth"),
-      plot_ui("worldmap")
+      plot_ui("worldmap"),
+      tags$caption("Averaged variable over a time span ranging from 1955 to 2017.")
       )
     )
   )

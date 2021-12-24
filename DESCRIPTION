@@ -25,10 +25,10 @@ Imports:
     dplyr,
     sf,
     cubelyr,
-    shinycssloaders,
     waiter,
     bslib,
     thematic,
     stringr,
-    magrittr
+    magrittr,
+    assertthat
 Config/testthat/edition: 3
