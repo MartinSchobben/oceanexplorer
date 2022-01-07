@@ -7,9 +7,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_NOAA("oxygen", 1, "annual", 2001) %>% plot_NOAA()
+#' get_NOAA("oxygen", 1, "annual") %>% plot_NOAA()
 #' }
-plot_NOAA <- function(NOAA) {
+plot_NOAA <- function(NOAA, points = NULL) {
 
   # get species / parameter names
   var <- stringr::str_sub(attributes(NOAA)$names, 1, 1)
@@ -27,11 +27,23 @@ plot_NOAA <- function(NOAA) {
   if (var %in% c("I")) {
     sc <- list(ggplot2::scale_fill_viridis_c(expression("Density (kg m"^{"-3"}*")")))
   }
-  ggplot2::ggplot() +
+
+  base <- ggplot2::ggplot() +
     stars::geom_stars(data = NOAA [1]) +
     ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
     ggplot2::scale_x_discrete(expand = c(0, 0)) +
     ggplot2::scale_y_discrete(expand = c(0, 0)) +
     sc +
     ggplot2::labs(x = NULL, y = NULL)
+  if (!is.null(points)) {
+    base +
+      ggplot2::geom_point(
+        data = points,
+        ggplot2::aes(geometry = geometry),
+        stat = "sf_coordinates",
+        color = "black"
+      )
+  } else {
+    base
+  }
 }

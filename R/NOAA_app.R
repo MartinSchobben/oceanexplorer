@@ -7,11 +7,30 @@ NOAA_app <- function() {
   ui <- fluidPage(
     theme = bslib::bs_theme(bootswatch = "slate"),
     titlePanel("NOAA WORLD OCEAN ATLAS"),
-    sidebarLayout(sidebarPanel(input_ui("NOAA")),
-    mainPanel(
-      filter_ui("depth"),
-      plot_ui("worldmap"),
-      tags$caption("Variable averaged over a time span ranging from 1955 to 2017.")
+    sidebarLayout(
+      sidebarPanel(
+        input_ui("NOAA")
+      ),
+      mainPanel(
+        conditionalPanel(
+          condition = "output.citation==null",
+          h4("Select your variable of interest and click on load data to display the results."),
+          ns = NS("NOAA")
+        ),
+        conditionalPanel(
+          condition = "output.citation!=null",
+          fluidRow(
+            column(
+              width = 8,
+              filter_ui("depth", plot_ui("worldmap"))
+              ),
+            column(
+              width = 2,
+              table_ui("table")
+            )
+          ),
+          ns = NS("NOAA")
+        )
       )
     )
   )
@@ -24,10 +43,13 @@ NOAA_app <- function() {
     })
 
     # filter depth
-    filter <- filter_server("depth", NOAA)
+    filter <- filter_server("depth", NOAA$data, NOAA$variable)
 
     # plot data
-    plot_server("worldmap", filter)
+    plot_server("worldmap", filter$map, filter$coord)
+
+    # table
+    table_server("table", filter$table)
 
   }
 

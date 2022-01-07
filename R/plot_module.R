@@ -5,16 +5,40 @@
 #'
 #' @return Shiny module.
 #' @export
-plot_ui <- function(id) {tagList(plotOutput(NS(id,  "plot")))}
+plot_ui <- function(id) {
+  tagList(
+    plotOutput(NS(id,  "plot")),
+    tags$caption("Variable averaged over a time span ranging from 1955 to 2017.")
+  )
+  }
 #' @rdname plot_ui
 #'
 #' @export
-plot_server <- function(id, NOAA) {
+plot_server <- function(id, NOAA, points) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
+  stopifnot(is.reactive(points))
 
   moduleServer(id, function(input, output, session) {
-    output$plot <- renderPlot(plot_NOAA(NOAA()))
+
+    coord <- reactiveVal(NULL)
+
+    # update output coordinates
+    observe({
+      req(points())
+      if (is.null(coord())) {
+        coord(points())
+      } else {
+        coord(dplyr::rows_upsert(coord(), points(), by = c("depth", "geometry")))
+      }
+    })
+
+    output$plot <- renderPlot({
+
+      plot_NOAA(NOAA(), coord())
+
+    })
   })
 }
+
