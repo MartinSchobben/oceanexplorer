@@ -63,8 +63,7 @@ bibtex::write.bib(
 The goal of oceanexplorer is to enable easy access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 
-
-![Demo of the ocean explorer](man/figures/oceanexplorer-demo.webm){width=95%}
+![Demo of the ocean explorer](man/figures/oceanexplorer-demo.gif){width=95%}
 
 ## Credits
 

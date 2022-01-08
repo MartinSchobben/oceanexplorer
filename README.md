@@ -19,7 +19,7 @@ ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
 the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 <figure>
-<video src="man/figures/oceanexplorer-demo.webm" style="width:95.0%" controls=""><a href="man/figures/oceanexplorer-demo.webm">Demo of the ocean explorer</a></video><figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
+<img src="man/figures/oceanexplorer-demo.gif" style="width:95.0%" alt="Demo of the ocean explorer" /><figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
 </figure>
 
 ## Credits
