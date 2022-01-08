@@ -1,6 +1,7 @@
 #' Plotting the global NOAA WORLD OCEAN ATLAS
 #'
 #' @param NOAA Dataset of the WORLD OCEAN ATLAS.
+#' @param points Add locations of extracted point geometry.
 #'
 #' @return Ggplot
 #' @export
@@ -39,7 +40,7 @@ plot_NOAA <- function(NOAA, points = NULL) {
     base +
       ggplot2::geom_point(
         data = points,
-        ggplot2::aes(geometry = geometry),
+        ggplot2::aes(geometry = .data$geometry),
         stat = "sf_coordinates",
         color = "black"
       )

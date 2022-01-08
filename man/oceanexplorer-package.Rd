@@ -4,9 +4,9 @@
 \name{oceanexplorer-package}
 \alias{oceanexplorer}
 \alias{oceanexplorer-package}
-\title{oceanexplorer: What the Package Does (One Line, Title Case)}
+\title{oceanexplorer: Explore our planet's ocean with the NOAA database}
 \description{
-What the package does (one paragraph).
+This package enables easy exploration of the NOAA WORLD OCEAN ATLAS. It includes functions to extract NetCDF data from the repository and codes to visualise several physical and chemical parameters of the ocean. A Shiny app further allows a more interactive exploration of the data.
 }
 \author{
 \strong{Maintainer}: Martin Schobben \email{schobbenmartin@gmail.com} (\href{https://orcid.org/0000-0001-8560-0037}{ORCID})

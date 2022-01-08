@@ -4,12 +4,12 @@
 \alias{plot_NOAA}
 \title{Plotting the global NOAA WORLD OCEAN ATLAS}
 \usage{
-plot_NOAA(NOAA)
+plot_NOAA(NOAA, points = NULL)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
 
-\item{depth}{Depth to filter.}
+\item{points}{Add locations of extracted point geometry.}
 }
 \value{
 Ggplot
@@ -19,6 +19,6 @@ Plotting the global NOAA WORLD OCEAN ATLAS
 }
 \examples{
 \dontrun{
-get_NOAA("oxygen", 1, "annual", 2001) \%>\% plot_NOAA()
+get_NOAA("oxygen", 1, "annual") \%>\% plot_NOAA()
 }
 }

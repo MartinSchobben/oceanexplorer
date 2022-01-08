@@ -10,3 +10,8 @@ NULL
 #' @rawNamespace import(shiny, except = serverInfo)
 ## usethis namespace: end
 NULL
+
+## usethis namespace: start
+#' @importFrom utils tail write.csv
+## usethis namespace: end
+NULL

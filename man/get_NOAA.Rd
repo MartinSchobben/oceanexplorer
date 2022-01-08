@@ -4,7 +4,7 @@
 \alias{get_NOAA}
 \title{Obtain NOAA WORLD OCEAN ATLAS dataset}
 \usage{
-get_NOAA(var, spat_res, temp_res, year)
+get_NOAA(var, spat_res, av_period)
 }
 \arguments{
 \item{var}{The chemical or physical variable of interest.}
@@ -12,19 +12,17 @@ get_NOAA(var, spat_res, temp_res, year)
 \item{spat_res}{Spatial resolution, either 1 or 5 degree grid-cells (numeric)
 .}
 
-\item{temp_res}{Temporal resolution, either \code{"annual"}, \code{"monthly"} and
-\code{"daily"}.}
-
-\item{year}{Year of publication (numeric).}
+\item{av_period}{Temporal resolution, either \code{"annual"}, specific seasons
+(e.g. \code{"winter"}), or month (e.g. \code{"August"}).}
 }
 \value{
-
+Star object.
 }
 \description{
 Obtain NOAA WORLD OCEAN ATLAS dataset
 }
 \examples{
 \dontrun{
-get_NOAA("oxygen", 1, "annual", 2001)
+get_NOAA("oxygen", 1, "annual")
 }
 }

@@ -2,9 +2,10 @@
 #'
 #' @param NOAA Dataset of the WORLD OCEAN ATLAS.
 #' @param depth Depth in meters
-#' @param lon Longitude in degrees
-#' @param lat Latitude in degrees
-#' @param output Star object (`"star"`) or dataframe (`"dataframe"`).
+#' @param coord List with named elements: `lon` for longitude in degrees, and
+#'  `lat` for latitude in degrees.
+#' @param output Geometry point (default `"point"`). Additional geometries are
+#'  currently not supported.
 #'
 #' @return Either a stars object or sf dataframe
 #' @export

@@ -26,7 +26,7 @@ NOAA_app <- function() {
               ),
             column(
               width = 2,
-              table_ui("table")
+              table_ui("table", output_ui("download"))
             )
           ),
           ns = NS("NOAA")
@@ -46,10 +46,13 @@ NOAA_app <- function() {
     filter <- filter_server("depth", NOAA$data, NOAA$variable)
 
     # plot data
-    plot_server("worldmap", filter$map, filter$coord, filter$reset)
+    plot_server("worldmap", filter$map, filter$coord, filter$back, filter$reset)
 
     # table
-    table_server("table", filter$table, filter$reset)
+    table_server("table", filter$table, filter$back, filter$reset)
+
+    # download
+    output_server("download", filter$table, NOAA$variable)
 
   }
 

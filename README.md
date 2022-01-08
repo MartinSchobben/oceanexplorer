@@ -10,13 +10,17 @@ yet, or the repository is only intended to be a limited example, demo,
 or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--12--23-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--01--08-yellowgreen.svg)](/commits/master)
 <!-- badges: end -->
 
-The goal of oceanexplorer is to enable ease access and exploration of
+The goal of oceanexplorer is to enable easy access and exploration of
 the [WORLD OCEAN
 ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
 the US agency [NOAA](https://www.ncei.noaa.gov/).
+
+<figure>
+<video src="man/figures/oceanexplorer-demo.webm" style="width:95.0%" controls=""><a href="man/figures/oceanexplorer-demo.webm">Demo of the ocean explorer</a></video><figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
+</figure>
 
 ## Credits
 
@@ -57,38 +61,53 @@ devtools::install_github("UtrechtUniversity/oceanexplorer")
 ## Example
 
 The package allows extraction of global databases of several physical
-and chemical parameteres of the ocean from the NOAA WORLD OCEAN ATLAS.
+and chemical parameters of the ocean from the NOAA WORLD OCEAN ATLAS.
 
 ``` r
 library(oceanexplorer)
 # obtain the NOAA world ocean atlas for oxygen content
-(oxy_global <- get_NOAA("oxygen", 1, "annual", 2001))
+(oxy_global <- get_NOAA("oxygen", 1, "annual"))
 #> Warning: ignoring unrecognized unit: micromoles_per_kilogram
 #> stars object with 4 dimensions and 1 attribute
 #> attribute(s), summary of first 1e+05 cells:
-#>           Min. 1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
-#> o_an  145.5074  207.41 246.5956 266.2805 329.1397 489.0815 34528
+#>           Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
+#> o_an  174.3385 207.6577 248.6996 265.9793 326.1863 476.6985 34528
 #> dimension(s):
 #>       from  to offset delta                       refsys point
 #> lon      1 360   -180     1 +proj=longlat +a=6378137 ...    NA
 #> lat      1 180    -90     1 +proj=longlat +a=6378137 ...    NA
-#> depth    1  57     NA    NA                           NA FALSE
+#> depth    1 102     NA    NA                           NA FALSE
 #> time     1   1     NA    NA                      POSIXct    NA
 #>                        values x/y
 #> lon                      NULL [x]
 #> lat                      NULL [y]
-#> depth [0,2.5),...,[1475,1500)    
-#> time  1958-01-16 06:22:58 UTC
+#> depth [0,2.5),...,[5450,5500)    
+#> time  2584-07-01 06:50:29 UTC
 ```
 
-In addition, the data can be plotted, like so:
+Slice a specific interval from the array with `filter_NOAA()`, like so:
+
+``` r
+# filter a depth of 200 meters to show OMZs
+(oxy_omz <- filter_NOAA(oxy_global, depth = 200))
+#> stars object with 2 dimensions and 1 attribute
+#> attribute(s):
+#>            Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
+#> o_an  0.9701567 164.1833 218.6721 206.2584 266.9612 359.0279 26041
+#> dimension(s):
+#>     from  to offset delta                       refsys point values x/y
+#> lon    1 360   -180     1 +proj=longlat +a=6378137 ...    NA   NULL [x]
+#> lat    1 180    -90     1 +proj=longlat +a=6378137 ...    NA   NULL [y]
+```
+
+In addition, the sliced array can be plotted, like so:
 
 ``` r
 # plot the NOAA world ocean atlas for oxygen content
-plot_NOAA(oxy_global)
+plot_NOAA(oxy_omz)
 ```
 
-<img src="man/figures/README-oxygen-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" width="100%" />
 
 Lastly the package can launch a Shiny app for interactive exploration of
 the datasets.

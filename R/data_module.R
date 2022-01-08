@@ -1,6 +1,9 @@
 #' NOAA data module
 #'
 #' @param id Namespace id shiny module.
+#' @param locations Reactive value for the dataset containing the locations
+#'  coordinates.
+#' @param variable Reactive value for the selected variable name.
 #'
 #' @return Shiny module.
 #' @export
@@ -35,6 +38,12 @@ input_ui <- function(id) {
 #' @rdname input_ui
 #'
 #' @export
+output_ui <- function(id) {
+  downloadButton(NS(id, "download"), "Download")
+}
+#' @rdname input_ui
+#'
+#' @export
 input_server <- function(id) {
 
   moduleServer(id, function(input, output, session) {
@@ -63,9 +72,29 @@ input_server <- function(id) {
     list(data = x, variable = reactive(input$var))
   })
 }
+#' @rdname input_ui
+#'
+#' @export
+output_server <- function(id, locations, variable) {
 
+  stopifnot(is.reactive(variable))
+  stopifnot(is.reactive(locations))
 
+  moduleServer(id, function(input, output, session) {
 
+    output$download <- downloadHandler(
+      filename = function() {
+        paste0(variable(), ".csv")
+      },
+      content = function(file) {
+        write.csv(locations(), file)
+      }
+    )
+
+  })
+}
+
+# cite the poapers
 vc_cite <- c(
   temperature = "Locarnini, R. A., A. V. Mishonov, O. K. Baranova, T. P. Boyer, M. M. Zweng, H. E. Garcia, J. R. Reagan, D. Seidov, K. Weathers, C. R. Paver, and I. Smolyar, 2018. World Ocean Atlas 2018, Volume 1: Temperature. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 81, 52pp.",
   salinity = "Zweng, M. M., J. R. Reagan, D. Seidov, T. P. Boyer, R. A. Locarnini, H. E. Garcia, A. V. Mishonov, O. K. Baranova, K. Weathers, C. R. Paver, and I. Smolyar, 2018. World Ocean Atlas 2018, Volume 2: Salinity. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 82, 50pp.",

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 pkgs <- c("dplyr", "tibble", "stringr", "magrittr",
           "ggplot2", "rlang", "purrr", "devtools", 
           "roxygen2", "testthat", "knitr", "rmarkdown", "stars", "sf", 
-          "thematic", "bslib", "shiny", "ncmeta" , "waiter")  
+          "thematic", "bslib", "shiny", "ncmeta", "waiter")  
 # Get the R reference
 rref <- citation()
 # Create ref key
@@ -60,8 +60,11 @@ bibtex::write.bib(
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 <!-- badges: end -->
 
-The goal of oceanexplorer is to enable ease access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
+The goal of oceanexplorer is to enable easy access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
 
+
+
+![Demo of the ocean explorer](man/figures/oceanexplorer-demo.webm){width=95%}
 
 ## Credits
 
@@ -87,19 +90,28 @@ devtools::install_github("UtrechtUniversity/oceanexplorer")
 
 ## Example
 
-The package allows extraction of global databases of several physical and chemical parameteres of the ocean from the NOAA WORLD OCEAN ATLAS.
+The package allows extraction of global databases of several physical and chemical parameters of the ocean from the NOAA WORLD OCEAN ATLAS.
 
-```{r example}
+```{r load}
 library(oceanexplorer)
 # obtain the NOAA world ocean atlas for oxygen content
-(oxy_global <- get_NOAA("oxygen", 1, "annual", 2001))
+(oxy_global <- get_NOAA("oxygen", 1, "annual"))
 ```
 
-In addition, the data can be plotted, like so:
 
-```{r oxygen}
+Slice a specific interval from the array with `filter_NOAA()`, like so:
+
+```{r slice}
+# filter a depth of 200 meters to show OMZs
+(oxy_omz <- filter_NOAA(oxy_global, depth = 200))
+```
+
+
+In addition, the sliced array can be plotted, like so:
+
+```{r plot}
 # plot the NOAA world ocean atlas for oxygen content
-plot_NOAA(oxy_global)
+plot_NOAA(oxy_omz)
 ```
 
 Lastly the package can launch a Shiny app for interactive exploration of the datasets.

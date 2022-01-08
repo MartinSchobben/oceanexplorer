@@ -2,6 +2,8 @@
 #'
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
+#' @param plot Add plot display in UI
+#' @param variable Reactive value for the selected variable name.
 #'
 #' @return Shiny module.
 #' @export
@@ -52,6 +54,7 @@ filter_ui <- function(id, plot) {
     ),
     actionButton(NS(id, "extract"), label = h5("Extract location(s)")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
+    actionButton(NS(id, "back"), label = h5("Back")),
     plot,
     sliderInput(
       NS("depth", "slide"),
@@ -83,7 +86,7 @@ filter_server <- function(id, NOAA, variable) {
 
       input2 <- purrr::map(
         c("depth", "lon", "lat"),
-        ~scan(textConnection(input[[.x]]), sep = ",")
+        ~scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)
         ) %>%
         rlang::set_names(c("depth", "lon", "lat"))
 
@@ -122,7 +125,7 @@ filter_server <- function(id, NOAA, variable) {
     z <- reactive({
       req(y())
       tb <- tibble::as_tibble(y()) %>%
-        dplyr::mutate(coordinates = sf::st_as_text(geometry), .keep = "unused")
+        dplyr::mutate(coordinates = sf::st_as_text(.data$geometry), .keep = "unused")
       # rename variable
       tb_nm <- colnames(tb)
       tb_nm[1] <- variable()
@@ -143,6 +146,6 @@ filter_server <- function(id, NOAA, variable) {
     ignoreInit = TRUE
     )
 
-    list(map = x, coord = y, table = z, reset = reactive(input$reset))
+    list(map = x, coord = y, table = z, back = reactive(input$back), reset = reactive(input$reset))
   })
 }

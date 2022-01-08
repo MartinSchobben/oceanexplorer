@@ -7,12 +7,18 @@
 \usage{
 plot_ui(id)
 
-plot_server(id, NOAA)
+plot_server(id, NOAA, points, back, reset)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
 
 \item{NOAA}{Reactive value of NOAA dataset.}
+
+\item{points}{Add locations of extracted point geometry.}
+
+\item{back}{Reactive value for back button.}
+
+\item{reset}{Reactive value for reset button.}
 }
 \value{
 Shiny module.

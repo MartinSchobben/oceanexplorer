@@ -2,15 +2,26 @@
 % Please edit documentation in R/data_module.R
 \name{input_ui}
 \alias{input_ui}
+\alias{output_ui}
 \alias{input_server}
+\alias{output_server}
 \title{NOAA data module}
 \usage{
 input_ui(id)
 
+output_ui(id)
+
 input_server(id)
+
+output_server(id, locations, variable)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
+
+\item{locations}{Reactive value for the dataset containing the locations
+coordinates.}
+
+\item{variable}{Reactive value for the selected variable name.}
 }
 \value{
 Shiny module.

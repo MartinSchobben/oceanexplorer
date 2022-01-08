@@ -5,14 +5,18 @@
 \alias{filter_server}
 \title{NOAA filter module}
 \usage{
-filter_ui(id)
+filter_ui(id, plot)
 
-filter_server(id, NOAA)
+filter_server(id, NOAA, variable)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
 
+\item{plot}{Add plot display in UI}
+
 \item{NOAA}{Reactive value of NOAA dataset.}
+
+\item{variable}{Reactive value for the selected variable name.}
 }
 \value{
 Shiny module.
