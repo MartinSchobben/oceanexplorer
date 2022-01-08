@@ -15,23 +15,29 @@ table_ui <- function(id) {
 #' @rdname plot_ui
 #'
 #' @export
-table_server <- function(id, NOAA) {
+table_server <- function(id, NOAA, reset) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
 
-    obs <- reactiveVal(tibble(NULL))
+    obs <- reactiveVal(NULL)
 
     # update output table
-    observe({
+    observeEvent(NOAA(), {
       req(NOAA())
-      if (nrow(obs()) == 0) {
+      if (is.null(obs())) {
         obs(NOAA())
       } else {
         obs(dplyr::rows_upsert(obs(), NOAA(), by = c("depth", "coordinates")))
       }
+    })
+
+    # reset table
+    observeEvent(reset(), {
+      req(reset())
+      obs(NULL)
     })
 
     output$table <- renderTable({obs()})

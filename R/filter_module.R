@@ -132,9 +132,8 @@ filter_server <- function(id, NOAA, variable) {
 
     # reset
     observeEvent(input$reset, {
-      updateTextInput(inputId = "depth", value = NULL, placeholder = "number or comma delimited vector")
-      updateTextInput(inputId = "lon", value = NULL, placeholder = "number or comma delimited vector")
-      updateTextInput(inputId = "lat", value = NULL, placeholder = "number or comma delimited vector")
+      updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
+      updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
       updateSliderInput(inputId = "slide", value = 0)
     })
 
@@ -144,6 +143,6 @@ filter_server <- function(id, NOAA, variable) {
     ignoreInit = TRUE
     )
 
-    list(map = x, coord = y, table = z)
+    list(map = x, coord = y, table = z, reset = reactive(input$reset))
   })
 }

@@ -14,7 +14,7 @@ NOAA_app <- function() {
       mainPanel(
         conditionalPanel(
           condition = "output.citation==null",
-          h4("Select your variable of interest and click on load data to display the results."),
+          h4("Select variable of interest and click \"Load data\" to display results."),
           ns = NS("NOAA")
         ),
         conditionalPanel(
@@ -46,10 +46,10 @@ NOAA_app <- function() {
     filter <- filter_server("depth", NOAA$data, NOAA$variable)
 
     # plot data
-    plot_server("worldmap", filter$map, filter$coord)
+    plot_server("worldmap", filter$map, filter$coord, filter$reset)
 
     # table
-    table_server("table", filter$table)
+    table_server("table", filter$table, filter$reset)
 
   }
 
