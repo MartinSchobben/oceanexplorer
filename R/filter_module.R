@@ -7,9 +7,9 @@
 #'
 #' @return Shiny module.
 #' @export
-filter_ui <- function(id, plot) {
+filter_ui <- function(id, plot = NULL, extended = TRUE) {
 
-  tagList(
+  coords <- tagList(
     fluidRow(
       column(
         width = 5,
@@ -50,7 +50,11 @@ filter_ui <- function(id, plot) {
           choices = "point"
         )
       )
-    ),
+    )
+  )
+
+
+  buttons <- tagList(
     actionButton(NS(id, "extract"), label = h5("Extract location(s)")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
     actionButton(NS(id, "back"), label = h5("Back")),
@@ -64,11 +68,13 @@ filter_ui <- function(id, plot) {
       width = "80%"
     )
   )
+
+  if (isTRUE(extended)) tagAppendChildren(coords, buttons) else buttons
 }
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, variable, external) {
+filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
 
@@ -83,44 +89,49 @@ filter_server <- function(id, NOAA, variable, external) {
     # coordinates
     y <- eventReactive(input$extract, {
 
-      input2 <- purrr::map(
-        c("depth", "lon", "lat"),
-        ~scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)
-        ) %>%
-        rlang::set_names(c("depth", "lon", "lat"))
+      if (isTRUE(extended)) {
 
+        # change text to numeric values for inout coords
+        input2 <- purrr::map(
+          c("depth", "lon", "lat"),
+          ~scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)
+          ) %>%
+          rlang::set_names(c("depth", "lon", "lat"))
+
+        # update slider
+        updateSliderInput(inputId = "slide", value = isolate(tail(input2$depth, 1)))
+
+        # warnings for explicit coord input
+        shinyFeedback::feedbackWarning(
+          "depth",
+          !dplyr::between(input2$depth, 0, 3000),
+          "Please choose a number between 0 and 3000"
+        )
+        shinyFeedback::feedbackWarning(
+          "lon",
+          !dplyr::between(input2$lon, -179, 180),
+          "Please choose a number between -179.00 and 180.00"
+        )
+        shinyFeedback::feedbackWarning(
+          "lat",
+          !dplyr::between(input2$lat, -89, 90),
+          "Please choose a number between -89.00 and 90.00"
+        )
+      }
 
       # if selected on plot, replace values for lon and lat
-      if(isTruthy(external$lon)) input2$lon <- external$lon
-      if(isTruthy(external$lat) )input2$lat <- external$lat
+      if (isFALSE(extended)) input2 <- list()
+      if (isTruthy(external$lon)) input2$lon <- external$lon
+      if (isTruthy(external$lat)) input2$lat <- external$lat
 
-      # update slider
-      updateSliderInput(inputId = "slide", value = isolate(tail(input2$depth, 1)))
-
-      shinyFeedback::feedbackWarning(
-        "depth",
-        !dplyr::between(input2$depth, 0, 3000),
-        "Please choose a number between 0 and 3000"
-      )
-      shinyFeedback::feedbackWarning(
-        "lon",
-        !dplyr::between(input2$lon, -179, 180),
-        "Please choose a number between -179.00 and 180.00"
-      )
-
-      shinyFeedback::feedbackWarning(
-        "lat",
-        !dplyr::between(input2$lat, -89, 90),
-        "Please choose a number between -89.00 and 90.00"
-      )
-
+      observe(message(glue::glue("{str(input$slide)}")))
       if (
-        dplyr::between(req(input2$depth), 0, 3000) &&
+        dplyr::between(req(input$slide), 0, 3000) &&
         dplyr::between(req(input2$lon), -179, 180) &&
-        dplyr::between(req(input2$lat), -89, 90)
+        dplyr::between(req(input2$lat), -89, 90) ||
+        isTRUE(extended)
         ) {
-        filter_NOAA(NOAA(), input2$depth,
-                    list(lon = input2$lon, lat = input2$lat))
+        filter_NOAA(NOAA(), input$slide, list(lon = input2$lon, lat = input2$lat))
       }
 
     })
@@ -139,16 +150,20 @@ filter_server <- function(id, NOAA, variable, external) {
 
     # reset all
     observeEvent(input$reset, {
-      updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
-      updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
+      if (isTRUE(extended)) {
+        updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
+        updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
+      }
       updateSliderInput(inputId = "slide", value = 0)
     })
 
     # reset text input when plot input is selected
-    observeEvent(external$lon | external$lat, {
-      updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
-      updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
-    })
+    if (isTRUE(extended)) {
+      observeEvent(external$lon | external$lat, {
+        updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
+        updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
+      })
+    }
 
     # slider to depth update
     observeEvent(input$slide, {
@@ -157,8 +172,7 @@ filter_server <- function(id, NOAA, variable, external) {
     ignoreInit = TRUE
     )
 
-
-
-    list(map = x, coord = y, table = z, back = reactive(input$back), reset = reactive(input$reset), depth_slider = reactive(input$slide))
+    list(map = x, coord = y, table = z, back = reactive(input$back),
+         reset = reactive(input$reset), depth_slider = reactive(input$slide))
   })
 }

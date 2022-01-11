@@ -7,7 +7,7 @@
 \usage{
 plot_ui(id)
 
-plot_server(id, NOAA, points, back, reset)
+plot_server(id, NOAA, points, back, reset, depth_slider)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}

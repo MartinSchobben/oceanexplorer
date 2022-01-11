@@ -7,9 +7,9 @@
 #'
 #' @return Shiny module.
 #' @export
-input_ui <- function(id) {
+input_ui <- function(id, extended = TRUE) {
 
-  tagList(
+  vars <- tagList(
     waiter::use_waiter(),
     selectInput(
       NS(id, "var"),
@@ -25,15 +25,23 @@ input_ui <- function(id) {
       NS(id, "temp"),
       h5("Averaging period"),
       choices = c("annual", month.name, "winter", "spring", "summer", "autumn")
-    ),
+    )
+  )
+
+  load <- tagList(
     tags$br(),
     tags$br(),
     actionButton(NS(id, "go"), h5("Load data")),
     tags$br(),
     tags$br(),
     uiOutput(NS(id,  "citation")),
-
   )
+
+  if (isTRUE(extended)) {
+    tagAppendChildren(vars, load)
+  } else {
+    fillRow(fillCol(vars), fillCol(load))
+  }
 }
 #' @rdname input_ui
 #'

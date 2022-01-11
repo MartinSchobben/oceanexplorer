@@ -2,7 +2,7 @@
 #'
 #' @return Shiny app
 #' @export
-NOAA_app <- function() {
+NOAA_app <- function(server = NOAA_server()) {
 
   ui <- fluidPage(
     theme = bslib::bs_theme(bootswatch = "slate"),
@@ -35,7 +35,15 @@ NOAA_app <- function() {
     )
   )
 
-  server <- function(input, output, session) {
+
+
+  shinyApp(ui, server)
+}
+#' @rdname NOAA_app
+#'
+#' @export
+NOAA_server <- function(extended = TRUE) {
+  function(input, output, session) {
     thematic::thematic_shiny()
     # original data
     withProgress(message = "Retrieving dataset from NOAA server", {
@@ -46,7 +54,7 @@ NOAA_app <- function() {
     clicked <- reactiveValues(lon = NULL, lat = NULL)
 
     # filter depth
-    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked)
+    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked, extended = extended)
 
     # plot data
     output_clicked <- plot_server("worldmap", filter$map, filter$coord, filter$back, filter$reset, filter$depth_slider)
@@ -67,10 +75,5 @@ NOAA_app <- function() {
     observe(message(glue::glue("In the app? is it reactivalues: longitude : {str(clicked$lon)} and latitude : {str(clicked$lat)}")))
 
   }
-
-  shinyApp(ui, server)
 }
-
-
-
 

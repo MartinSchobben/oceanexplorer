@@ -35,5 +35,6 @@ Imports:
     shinyFeedback,
     abind,
     purrr,
-    utils
+    utils,
+    miniUI
 Config/testthat/edition: 3

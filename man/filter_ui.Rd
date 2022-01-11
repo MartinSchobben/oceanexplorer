@@ -7,7 +7,7 @@
 \usage{
 filter_ui(id, plot)
 
-filter_server(id, NOAA, variable)
+filter_server(id, NOAA, variable, external)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}

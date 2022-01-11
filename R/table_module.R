@@ -8,7 +8,7 @@
 #'
 #' @return Shiny module.
 #' @export
-table_ui <- function(id, download) {
+table_ui <- function(id, download = NULL) {
   tagList(
     tags$br(),
     conditionalPanel(condition = "output.table!=null", download, ns = NS(id)),

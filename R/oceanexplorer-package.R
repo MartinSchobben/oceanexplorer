@@ -15,3 +15,8 @@ NULL
 #' @importFrom utils tail write.csv
 ## usethis namespace: end
 NULL
+
+## usethis namespace: start
+#' @import miniUI
+## usethis namespace: end
+NULL
