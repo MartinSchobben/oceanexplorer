@@ -42,17 +42,29 @@ NOAA_app <- function() {
       NOAA <- input_server("NOAA")
     })
 
+    # initiate plot click filter with null value
+    clicked <- reactiveValues(lon = NULL, lat = NULL)
+
     # filter depth
-    filter <- filter_server("depth", NOAA$data, NOAA$variable)
+    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked)
 
     # plot data
-    plot_server("worldmap", filter$map, filter$coord, filter$back, filter$reset)
+    output_clicked <- plot_server("worldmap", filter$map, filter$coord, filter$back, filter$reset, filter$depth_slider)
+
+    # update reactivevalue if plot click selection has been used
+    observe({
+      clicked$lon <- output_clicked$lon
+      clicked$lat <- output_clicked$lat
+    })
 
     # table
     table_server("table", filter$table, filter$back, filter$reset)
 
     # download
     output_server("download", filter$table, NOAA$variable)
+
+    # are clicked points there?
+    observe(message(glue::glue("In the app? is it reactivalues: longitude : {str(clicked$lon)} and latitude : {str(clicked$lat)}")))
 
   }
 

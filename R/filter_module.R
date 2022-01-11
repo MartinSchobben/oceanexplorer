@@ -17,8 +17,7 @@ filter_ui <- function(id, plot) {
         textInput(
           NS(id, "depth"),
           h5("depth (meter)"),
-          NULL,
-          placeholder = "number or comma delimited vector"
+          "0"
         )
       ),
       column(
@@ -69,13 +68,13 @@ filter_ui <- function(id, plot) {
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, variable) {
+filter_server <- function(id, NOAA, variable, external) {
 
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
 
-    # map filter
+    # slider filter
     x <- reactive({
       req(input$slide)
       filter_NOAA(NOAA(), input$slide)
@@ -90,30 +89,35 @@ filter_server <- function(id, NOAA, variable) {
         ) %>%
         rlang::set_names(c("depth", "lon", "lat"))
 
+
+      # if selected on plot, replace values for lon and lat
+      if(isTruthy(external$lon)) input2$lon <- external$lon
+      if(isTruthy(external$lat) )input2$lat <- external$lat
+
       # update slider
       updateSliderInput(inputId = "slide", value = isolate(tail(input2$depth, 1)))
 
       shinyFeedback::feedbackWarning(
         "depth",
-        !input2$depth %in% 0:3000,
+        !dplyr::between(input2$depth, 0, 3000),
         "Please choose a number between 0 and 3000"
       )
       shinyFeedback::feedbackWarning(
         "lon",
-        !input2$lon %in% seq(-179, 180, 1e-2),
-        "Please choose a number between -179 and 180"
+        !dplyr::between(input2$lon, -179, 180),
+        "Please choose a number between -179.00 and 180.00"
       )
 
       shinyFeedback::feedbackWarning(
         "lat",
-        !input2$lat %in% seq(-89, 90, 1e-2),
-        "Please choose a number between -89 and 90"
+        !dplyr::between(input2$lat, -89, 90),
+        "Please choose a number between -89.00 and 90.00"
       )
 
       if (
-        req(input2$depth) %in% 0:3000 &&
-        req(input2$lon) %in% seq(-179, 180, 1e-2) &&
-        req(input$lat) %in% seq(-89, 90, 1e-2)
+        dplyr::between(req(input2$depth), 0, 3000) &&
+        dplyr::between(req(input2$lon), -179, 180) &&
+        dplyr::between(req(input2$lat), -89, 90)
         ) {
         filter_NOAA(NOAA(), input2$depth,
                     list(lon = input2$lon, lat = input2$lat))
@@ -133,19 +137,28 @@ filter_server <- function(id, NOAA, variable) {
       tb
       })
 
-    # reset
+    # reset all
     observeEvent(input$reset, {
       updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
       updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
       updateSliderInput(inputId = "slide", value = 0)
     })
 
+    # reset text input when plot input is selected
+    observeEvent(external$lon | external$lat, {
+      updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
+      updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
+    })
+
+    # slider to depth update
     observeEvent(input$slide, {
       updateSliderInput(inputId = "depth", value = isolate(input$slide))
     },
     ignoreInit = TRUE
     )
 
-    list(map = x, coord = y, table = z, back = reactive(input$back), reset = reactive(input$reset))
+
+
+    list(map = x, coord = y, table = z, back = reactive(input$back), reset = reactive(input$reset), depth_slider = reactive(input$slide))
   })
 }
