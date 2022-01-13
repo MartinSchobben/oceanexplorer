@@ -12,7 +12,16 @@
 #' @export
 plot_ui <- function(id) {
   tagList(
+    tags$br(),
     plotOutput(NS(id,  "plot"), click = NS(id, "plot_click")),
+    sliderInput(
+      NS("depth", "slide"),
+      h5("depth (meter)"),
+      min = 0,
+      max = 3000,
+      value = 0,
+      width = "100%"
+    ),
     tags$caption("Variable averaged over a time span ranging from 1955 to 2017.")
   )
 }

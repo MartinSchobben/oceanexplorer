@@ -37,5 +37,6 @@ Imports:
     purrr,
     utils,
     miniUI,
-    rstudioapi
+    rstudioapi,
+    DT
 Config/testthat/edition: 3

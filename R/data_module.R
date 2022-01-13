@@ -9,10 +9,11 @@
 #'
 #' @return Shiny module.
 #' @export
-input_ui <- function(id, extended = TRUE) {
+input_ui <- function(id, citation = NULL, extended = TRUE) {
 
   vars <- tagList(
-    waiter::use_waiter(),
+    fluidRow(
+    column(6,
     selectInput(
       NS(id, "var"),
       h5("Variable"),
@@ -22,12 +23,13 @@ input_ui <- function(id, extended = TRUE) {
       NS(id, "spat"),
       h5("Spatial resolution"),
       choices = c(1, 5)
-    ),
+    )),
+    column(6,
     selectInput(
       NS(id, "temp"),
       h5("Averaging period"),
       choices = c("annual", month.name, "winter", "spring", "summer", "autumn")
-    )
+    )))
   )
 
   load <- tagList(
@@ -36,14 +38,21 @@ input_ui <- function(id, extended = TRUE) {
     actionButton(NS(id, "go"), h5("Load data")),
     tags$br(),
     tags$br(),
-    uiOutput(NS(id,  "citation")),
+    citation,
   )
 
   if (isTRUE(extended)) {
     tagAppendChildren(vars, load)
   } else {
-    fillRow(fillCol(vars), fillCol(load))
+    tagList(fillRow(fillCol(vars), fillCol(load)))
   }
+}
+#' @rdname input_ui
+#'
+#' @export
+citation_ui <- function(id) {
+
+  tagList(tags$br(), tags$br(), uiOutput(NS(id,  "citation")))
 }
 #' @rdname input_ui
 #'

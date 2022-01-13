@@ -15,7 +15,8 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
         "Parameters",
         icon = icon("sliders-h"),
         miniContentPanel(
-          input_ui("NOAA", extended = FALSE)
+          waiter::use_waiter(),
+          input_ui("NOAA", citation = citation_ui("NOAA"), extended = FALSE),
           )
       ),
       miniTabPanel(
@@ -30,7 +31,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       miniTabPanel(
         "Data",
         icon = icon("table"),
-        miniContentPanel(table_ui("table", extended = FALSE))
+        miniContentPanel(table_ui("table"))
       )
     )
   )

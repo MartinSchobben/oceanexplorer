@@ -13,9 +13,15 @@ NOAA_app <- function(server = NOAA_server()) {
     titlePanel("NOAA WORLD OCEAN ATLAS"),
     sidebarLayout(
       sidebarPanel(
-        input_ui("NOAA")
-      ),
+        tabsetPanel(
+          id = "tabset",
+          tabPanel("parameters", input_ui("NOAA")),
+          tabPanel("locations", filter_ui("depth"))
+          ),
+        citation_ui("NOAA")
+        ),
       mainPanel(
+        waiter::use_waiter(),
         conditionalPanel(
           condition = "output.citation==null",
           h4("Select variable of interest and click \"Load data\" to display results."),
@@ -23,13 +29,13 @@ NOAA_app <- function(server = NOAA_server()) {
         ),
         conditionalPanel(
           condition = "output.citation!=null",
-          fluidRow(
-            column(
-              width = 8,
-              filter_ui("depth", plot_ui("worldmap"))
+          tabsetPanel(
+            tabPanel(
+              "map",
+              plot_ui("worldmap")
               ),
-            column(
-              width = 2,
+            tabPanel(
+              "table",
               table_ui("table", output_ui("download"))
             )
           ),
@@ -55,6 +61,16 @@ NOAA_server <- function(extended = TRUE) {
     # original data
     withProgress(message = "Retrieving dataset from NOAA server", {
       NOAA <- input_server("NOAA")
+    })
+
+
+    # show locations selection controls when data loaded
+    observeEvent(NOAA$data(), {
+      updateTabsetPanel(
+        session,
+        "tabset",
+        selected = "locations"
+      )
     })
 
     # initiate plot click filter with null value

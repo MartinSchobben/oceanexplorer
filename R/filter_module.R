@@ -9,25 +9,25 @@
 #'
 #' @return Shiny module.
 #' @export
-filter_ui <- function(id, plot = NULL, extended = TRUE) {
+filter_ui <- function(id, citation, extended = TRUE) {
 
   coords <- tagList(
     fluidRow(
       column(
-        width = 5,
+        width = 6,
         shinyFeedback::useShinyFeedback(),
         textInput(
           NS(id, "depth"),
-          h5("depth (meter)"),
+          h5("Depth (meter)"),
           "0"
         )
       ),
       column(
-        width = 5,
+        width = 6,
         shinyFeedback::useShinyFeedback(),
         textInput(
           NS(id, "lon"),
-          h5("longitude (degrees)"),
+          h5("Longitude (degrees)"),
           NULL,
           placeholder = "number or comma delimited vector"
         )
@@ -35,20 +35,20 @@ filter_ui <- function(id, plot = NULL, extended = TRUE) {
     ),
     fluidRow(
       column(
-        width = 5,
+        width = 6,
         shinyFeedback::useShinyFeedback(),
         textInput(
           NS(id, "lat"),
-          h5("latitude (degrees)"),
+          h5("Latitude (degrees)"),
           NULL,
           placeholder = "number or comma delimited vector"
         )
       ),
       column(
-        width = 5,
+        width = 6,
         selectizeInput(
           NS(id, "geom"),
-          h5("geometry"),
+          h5("Geometry        "),
           choices = "point"
         )
       )
@@ -57,18 +57,14 @@ filter_ui <- function(id, plot = NULL, extended = TRUE) {
 
 
   buttons <- tagList(
+    tags$br(),
+    tags$br(),
     actionButton(NS(id, "extract"), label = h5("Extract location(s)")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
-    actionButton(NS(id, "back"), label = h5("Back")),
-    plot,
-    sliderInput(
-      NS("depth", "slide"),
-      h5("depth (meter)"),
-      min = 0,
-      max = 3000,
-      value = 0,
-      width = "80%"
-    )
+    actionButton(NS(id, "back"), label = h5("Back"))#,
+    # tags$br(),
+    # tags$br(),
+    # citation
   )
 
   if (isTRUE(extended)) tagAppendChildren(coords, buttons) else buttons
