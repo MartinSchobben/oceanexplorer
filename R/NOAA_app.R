@@ -44,7 +44,10 @@ NOAA_app <- function(server = NOAA_server()) {
 #' @export
 NOAA_server <- function(extended = TRUE) {
   function(input, output, session) {
+
+    # plot colors to match shiny ui
     thematic::thematic_shiny()
+
     # original data
     withProgress(message = "Retrieving dataset from NOAA server", {
       NOAA <- input_server("NOAA")
@@ -54,10 +57,13 @@ NOAA_server <- function(extended = TRUE) {
     clicked <- reactiveValues(lon = NULL, lat = NULL)
 
     # filter depth
-    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked, extended = extended)
+    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked,
+                            extended = extended)
 
     # plot data
-    output_clicked <- plot_server("worldmap", filter$map, filter$coord, filter$back, filter$reset, filter$depth_slider)
+    output_clicked <- plot_server("worldmap", filter$map, filter$coord,
+                                  filter$back, filter$reset,
+                                  filter$depth_slider)
 
     # update reactivevalue if plot click selection has been used
     observe({
@@ -73,6 +79,20 @@ NOAA_server <- function(extended = TRUE) {
 
     # are clicked points there?
     observe(message(glue::glue("In the app? is it reactivalues: longitude : {str(clicked$lon)} and latitude : {str(clicked$lat)}")))
+
+    # for the add-in
+    if (isFALSE(extended)) {
+      # Listen for 'done'.
+      observeEvent(input$done, {
+
+        # observe(message())
+
+        # Emit the filter call
+        rstudioapi::insertText(paste0("NOAA <- ", NOAA$code(), "\n", filter$code()))
+
+        invisible(stopApp())
+      })
+    }
 
   }
 }

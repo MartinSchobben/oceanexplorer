@@ -73,11 +73,17 @@ input_server <- function(id) {
       waiter$show()
       on.exit(waiter$hide())
 
-      get_NOAA(input$var, input$spat, input$temp)
+      # call for data retrieval
+      call_NOAA <- glue::glue(" get_NOAA({glue::double_quote(input$var)}, {input$spat}, {glue::double_quote(input$temp)})")
+
+      # execute
+      exec_NOAA <- get_NOAA(input$var, input$spat, input$temp)
+
+      list(data = exec_NOAA, code = call_NOAA)
     })
 
     # output
-    list(data = x, variable = reactive(input$var))
+    list(data = reactive(x()$data), code = reactive(x()$code), variable = reactive(input$var))
   })
 }
 #' @rdname input_ui

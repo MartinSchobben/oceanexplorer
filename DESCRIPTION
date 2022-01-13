@@ -36,5 +36,6 @@ Imports:
     abind,
     purrr,
     utils,
-    miniUI
+    miniUI,
+    rstudioapi
 Config/testthat/edition: 3

@@ -124,22 +124,32 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       if (isTruthy(external$lon)) input2$lon <- external$lon
       if (isTruthy(external$lat)) input2$lat <- external$lat
 
-      observe(message(glue::glue("{str(input$slide)}")))
+
       if (
         dplyr::between(req(input$slide), 0, 3000) &&
         dplyr::between(req(input2$lon), -179, 180) &&
         dplyr::between(req(input2$lat), -89, 90) ||
         isTRUE(extended)
         ) {
-        filter_NOAA(NOAA(), input$slide, list(lon = input2$lon, lat = input2$lat))
+
+        # filter call
+        call_NOAA <- glue::glue("filter_NOAA(NOAA, depth = {input$slide}, \\
+                                coord = list(lon = c({glue::glue_collapse(input2$lon\\
+                                , sep = ', ')}), lat = c({glue::glue_collapse(\\
+                                input2$lat, sep = ', ')})))")
+
+        # execute
+        exec_NOAA <- filter_NOAA(NOAA(), input$slide, list(lon = input2$lon, lat = input2$lat))
+
+        list(out = exec_NOAA , code = call_NOAA)
       }
 
     })
 
     # table
     z <- reactive({
-      req(y())
-      tb <- tibble::as_tibble(y()) %>%
+      req(y()$out)
+      tb <- tibble::as_tibble(y()$out) %>%
         dplyr::mutate(coordinates = sf::st_as_text(.data$geometry), .keep = "unused")
       # rename variable
       tb_nm <- colnames(tb)
@@ -172,7 +182,7 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
     ignoreInit = TRUE
     )
 
-    list(map = x, coord = y, table = z, back = reactive(input$back),
+    list(map = x, coord = reactive(y()$out), code = reactive(y()$code),  table = z, back = reactive(input$back),
          reset = reactive(input$reset), depth_slider = reactive(input$slide))
   })
 }
