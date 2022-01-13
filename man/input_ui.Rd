@@ -7,7 +7,7 @@
 \alias{output_server}
 \title{NOAA data module}
 \usage{
-input_ui(id)
+input_ui(id, extended = TRUE)
 
 output_ui(id)
 
@@ -17,6 +17,9 @@ output_server(id, locations, variable)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
+
+\item{extended}{Boolean whether to build the extended module
+(default = \code{TRUE}).}
 
 \item{locations}{Reactive value for the dataset containing the locations
 coordinates.}

@@ -19,6 +19,9 @@ plot_server(id, NOAA, points, back, reset, depth_slider)
 \item{back}{Reactive value for back button.}
 
 \item{reset}{Reactive value for reset button.}
+
+\item{extended}{Boolean whether to build the extended module
+(default = \code{TRUE}).}
 }
 \value{
 Shiny module.

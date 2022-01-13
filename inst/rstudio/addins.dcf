@@ -1,0 +1,5 @@
+Name: Launch oceanexplorer
+Description: Launched the oceanexplorer gadget which enables loading of the NOAA world ocean atlas and extract data from specified coordinates.
+Binding: NOAA_addin
+Interactive: true
+

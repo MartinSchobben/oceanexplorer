@@ -4,6 +4,8 @@
 #' @param locations Reactive value for the dataset containing the locations
 #'  coordinates.
 #' @param variable Reactive value for the selected variable name.
+#' @param extended Boolean whether to build the extended module
+#'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export

@@ -5,14 +5,17 @@
 \alias{table_server}
 \title{NOAA table module}
 \usage{
-table_ui(id, download)
+table_ui(id, download = NULL, extended = TRUE)
 
-table_server(id, NOAA, back, reset)
+table_server(id, NOAA, back, reset, extended = TRUE)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
 
 \item{download}{Add download button.}
+
+\item{extended}{Boolean whether to build the extended module
+(default = \code{TRUE}).}
 
 \item{NOAA}{Reactive value of NOAA dataset.}
 

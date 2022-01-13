@@ -1,5 +1,9 @@
 #' Ocean explorer addin
 #'
+#' @param server Server function.
+#' @param extended Boolean whether to launch the extended app (default = `TRUE`)
+#'  or the limited version for usage as a RStudio gadget.
+#'
 #' @return Rstudio gadget
 #' @export
 NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
@@ -26,7 +30,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       miniTabPanel(
         "Data",
         icon = icon("table"),
-        miniContentPanel(table_ui("table"))
+        miniContentPanel(table_ui("table", extended = FALSE))
       )
     )
   )

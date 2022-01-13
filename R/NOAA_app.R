@@ -1,5 +1,9 @@
 #' Ocean explorer app
 #'
+#' @param server Server function.
+#' @param extended Boolean whether to launch the extended app (default = `TRUE`)
+#'  or the limited version for usage as a RStudio gadget.
+#'
 #' @return Shiny app
 #' @export
 NOAA_app <- function(server = NOAA_server()) {
@@ -77,20 +81,27 @@ NOAA_server <- function(extended = TRUE) {
     # download
     output_server("download", filter$table, NOAA$variable)
 
-    # are clicked points there?
-    observe(message(glue::glue("In the app? is it reactivalues: longitude : {str(clicked$lon)} and latitude : {str(clicked$lat)}")))
-
-    # for the add-in
+    # emit code (RStudio addin)
     if (isFALSE(extended)) {
-      # Listen for 'done'.
+      # listen for 'done'.
       observeEvent(input$done, {
+        req(NOAA$code())
 
-        # observe(message())
+        observe(message(glue::glue("{NOAA$code()}")))
+        observe(message(glue::glue("{filter$code()}")))
 
-        # Emit the filter call
-        rstudioapi::insertText(paste0("NOAA <- ", NOAA$code(), "\n", filter$code()))
+        # code (only loading)
+        if (isTruthy(NOAA$code()) & !isTruthy(filter$code())) {
+          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code()))
+          invisible(stopApp())
+        }
+        # code (loading and filter extraction)
+        if (isTruthy(NOAA$code()) & isTruthy(filter$code())) {
+          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code(), "\n", filter$code()))
+          invisible(stopApp())
+        }
 
-        invisible(stopApp())
+
       })
     }
 

@@ -4,6 +4,8 @@
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param plot Add plot display in UI
 #' @param variable Reactive value for the selected variable name.
+#' @param extended Boolean whether to build the extended module
+#'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export
@@ -151,6 +153,7 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       req(y()$out)
       tb <- tibble::as_tibble(y()$out) %>%
         dplyr::mutate(coordinates = sf::st_as_text(.data$geometry), .keep = "unused")
+
       # rename variable
       tb_nm <- colnames(tb)
       tb_nm[1] <- variable()

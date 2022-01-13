@@ -5,23 +5,30 @@
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param back Reactive value for back button.
 #' @param reset Reactive value for reset button.
+#' @param extended Boolean whether to build the extended module
+#'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export
-table_ui <- function(id, download = NULL) {
-  tagList(
-    tags$br(),
-    conditionalPanel(condition = "output.table!=null", download, ns = NS(id)),
-    tags$br(),
-    tags$br(),
-    tags$br(),
-    tableOutput(NS(id,  "table"))
-  )
+table_ui <- function(id, download = NULL, extended = TRUE) {
+
+  if (isTRUE(extended)) {
+    tagList(
+      tags$br(),
+      conditionalPanel(condition = "output.table!=null", download, ns = NS(id)),
+      tags$br(),
+      tags$br(),
+      tags$br(),
+      tableOutput(NS(id,  "table"))
+    )
+  } else {
+    dataTableOutput(NS(id,  "table"))
+  }
 }
 #' @rdname table_ui
 #'
 #' @export
-table_server <- function(id, NOAA, back, reset) {
+table_server <- function(id, NOAA, back, reset, extended = TRUE) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
@@ -52,6 +59,10 @@ table_server <- function(id, NOAA, back, reset) {
       obs(NULL)
     })
 
-    output$table <- renderTable({obs()})
+    if (isTRUE(extended)) {
+      output$table <- renderTable({obs()})
+    } else {
+      output$table <- renderDataTable({obs()})
+    }
   })
 }

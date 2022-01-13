@@ -5,6 +5,8 @@
 #' @param points Add locations of extracted point geometry.
 #' @param back Reactive value for back button.
 #' @param reset Reactive value for reset button.
+#' @param extended Boolean whether to build the extended module
+#'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export
