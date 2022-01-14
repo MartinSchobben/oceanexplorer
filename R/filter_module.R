@@ -12,62 +12,50 @@
 filter_ui <- function(id, citation, extended = TRUE) {
 
   coords <- tagList(
-    fluidRow(
-      column(
-        width = 6,
-        shinyFeedback::useShinyFeedback(),
-        textInput(
-          NS(id, "depth"),
-          h5("Depth (meter)"),
-          "0"
-        )
-      ),
-      column(
-        width = 6,
-        shinyFeedback::useShinyFeedback(),
-        textInput(
-          NS(id, "lon"),
-          h5("Longitude (degrees)"),
-          NULL,
-          placeholder = "number or comma delimited vector"
-        )
-      )
+    textInput(
+      NS(id, "depth"),
+      h5("Depth (meter)"),
+      "0"
     ),
-    fluidRow(
-      column(
-        width = 6,
-        shinyFeedback::useShinyFeedback(),
-        textInput(
-          NS(id, "lat"),
-          h5("Latitude (degrees)"),
-          NULL,
-          placeholder = "number or comma delimited vector"
-        )
-      ),
-      column(
-        width = 6,
-        selectizeInput(
-          NS(id, "geom"),
-          h5("Geometry        "),
-          choices = "point"
-        )
-      )
+    textInput(
+      NS(id, "lon"),
+      h5("Longitude (degrees)"),
+      NULL,
+      placeholder = "number or comma delimited vector"
+    ),
+    textInput(
+      NS(id, "lat"),
+      h5("Latitude (degrees)"),
+      NULL,
+      placeholder = "number or comma delimited vector"
+    ),
+    selectizeInput(
+      NS(id, "geom"),
+      h5("Geometry        "),
+      choices = "point"
     )
   )
-
 
   buttons <- tagList(
     tags$br(),
     tags$br(),
     actionButton(NS(id, "extract"), label = h5("Extract location(s)")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
-    actionButton(NS(id, "back"), label = h5("Back"))#,
-    # tags$br(),
-    # tags$br(),
-    # citation
+    actionButton(NS(id, "back"), label = h5("Back"))
   )
 
-  if (isTRUE(extended)) tagAppendChildren(coords, buttons) else buttons
+  if (isTRUE(extended)) {
+    layout <- tagList(
+      fluidRow(
+        shinyFeedback::useShinyFeedback(),
+        column(6, coords[[1]], coords[[2]]),
+        column(6, coords[[3]], coords[[4]])
+      )
+    )
+    tagAppendChildren(layout, buttons)
+  } else {
+    buttons
+  }
 }
 #' @rdname filter_ui
 #'

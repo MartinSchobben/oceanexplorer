@@ -16,7 +16,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
         icon = icon("sliders-h"),
         miniContentPanel(
           waiter::use_waiter(),
-          input_ui("NOAA", citation = citation_ui("NOAA"), extended = FALSE),
+          input_ui("NOAA", citation = citation_ui("NOAA"), extended = F),
           )
       ),
       miniTabPanel(

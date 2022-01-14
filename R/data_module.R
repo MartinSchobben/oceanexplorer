@@ -12,24 +12,22 @@
 input_ui <- function(id, citation = NULL, extended = TRUE) {
 
   vars <- tagList(
-    fluidRow(
-    column(6,
     selectInput(
       NS(id, "var"),
       h5("Variable"),
-      choices = c("temperature", "phosphate", "nitrate", "silicate", "oxygen", "salinity", "density")
+      choices = c("temperature", "phosphate", "nitrate", "silicate", "oxygen",
+                  "salinity", "density")
     ),
     selectInput(
       NS(id, "spat"),
       h5("Spatial resolution"),
       choices = c(1, 5)
-    )),
-    column(6,
+    ),
     selectInput(
       NS(id, "temp"),
       h5("Averaging period"),
       choices = c("annual", month.name, "winter", "spring", "summer", "autumn")
-    )))
+    )
   )
 
   load <- tagList(
@@ -42,9 +40,12 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
   )
 
   if (isTRUE(extended)) {
-    tagAppendChildren(vars, load)
+    layout <- tagList(
+      fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]]))
+    )
+    tagAppendChildren(layout, load)
   } else {
-    tagList(fillRow(fillCol(vars), fillCol(load)))
+    fillRow(fillCol(vars), fillCol(load))
   }
 }
 #' @rdname input_ui
