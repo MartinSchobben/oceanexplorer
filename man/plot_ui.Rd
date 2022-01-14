@@ -20,8 +20,7 @@ plot_server(id, NOAA, points, back, reset, depth_slider)
 
 \item{reset}{Reactive value for reset button.}
 
-\item{extended}{Boolean whether to build the extended module
-(default = \code{TRUE}).}
+\item{depth_slider}{Reactive value for slider for ocean depth.}
 }
 \value{
 Shiny module.

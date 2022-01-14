@@ -3,6 +3,7 @@
 #' @param id Namespace id shiny module.
 #' @param locations Reactive value for the dataset containing the locations
 #'  coordinates.
+#' @param citation Additional space for citation element.
 #' @param variable Reactive value for the selected variable name.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).

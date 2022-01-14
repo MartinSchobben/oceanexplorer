@@ -2,8 +2,9 @@
 #'
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
-#' @param plot Add plot display in UI
+#' @param citation Additional space for citation element.
 #' @param variable Reactive value for the selected variable name.
+#' @param external Reactive value for filter operation based on plot selection.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).
 #'
@@ -67,15 +68,15 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
   moduleServer(id, function(input, output, session) {
 
     # store site (change geom point color)
-    store <- reactiveVal(FALSE)
+    store <- reactiveVal(logical(0))
     observeEvent(input$extract, {
       req(y()$out)
       new <- rep(TRUE, nrow(y()$out))
       store(new)
       })
-    # observeEvent(external$lon() ,{
-    #   store(append(store(),FALSE))
-    # })
+    observeEvent(external$lon ,{
+      store(append(store(), FALSE))
+    })
 
     # slider filter
     x <- reactive({
@@ -143,8 +144,6 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
         list(out = exec_NOAA , code = call_NOAA)
       }
     })
-
-    observe(message(glue::glue("{str(y()$out)}")))
 
     # table
     z <- eventReactive(input$extract, {
