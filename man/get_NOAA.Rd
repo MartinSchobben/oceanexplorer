@@ -4,7 +4,7 @@
 \alias{get_NOAA}
 \title{Obtain NOAA WORLD OCEAN ATLAS dataset}
 \usage{
-get_NOAA(var, spat_res, av_period)
+get_NOAA(var, spat_res, av_period, cacheNOAA = TRUE)
 }
 \arguments{
 \item{var}{The chemical or physical variable of interest.}
@@ -14,12 +14,14 @@ get_NOAA(var, spat_res, av_period)
 
 \item{av_period}{Temporal resolution, either \code{"annual"}, specific seasons
 (e.g. \code{"winter"}), or month (e.g. \code{"August"}).}
+
+\item{cacheNOAA}{Caching the extracted files under \code{inst/extdata}.}
 }
 \value{
 Star object.
 }
 \description{
-Obtain NOAA WORLD OCEAN ATLAS dataset
+The function can also automatically caches the extracted files.
 }
 \examples{
 \dontrun{

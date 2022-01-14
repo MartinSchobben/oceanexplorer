@@ -2,12 +2,15 @@
 % Please edit documentation in R/data_module.R
 \name{input_ui}
 \alias{input_ui}
+\alias{citation_ui}
 \alias{output_ui}
 \alias{input_server}
 \alias{output_server}
 \title{NOAA data module}
 \usage{
-input_ui(id, extended = TRUE)
+input_ui(id, citation = NULL, extended = TRUE)
+
+citation_ui(id)
 
 output_ui(id)
 
