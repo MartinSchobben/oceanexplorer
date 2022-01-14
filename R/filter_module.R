@@ -66,6 +66,11 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
 
   moduleServer(id, function(input, output, session) {
 
+    # store site (change geom point color)
+    store <- reactiveVal(FALSE)
+    observeEvent(input$extract, {store(TRUE)})
+    # observeEvent(external$lat(), {store(FALSE)})
+
     # slider filter
     x <- reactive({
       req(input$slide)
@@ -73,8 +78,8 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       })
 
     # coordinates
-    y <- eventReactive(input$extract, {
-
+    # y <- eventReactive(input$extract, {
+    y <- reactive({
       if (isTRUE(extended)) {
 
         # change text to numeric values for inout coords
@@ -127,13 +132,16 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
         # execute
         exec_NOAA <- filter_NOAA(NOAA(), input$slide, list(lon = input2$lon, lat = input2$lat))
 
+        # add column to identify whether point has been extracted or merely holds the spot
+        exec_NOAA <- tibble::add_column(exec_NOAA, stored = store(), .after = .data$geometry)
+
         list(out = exec_NOAA , code = call_NOAA)
       }
-
     })
 
+
     # table
-    z <- reactive({
+    z <- eventReactive(input$extract, {
       req(y()$out)
       tb <- tibble::as_tibble(y()$out) %>%
         dplyr::mutate(coordinates = sf::st_as_text(.data$geometry), .keep = "unused")
@@ -144,6 +152,7 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       colnames(tb) <- tb_nm
       tb
       })
+
 
     # reset all
     observeEvent(input$reset, {
