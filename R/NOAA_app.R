@@ -63,7 +63,6 @@ NOAA_server <- function(extended = TRUE) {
       NOAA <- input_server("NOAA")
     })
 
-
     # show locations selection controls when data loaded
     observeEvent(NOAA$data(), {
       updateTabsetPanel(
@@ -74,21 +73,21 @@ NOAA_server <- function(extended = TRUE) {
     })
 
     # initiate plot click filter with null value
-    clicked <- reactiveValues(lon = NULL, lat = NULL)
+    clicked <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
 
     # filter depth
     filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked,
                             extended = extended)
 
     # plot data
-    output_clicked <- plot_server("worldmap", filter$map, filter$coord,
-                                  filter$back, filter$reset,
-                                  filter$depth_slider)
+    output_plot <- plot_server("worldmap", filter$map, filter$coord,
+                                  filter$back, filter$reset)
 
-    # update reactivevalue if plot click selection has been used
+    # update `reactivevalue` if plot click selection has been used
     observe({
-      clicked$lon <- output_clicked$lon
-      clicked$lat <- output_clicked$lat
+      clicked$lon <- output_plot$lon
+      clicked$lat <- output_plot$lat
+      clicked$depth <- output_plot$depth
     })
 
     # table
@@ -103,8 +102,8 @@ NOAA_server <- function(extended = TRUE) {
       observeEvent(input$done, {
         req(NOAA$code())
 
-        observe(message(glue::glue("{NOAA$code()}")))
-        observe(message(glue::glue("{filter$code()}")))
+        # observe(message(glue::glue("{NOAA$code()}")))
+        # observe(message(glue::glue("{filter$code()}")))
 
         # code (only loading)
         if (isTruthy(NOAA$code()) & !isTruthy(filter$code())) {

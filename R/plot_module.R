@@ -14,7 +14,7 @@ plot_ui <- function(id) {
     tags$br(),
     plotOutput(NS(id,  "plot"), click = NS(id, "plot_click")),
     sliderInput(
-      NS("depth", "slide"),
+      NS(id, "depth"),
       h5("depth (meter)"),
       min = 0,
       max = 3000,
@@ -27,7 +27,7 @@ plot_ui <- function(id) {
 #' @rdname plot_ui
 #'
 #' @export
-plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
+plot_server <- function(id, NOAA, points, back, reset) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
@@ -37,10 +37,11 @@ plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
 
   moduleServer(id, function(input, output, session) {
 
-    # initiate
+    # initiate saved coords
     coord <- reactiveVal(NULL)
-    selected <- reactiveValues(lon = NULL, lat = NULL)
-
+    # initiated selected coords
+    selected <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
+    observe({selected$depth <- input$depth})
 
     # update output coordinates
     observeEvent(points(), {
@@ -55,7 +56,7 @@ plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
     # back
     observeEvent(back(), {
       req(back())
-      coord(dplyr::rows_delete(coord(), tail(coord(), 1), by = colnames(coord())))
+      coord(dplyr::add_row(coord(), tail(coord(), 1)))
     })
 
     # reset
@@ -63,6 +64,7 @@ plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
       req(reset())
       selected$lon <- NULL
       selected$lat <- NULL
+      selected$depth <- NULL
       coord(NULL)
     })
 
@@ -73,8 +75,7 @@ plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
 
     # store clicked points
     observeEvent(input$plot_click, {
-      # if selected are null then initiated otherwise append
-      if (all(sapply(reactiveValuesToList(selected), is.null))) {
+      if (is.null(selected$lon) & is.null(selected$lon)) {
         selected$lon <- input$plot_click$x
         selected$lat <- input$plot_click$y
       } else {
@@ -83,14 +84,14 @@ plot_server <- function(id, NOAA, points, back, reset, depth_slider) {
       }
     })
 
-    # if depth slides and coords plot selection are changed reset the external input
-    observeEvent(depth_slider(), { #{message(glue::glue("{depth_slider()}"))})
+    # if depth slide and coordinate plot selection are changed reset the external input
+    # depth is not reset as we need a 2D surface for the plot
+    observeEvent(input$slide, {
       selected$lon <- NULL
       selected$lat <- NULL
     })
 
-
-    # return
+    # return `reactivevalues`
     selected
   })
 }

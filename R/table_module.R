@@ -36,7 +36,7 @@ table_server <- function(id, NOAA, back, reset) {
       if (is.null(obs())) {
         obs(NOAA())
       } else {
-        obs(dplyr::rows_upsert(obs(), NOAA(), by = c("depth", "coordinates")))
+        obs(dplyr::add_row(obs(), NOAA()))
       }
     })
 
