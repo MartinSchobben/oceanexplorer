@@ -14,18 +14,18 @@ filter_ui <- function(id, citation, extended = TRUE) {
   coords <- tagList(
     textInput(
       NS(id, "depth"),
-      h5("Depth (meter)"),
+      h5("Depth"),
       "0"
     ),
     textInput(
       NS(id, "lon"),
-      h5("Longitude (degrees)"),
+      h5("Longitude"),
       NULL,
       placeholder = "number or comma delimited vector"
     ),
     textInput(
       NS(id, "lat"),
-      h5("Latitude (degrees)"),
+      h5("Latitude"),
       NULL,
       placeholder = "number or comma delimited vector"
     ),
@@ -68,8 +68,14 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
 
     # store site (change geom point color)
     store <- reactiveVal(FALSE)
-    observeEvent(input$extract, {store(TRUE)})
-    # observeEvent(external$lat(), {store(FALSE)})
+    observeEvent(input$extract, {
+      req(y()$out)
+      new <- rep(TRUE, nrow(y()$out))
+      store(new)
+      })
+    # observeEvent(external$lon() ,{
+    #   store(append(store(),FALSE))
+    # })
 
     # slider filter
     x <- reactive({
@@ -78,7 +84,6 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       })
 
     # coordinates
-    # y <- eventReactive(input$extract, {
     y <- reactive({
       if (isTRUE(extended)) {
 
@@ -139,6 +144,7 @@ filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
       }
     })
 
+    observe(message(glue::glue("{str(y()$out)}")))
 
     # table
     z <- eventReactive(input$extract, {

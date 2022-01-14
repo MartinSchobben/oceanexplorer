@@ -20,12 +20,12 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
     ),
     selectInput(
       NS(id, "spat"),
-      h5("Spatial resolution"),
+      h5("Resolution"),
       choices = c(1, 5)
     ),
     selectInput(
       NS(id, "temp"),
-      h5("Averaging period"),
+      h5("Averaging"),
       choices = c("annual", month.name, "winter", "spring", "summer", "autumn")
     )
   )

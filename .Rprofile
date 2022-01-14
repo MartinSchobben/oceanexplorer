@@ -1,2 +1,2 @@
 source("renv/activate.R")
-# source("~/.Rprofile")
+source("~/.Rprofile")
