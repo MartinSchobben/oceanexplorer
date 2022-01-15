@@ -46,7 +46,6 @@ NOAA_app <- function(server = NOAA_server()) {
   )
 
 
-
   shinyApp(ui, server)
 }
 #' @rdname NOAA_app
@@ -76,12 +75,10 @@ NOAA_server <- function(extended = TRUE) {
     clicked <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
 
     # filter depth
-    filter <- filter_server("depth", NOAA$data, NOAA$variable, clicked,
-                            extended = extended)
+    filter <- filter_server("depth", NOAA$data, clicked, extended = extended)
 
     # plot data
-    output_plot <- plot_server("worldmap", filter$map, filter$coord,
-                                  filter$back, filter$reset)
+    output_plot <- plot_server("worldmap", filter$map, filter$coord)
 
     # update `reactivevalue` if plot click selection has been used
     observe({
@@ -91,10 +88,10 @@ NOAA_server <- function(extended = TRUE) {
     })
 
     # table
-    table_server("table", filter$table, filter$back, filter$reset)
+    output_table <- table_server("table", filter$coord, NOAA$variable)
 
     # download
-    output_server("download", filter$table, NOAA$variable)
+    # output_server("download", filter$coord, NOAA$variable)
 
     # emit code (RStudio addin)
     if (isFALSE(extended)) {
@@ -106,13 +103,13 @@ NOAA_server <- function(extended = TRUE) {
         # observe(message(glue::glue("{filter$code()}")))
 
         # code (only loading)
-        if (isTruthy(NOAA$code()) & !isTruthy(filter$code())) {
+        if (isTruthy(NOAA$code()) & !isTruthy(output_table())) {
           rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code()))
           invisible(stopApp())
         }
         # code (loading and filter extraction)
-        if (isTruthy(NOAA$code()) & isTruthy(filter$code())) {
-          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code(), "\n", filter$code()))
+        if (isTruthy(NOAA$code()) & isTruthy(output_table())) {
+          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code(), "\n", output_table()))
           invisible(stopApp())
         }
 

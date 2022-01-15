@@ -40,7 +40,7 @@ plot_NOAA <- function(NOAA, points = NULL) {
     base +
       ggplot2::geom_point(
         data = points,
-        ggplot2::aes(geometry = .data$geometry, color = .data$stored),
+        ggplot2::aes(geometry = .data$geometry),
         stat = "sf_coordinates",
         shape = 21,
         fill = "black",

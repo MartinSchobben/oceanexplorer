@@ -21,37 +21,63 @@ table_ui <- function(id, download = NULL) {
 #' @rdname table_ui
 #'
 #' @export
-table_server <- function(id, NOAA, back, reset) {
+table_server <- function(id, NOAA, variable) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
 
-    obs <- reactiveVal(NULL)
-
-    # update output table
-    observeEvent(NOAA(), {
+    # format
+    pretty_table <- reactive({
       req(NOAA())
-      if (is.null(obs())) {
-        obs(NOAA())
-      } else {
-        obs(dplyr::add_row(obs(), NOAA()))
-      }
+      req(variable())
+
+      format_table(NOAA(), variable())
     })
 
-    # delete observation table
-    observeEvent(back(), {
-      req(back())
-      obs(dplyr::rows_delete(obs(), tail(obs(), 1), by = colnames(obs())))
+    # table
+    output$table <- DT::renderDT({pretty_table()})
+
+    # return code for the specific operation
+    reactive({
+      glue::glue(
+        "filter_NOAA(\\
+         NOAA, \\
+         depth = c({glue::glue_collapse(pretty_table()$depth, sep = ', ')}), \\
+         coord = \\
+         list(\\
+         lon = c({glue::glue_collapse(pretty_table()$longitude, sep = ', ')}), \\
+         lat = c({glue::glue_collapse(pretty_table()$latitude, sep = ', ')})\\
+         )\\
+         )"
+      )
     })
 
-    # reset whole table
-    observeEvent(reset(), {
-      req(reset())
-      obs(NULL)
-    })
-
-    output$table <- DT::renderDT({obs()})
   })
+}
+
+# table output formatting
+format_table <- function(NOAA, variable) {
+
+  tb <- tibble::as_tibble(NOAA) %>%
+    dplyr::mutate(
+      coordinates = sf::st_as_text(.data$geometry),
+      .keep = "unused"
+      )
+
+  tb <- format_coord(tb)
+
+  # rename variable
+  tb_nm <- colnames(tb)
+  tb_nm[1] <- variable
+  colnames(tb) <- tb_nm
+  tb
+}
+
+format_coord <- function(NOAA, coord) {
+
+  tidyr::separate(NOAA, "coordinates", into = c("geometry", "longitude", "latitude"), sep = "[^[:alnum:]|.|-]+", extra = "drop")
+
+
 }

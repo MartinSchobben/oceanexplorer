@@ -102,19 +102,27 @@ input_server <- function(id) {
 #' @rdname input_ui
 #'
 #' @export
-output_server <- function(id, locations, variable) {
+output_server <- function(id, NOAA, variable) {
 
   stopifnot(is.reactive(variable))
-  stopifnot(is.reactive(locations))
+  stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
+
+    # format
+    pretty_table <- reactive({
+      req(NOAA())
+      req(variable())
+
+      format_table(NOAA(), variable())
+    })
 
     output$download <- downloadHandler(
       filename = function() {
         paste0(variable(), ".csv")
       },
       content = function(file) {
-        write.csv(locations(), file)
+        write.csv(pretty_table(), file)
       }
     )
 

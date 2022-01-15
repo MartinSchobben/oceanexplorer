@@ -56,126 +56,117 @@ filter_ui <- function(id, citation, extended = TRUE) {
     )
     tagAppendChildren(layout, buttons)
   } else {
-    buttons
+    buttons[-3]
   }
 }
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, variable, external, extended = TRUE) {
+filter_server <- function(id, NOAA, external, extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
 
-    # store site (change geom point color)
-    store <- reactiveVal(logical(0))
+    # store input in custom `reactivalues`
+    input2 <- reactiveValues(depth = NULL, lon = NULL, lat = NULL)
+
+    # extract text input + action and validate input
     observeEvent(input$extract, {
-      req(y()$out)
-      new <- rep(TRUE, nrow(y()$out))
-      store(new)
-      })
-    observeEvent(external$lon | external$lat, {
-      store(append(store(), FALSE))
+
+      if (isTRUE(extended)) {
+
+      # convert text to numeric values
+      purrr::walk(
+        c("depth", "lon", "lat"),
+        ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)}
+      )
+
+      # warnings for explicit coord input
+      shinyFeedback::feedbackWarning(
+        "depth",
+        !dplyr::between(input2$depth, 0, 3000),
+        "Please choose a number between 0 and 3000"
+      )
+      shinyFeedback::feedbackWarning(
+        "lon",
+        !dplyr::between(input2$lon, -179, 180),
+        "Please choose a number between -179.00 and 180.00"
+      )
+      shinyFeedback::feedbackWarning(
+        "lat",
+        !dplyr::between(input2$lat, -89, 90),
+        "Please choose a number between -89.00 and 90.00"
+      )
+      }
+    })
+
+    # clicked points
+    observeEvent(external$lon | external$lat | external$depth, {
+
+      if (isTruthy(external$lon)) input2$lon <- external$lon
+      if (isTruthy(external$lat)) input2$lat <-  external$lat
+      if (isTruthy(external$depth)) input2$depth <- external$depth
+
     })
 
 
+    observe(message(glue::glue("{input2$lat}, {input2$lon}, {input2$depth}")))
+    observe(message(glue::glue("{str(coord())}")))
+
     # slider filter
-    x <- reactive({
+    map <- reactive({
       req(external$depth)
       filter_NOAA(NOAA(), external$depth)
       })
 
-
-    # coordinates
-    y <- reactive({
-      if (isTRUE(extended)) {
-
-        # change text to numeric values for inout coords
-        input2 <- purrr::map(
-          c("depth", "lon", "lat"),
-          ~scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)
-          ) %>%
-          rlang::set_names(c("depth", "lon", "lat"))
-
-        # warnings for explicit coord input
-        shinyFeedback::feedbackWarning(
-          "depth",
-          !dplyr::between(input2$depth, 0, 3000),
-          "Please choose a number between 0 and 3000"
-        )
-        shinyFeedback::feedbackWarning(
-          "lon",
-          !dplyr::between(input2$lon, -179, 180),
-          "Please choose a number between -179.00 and 180.00"
-        )
-        shinyFeedback::feedbackWarning(
-          "lat",
-          !dplyr::between(input2$lat, -89, 90),
-          "Please choose a number between -89.00 and 90.00"
-        )
-      }
-      message(glue::glue("{input2$lat}, {input2$lon}, {input2$depth}"))
-
-      # if selected on plot, replace values for lon and lat
-      if (isFALSE(extended)) input2 <- list()
-      if (isTruthy(external$lon)) input2$lon <- external$lon
-      if (isTruthy(external$lat)) input2$lat <- external$lat
-      if (isTruthy(external$depth)) input2$depth <- external$depth
-
+    # coordinate extraction
+    extract <- reactive({
       if (
         dplyr::between(req(input2$depth), 0, 3000) &&
         dplyr::between(req(input2$lon), -179, 180) &&
-        dplyr::between(req(input2$lat), -89, 90) ||
-        isTRUE(extended)
+        dplyr::between(req(input2$lat), -89, 90)
         ) {
 
-        # filter call
-        call_NOAA <- glue::glue("filter_NOAA(NOAA, depth = {input2$depth}, \\
-                                coord = list(lon = c({glue::glue_collapse(input2$lon\\
-                                , sep = ', ')}), lat = c({glue::glue_collapse(\\
-                                input2$lat, sep = ', ')})))")
-
         # execute
-        exec_NOAA <- filter_NOAA(NOAA(), input2$depth, list(lon = input2$lon, lat = input2$lat))
-
-        # add column to identify whether point has been extracted or merely holds the spot
-        exec_NOAA <- tibble::add_column(exec_NOAA, stored = store(), .after = .data$geometry)
-
-        list(out = exec_NOAA , code = call_NOAA)
+        filter_NOAA(NOAA(), input2$depth, list(lon = input2$lon, lat = input2$lat))
       }
     })
 
-    # table
-    z <- eventReactive(input$extract, {
-      req(y()$out)
-      tb <- tibble::as_tibble(y()$out) %>%
-        dplyr::mutate(coordinates = sf::st_as_text(.data$geometry), .keep = "unused")
 
-      # rename variable
-      tb_nm <- colnames(tb)
-      tb_nm[1] <- variable()
-      colnames(tb) <- tb_nm
-      tb
+    # store coordinate points
+    coord <- reactiveVal(NULL)
+    observeEvent(extract(), {
+      if (is.null(extract())) {
+        coord(extract())
+      } else {
+        coord(dplyr::bind_rows(coord(), extract()))
+      }
+    })
+
+    # delete one coordinate point
+    observeEvent(input$back, {
+      coord(dplyr::rows_delete(coord(), tail(coord(), 1), by = colnames(coord())))
+    })
+
+    # delete all coordinate points
+    observeEvent(input$reset, {
+      coord(NULL)
+    })
+
+
+    if (isTRUE(extended)) {
+      # reset all by button click or reset text input when plot input is selected
+      observeEvent(input$reset | external$lon | external$lat | external$depth, {
+        updateTextInput(inputId = "lon", value = character(0), placeholder = "number or comma delimited vector")
+        updateTextInput(inputId = "lat", value = character(0), placeholder = "number or comma delimited vector")
+        updateTextInput(inputId = "depth", value = character(0), placeholder = "number or comma delimited vector")
       })
+    }
 
-
-    # reset all by button click or reset text input when plot input is selected
-    observeEvent(input$reset | external$lon | external$lat | external$depth, {
-      if (isTRUE(extended)) {
-        updateTextInput(inputId = "lon", value = NA_character_, placeholder = "number or comma delimited vector")
-        updateTextInput(inputId = "lat", value = NA_character_, placeholder = "number or comma delimited vector")
-        updateTextInput(inputId = "depth", value = NA_character_, placeholder = "number or comma delimited vector")
-      }
-    })
-
-    list(
-      map = x,
-      coord = reactive(y()$out),
-      code = reactive(y()$code),
-      table = z,
-      back = reactive(input$back),
-      reset = reactive(input$reset)
-      )
+    # return
+    list(map = map, coord = coord, code = code)
   })
 }
+
+
