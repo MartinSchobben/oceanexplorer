@@ -39,7 +39,7 @@ plot_NOAA <- function(NOAA, points = NULL) {
   if (!is.null(points)) {
     sf::st_coordinates(points$geometry)
     base +
-      geom_point(
+      ggplot2::geom_point(
         # check what the warning means: 'st_point_on_surface may not give correct results for longitude/latitude data'
         data = tibble::as_tibble(sf::st_coordinates(points$geometry)),
         mapping = ggplot2::aes( x= X, y = Y),

@@ -35,22 +35,26 @@ get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
     stat <- paste(v, "mn", sep = "_")
   }
 
+  # where is package
+  pkg_path <- fs::path_package("oceanexplorer")
+
   # path
   NOAA_path <- url_parser(var, spat_res, av_period)
 
   if (length(NOAA_path) == 1) {
     # get stars
-    NOAA <- readRDS(NOAA_path[[1]])
+    NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]]))
   } else {
     # get netcdf
     NOAA <- suppressWarnings(stars::read_ncdf(NOAA_path[[1]], var = stat)) # suppress warning for unrecognized units
 
     if (isTRUE(cacheNOAA)) {
+
       # write stars object if extracted from NOAA server
       # create dir
-      fs::dir_create(fs::path_dir(NOAA_path[[2]]))
+      fs::dir_create(pkg_path, fs::path_dir(NOAA_path[[2]]))
       # create file
-      saveRDS(NOAA, NOAA_path[[2]])
+      saveRDS(NOAA, fs::path(pkg_path, NOAA_path[[2]]))
     }
   }
 
@@ -97,9 +101,9 @@ url_parser <- function(var, spat_res, av_period) {
   file_path <- paste(var, deca, if(spat_res > 1) "5deg" else "1.00", file, sep = "/")
 
   # check whether exist locally
-  local_path <- fs::path("inst", "extdata", fs::path_ext_remove(file_path), ext = "rds")
+  local_path <- fs::path("extdata", fs::path_ext_remove(file_path), ext = "rds")
   # if not exist make external path to server
-  if (!fs::file_exists(local_path)) {
+  if (class(try(fs::path_package("oceanexplorer", local_path), silent = TRUE))[1] != "fs_path") {
     external_path <- paste(base_path, file_path, sep = "/")
     list(external = external_path, local = local_path)
   } else {
