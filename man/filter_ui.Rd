@@ -5,23 +5,28 @@
 \alias{filter_server}
 \title{NOAA filter module}
 \usage{
-filter_ui(id, citation, extended = TRUE)
+filter_ui(id, extended = TRUE)
 
-filter_server(id, NOAA, variable, external, extended = TRUE)
+filter_server(
+  id,
+  NOAA,
+  external,
+  ivars = c("depth", "lon", "lat"),
+  extended = TRUE
+)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
-
-\item{citation}{Additional space for citation element.}
 
 \item{extended}{Boolean whether to build the extended module
 (default = \code{TRUE}).}
 
 \item{NOAA}{Reactive value of NOAA dataset.}
 
-\item{variable}{Reactive value for the selected variable name.}
+\item{external}{Reactive values for latitude, longitude and depth from plot
+module.}
 
-\item{external}{Reactive value for filter operation based on plot selection.}
+\item{ivars}{Character vector for the variables for filtering.}
 }
 \value{
 Shiny module.

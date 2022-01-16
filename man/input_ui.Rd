@@ -16,7 +16,7 @@ output_ui(id)
 
 input_server(id)
 
-output_server(id, locations, variable)
+output_server(id, NOAA, variable)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
@@ -26,7 +26,7 @@ output_server(id, locations, variable)
 \item{extended}{Boolean whether to build the extended module
 (default = \code{TRUE}).}
 
-\item{locations}{Reactive value for the dataset containing the locations
+\item{NOAA}{Reactive value for the dataset containing the locations
 coordinates.}
 
 \item{variable}{Reactive value for the selected variable name.}

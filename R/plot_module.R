@@ -3,9 +3,6 @@
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param points Add locations of extracted point geometry.
-#' @param back Reactive value for back button.
-#' @param reset Reactive value for reset button.
-#' @param depth_slider Reactive value for slider for ocean depth.
 #'
 #' @return Shiny module.
 #' @export

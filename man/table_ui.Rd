@@ -7,7 +7,7 @@
 \usage{
 table_ui(id, download = NULL)
 
-table_server(id, NOAA, back, reset)
+table_server(id, NOAA, variable)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
@@ -16,9 +16,7 @@ table_server(id, NOAA, back, reset)
 
 \item{NOAA}{Reactive value of NOAA dataset.}
 
-\item{back}{Reactive value for back button.}
-
-\item{reset}{Reactive value for reset button.}
+\item{variable}{Reactive value for selected variable name.}
 }
 \value{
 Shiny module.
