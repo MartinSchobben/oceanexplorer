@@ -37,18 +37,22 @@ plot_NOAA <- function(NOAA, points = NULL) {
     sc +
     ggplot2::labs(x = NULL, y = NULL)
   if (!is.null(points)) {
+    sf::st_coordinates(points$geometry)
     base +
-      ggplot2::geom_point(
-        data = points,
-        ggplot2::aes(geometry = .data$geometry),
-        stat = "sf_coordinates",
+      geom_point(
+        # check what the warning means: 'st_point_on_surface may not give correct results for longitude/latitude data'
+        data = tibble::as_tibble(sf::st_coordinates(points$geometry)),
+        mapping = ggplot2::aes( x= X, y = Y),
         shape = 21,
-        fill = "black",
-        show.legend = FALSE
-      ) +
-      ggplot2::scale_color_manual(
-        values = c("TRUE" = "black", "FALSE" = "white")
+        fill = "black"
       )
+      # ggplot2::geom_point(
+      #   data = points,
+      #   ggplot2::aes(geometry = .data$geometry),
+      #   stat = "sf_coordinates",
+      #   shape = 21,
+      #   fill = "black"
+      # )
   } else {
     base
   }

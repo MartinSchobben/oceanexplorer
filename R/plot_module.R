@@ -32,19 +32,17 @@ plot_server <- function(id, NOAA, points) {
   # check for reactive
   stopifnot(is.reactive(NOAA))
   stopifnot(is.reactive(points))
-  stopifnot(is.reactive(back))
-  stopifnot(is.reactive(reset))
 
   moduleServer(id, function(input, output, session) {
 
     # initiated selected coordinate
     selected <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
-    # coords <- reactiveVal(NULL)
-    # observe({coords(points())})
 
     # plot
     output$plot <- renderPlot({
+
       plot_NOAA(NOAA(), points())
+
     })
 
 

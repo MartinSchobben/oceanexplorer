@@ -27,7 +27,7 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
   start_depth <- stars::st_dimensions(NOAA)$depth$values$start
 
   # depth
-  x <- purrr::map(depth, ~dplyr::slice(NOAA, "depth", findInterval(.x, start_depth)))
+  x <- purrr::map(unique(depth), ~dplyr::slice(NOAA, "depth", findInterval(.x, start_depth)))
 
   # coordinate selection
   if (!is.null(coord)) {
@@ -40,7 +40,7 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
 
     pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y))) %>%
       sf::st_sfc(crs = sf::st_crs(x[[1]]))
-    ext <- purrr::map2_dfr(x, depth, ~stars::st_extract(.x, pnt) %>%
+    ext <- purrr::map2_dfr(x, unique(depth), ~stars::st_extract(.x, pnt) %>%
                              tibble::add_column(depth = .y))
     return(ext)
   }

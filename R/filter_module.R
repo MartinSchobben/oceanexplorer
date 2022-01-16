@@ -3,45 +3,25 @@
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param citation Additional space for citation element.
-#' @param variable Reactive value for the selected variable name.
-#' @param external Reactive value for filter operation based on plot selection.
+#' @param ivars Character vector for the variables for filtering.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export
-filter_ui <- function(id, citation, extended = TRUE) {
+filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
-    textInput(
-      NS(id, "depth"),
-      h5("Depth"),
-      NULL,
-      placeholder = "number or comma delimited vector"
-    ),
-    textInput(
-      NS(id, "lon"),
-      h5("Longitude"),
-      NULL,
-      placeholder = "number or comma delimited vector"
-    ),
-    textInput(
-      NS(id, "lat"),
-      h5("Latitude"),
-      NULL,
-      placeholder = "number or comma delimited vector"
-    ),
-    selectizeInput(
-      NS(id, "geom"),
-      h5("Geometry        "),
-      choices = "point"
-    )
+    textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = plch),
+    textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = plch),
+    textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = plch),
+    selectizeInput(NS(id, "geom"), h5("Geometry"), choices = "point")
   )
 
   buttons <- tagList(
     tags$br(),
     tags$br(),
-    actionButton(NS(id, "extract"), label = h5("Extract location(s)")),
+    actionButton(NS(id, "extract"), label = h5("Extract")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
     actionButton(NS(id, "back"), label = h5("Back"))
   )
@@ -56,20 +36,34 @@ filter_ui <- function(id, citation, extended = TRUE) {
     )
     tagAppendChildren(layout, buttons)
   } else {
-    buttons[-3]
+    tagList(buttons[[4]], buttons[[5]])
   }
 }
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, external, extended = TRUE) {
+filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
+                          extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
+  stopifnot(is.reactivevalues(external))
 
   moduleServer(id, function(input, output, session) {
 
     # store input in custom `reactivalues`
     input2 <- reactiveValues(depth = NULL, lon = NULL, lat = NULL)
+
+    # toggle disable/enable  of `actionbutton` extract/reset/back locations
+    observe({
+      if (isTRUE(extended)) {
+        shinyjs::toggleState(
+          "extract",
+          all(purrr::map_lgl(ivars, ~{input[[.x]]!=""}))
+          )
+      }
+      shinyjs::toggleState("back", !is.null(coord()))
+      shinyjs::toggleState("reset", !is.null(coord()))
+    })
 
     # extract text input + action and validate input
     observeEvent(input$extract, {
@@ -78,7 +72,7 @@ filter_server <- function(id, NOAA, external, extended = TRUE) {
 
       # convert text to numeric values
       purrr::walk(
-        c("depth", "lon", "lat"),
+        ivars,
         ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)}
       )
 
@@ -109,10 +103,6 @@ filter_server <- function(id, NOAA, external, extended = TRUE) {
       if (isTruthy(external$depth)) input2$depth <- external$depth
 
     })
-
-
-    observe(message(glue::glue("{input2$lat}, {input2$lon}, {input2$depth}")))
-    observe(message(glue::glue("{str(coord())}")))
 
     # slider filter
     map <- reactive({
@@ -146,21 +136,25 @@ filter_server <- function(id, NOAA, external, extended = TRUE) {
 
     # delete one coordinate point
     observeEvent(input$back, {
-      coord(dplyr::rows_delete(coord(), tail(coord(), 1), by = colnames(coord())))
+      # how many steps back? maximum depth of `input2`
+      n_max <- lengths(reactiveValuesToList(input2))  %>% max()
+      coord(dplyr::slice_head(coord(), n = nrow(coord()) - n_max))
     })
 
-    # delete all coordinate points
-    observeEvent(input$reset, {
-      coord(NULL)
+    # delete all coordinate points by clicking reset of changing the dataset
+    observe({
+      input$reset
+      NOAA()
+      coord(NULL) # set stored data to NULL
+      purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL
     })
-
 
     if (isTRUE(extended)) {
       # reset all by button click or reset text input when plot input is selected
       observeEvent(input$reset | external$lon | external$lat | external$depth, {
-        updateTextInput(inputId = "lon", value = character(0), placeholder = "number or comma delimited vector")
-        updateTextInput(inputId = "lat", value = character(0), placeholder = "number or comma delimited vector")
-        updateTextInput(inputId = "depth", value = character(0), placeholder = "number or comma delimited vector")
+        updateTextInput(inputId = "lon", value = NULL, placeholder = plch)
+        updateTextInput(inputId = "lat", value = NULL, placeholder = plch)
+        updateTextInput(inputId = "depth", value = NULL, placeholder = plch)
       })
     }
 
@@ -169,4 +163,4 @@ filter_server <- function(id, NOAA, external, extended = TRUE) {
   })
 }
 
-
+plch <- "number or comma delimited vector"

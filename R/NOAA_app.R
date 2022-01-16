@@ -10,6 +10,7 @@ NOAA_app <- function(server = NOAA_server()) {
 
   ui <- fluidPage(
     theme = bslib::bs_theme(bootswatch = "slate"),
+    shinyjs::useShinyjs(), # use shinyjs
     titlePanel("NOAA WORLD OCEAN ATLAS"),
     sidebarLayout(
       sidebarPanel(
@@ -31,11 +32,11 @@ NOAA_app <- function(server = NOAA_server()) {
           condition = "output.citation!=null",
           tabsetPanel(
             tabPanel(
-              "map",
+              "Map",
               plot_ui("worldmap")
               ),
             tabPanel(
-              "table",
+              "Table",
               table_ui("table", output_ui("download"))
             )
           ),
@@ -67,7 +68,7 @@ NOAA_server <- function(extended = TRUE) {
       updateTabsetPanel(
         session,
         "tabset",
-        selected = "locations"
+        selected = if (isTRUE(extended)) "locations" else "Map"
       )
     })
 
@@ -91,16 +92,13 @@ NOAA_server <- function(extended = TRUE) {
     output_table <- table_server("table", filter$coord, NOAA$variable)
 
     # download
-    # output_server("download", filter$coord, NOAA$variable)
+    output_server("download", filter$coord, NOAA$variable)
 
     # emit code (RStudio addin)
     if (isFALSE(extended)) {
       # listen for 'done'.
       observeEvent(input$done, {
         req(NOAA$code())
-
-        # observe(message(glue::glue("{NOAA$code()}")))
-        # observe(message(glue::glue("{filter$code()}")))
 
         # code (only loading)
         if (isTruthy(NOAA$code()) & !isTruthy(output_table())) {

@@ -3,8 +3,7 @@
 #' @param id Namespace id shiny module.
 #' @param download Add download button.
 #' @param NOAA Reactive value of NOAA dataset.
-#' @param back Reactive value for back button.
-#' @param reset Reactive value for reset button.
+#' @param variable Reactive value for selected variable name.
 #'
 #' @return Shiny module.
 #' @export
@@ -37,7 +36,14 @@ table_server <- function(id, NOAA, variable) {
     })
 
     # table
-    output$table <- DT::renderDT({pretty_table()})
+    output$table <- DT::renderDT({
+      pretty_table()
+      DT::formatRound(
+        DT::datatable(pretty_table()),
+        columns  = c(variable(), "depth", "longitude", "latitude"),
+        digits = c(1, 0, 2, 2)
+        )
+      })
 
     # return code for the specific operation
     reactive({

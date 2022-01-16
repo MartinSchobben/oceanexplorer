@@ -9,14 +9,16 @@
 NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
 
   ui <- miniPage(
+    shinyjs::useShinyjs(), # use shinyjs
     gadgetTitleBar("NOAA WORLD OCEAN ATLAS"),
     miniTabstripPanel(
+      id = "tabset",
       miniTabPanel(
         "Parameters",
         icon = icon("sliders-h"),
         miniContentPanel(
           waiter::use_waiter(),
-          input_ui("NOAA", citation = citation_ui("NOAA"), extended = F),
+          input_ui("NOAA", citation = citation_ui("NOAA"), extended = FALSE),
           )
       ),
       miniTabPanel(
@@ -29,7 +31,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       miniButtonBlock(filter_ui("depth", extended = FALSE))
       ),
       miniTabPanel(
-        "Data",
+        "Table",
         icon = icon("table"),
         miniContentPanel(table_ui("table"))
       )
