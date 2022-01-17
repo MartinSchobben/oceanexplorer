@@ -28,7 +28,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
           padding = 0,
           plot_ui("worldmap")
           ),
-      miniButtonBlock(filter_ui("depth", extended = FALSE))
+      miniButtonBlock(filter_ui("depth"))
       ),
       miniTabPanel(
         "Table",

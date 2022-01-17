@@ -95,7 +95,7 @@ The package allows extraction of global databases of several physical and chemic
 ```{r load}
 library(oceanexplorer)
 # obtain the NOAA world ocean atlas for oxygen content
-(oxy_global <- get_NOAA("oxygen", 1, "annual"))
+oxy_global <- get_NOAA("oxygen", 1, "annual")
 ```
 
 
@@ -114,11 +114,23 @@ In addition, the sliced array can be plotted, like so:
 plot_NOAA(oxy_omz)
 ```
 
-Lastly the package can launch a Shiny app for interactive exploration of the datasets.
 
-```{r pressure, eval = FALSE}
+# Interactive exploration
+
+Lastly, the package can launch a Shiny app for interactive exploration of the datasets.
+
+```{r app, eval = FALSE}
 # launch an interactive shiny session
 NOAA_app()
 ```
+
+
+Or, the RStudio addin can be launch within the RStudio viewer pain by executing the following code, or by using the `Addins` drop down menu in the taskbar.
+
+```{r addin, eval = FALSE}
+# launch an interactive shiny session
+NOAA_addin()
+```
+
 
 # References
