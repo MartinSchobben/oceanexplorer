@@ -123,7 +123,6 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
       }
     })
 
-
     # store coordinate points
     coord <- reactiveVal(NULL)
     observeEvent(extract(), {
@@ -134,13 +133,21 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
       }
     })
 
-    # delete one coordinate point
-    observeEvent(input$back, {
+    # delete previous extracted coordinate points by first storing the step length
+    n_max <- reactiveVal(numeric(0))
+    observe({
       # how many steps back? maximum depth of `input2`
-      n_max <- lengths(reactiveValuesToList(input2))  %>% max()
-      coord(dplyr::slice_head(coord(), n = nrow(coord()) - n_max))
+      step <- lengths(reactiveValuesToList(input2))  %>% max()
+      if (step > 0) n_max(c(isolate(n_max()), step))
+    })
+    # and then deleting the last observations
+    observeEvent(input$back, {
+      coord(dplyr::slice_head(coord(), n = nrow(coord()) - rev(n_max())[1]))
+      # delete last n_max
+      n_max(utils::head(n_max(), -1))
       # enable base map plotting (otherwise generates error)
       if (nrow(coord()) == 0) coord(NULL)
+      purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL
     })
 
     # delete all coordinate points by clicking reset of changing the dataset
@@ -151,15 +158,15 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
       purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL
     })
 
-
-    if (isTRUE(extended)) {
-      # reset all by button click or reset text input when plot input is selected
-      observeEvent(input$reset | external$lon | external$lat | external$depth, {
-        updateTextInput(inputId = "lon", value = NULL, placeholder = plch)
-        updateTextInput(inputId = "lat", value = NULL, placeholder = plch)
-        updateTextInput(inputId = "depth", value = NULL, placeholder = plch)
-      })
-    }
+    # reset all by button click or reset text input when plot input is selected
+    observeEvent(input$reset | input$back| external$lon | external$lat |
+                   external$depth, {
+      if (isTRUE(extended)) {
+        updateTextInput(inputId = "lon", value = character(0), placeholder = plch)
+        updateTextInput(inputId = "lat", value = character(0), placeholder = plch)
+        updateTextInput(inputId = "depth", value = character(0), placeholder = plch)
+      }
+    })
 
     # return
     list(map = map, coord = coord, code = code)
