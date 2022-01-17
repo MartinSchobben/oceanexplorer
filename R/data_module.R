@@ -41,7 +41,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
   )
 
   if (isTRUE(extended)) {
-    layout <- fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]]))
+    layout <- tagList(fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]])))
     tagAppendChildren(layout, load)
   } else {
     fillRow(fillCol(vars), fillCol(load))

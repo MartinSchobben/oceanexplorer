@@ -10,7 +10,7 @@
 #'
 #' @return Shiny module.
 #' @export
-filter_ui <- function(id) {
+filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
     textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = plch),
@@ -27,23 +27,27 @@ filter_ui <- function(id) {
     actionButton(NS(id, "back"), label = h5("Back"))
   )
 
-
-  layout <- tagList(
-    fluidRow(
-      shinyFeedback::useShinyFeedback(),
-      column(6, coords[[1]], coords[[2]]),
-      column(6, coords[[3]], coords[[4]])
+  if (isTRUE(extended)) {
+    layout <- tagList(
+      fluidRow(
+        shinyFeedback::useShinyFeedback(),
+        column(6, coords[[1]], coords[[2]]),
+        column(6, coords[[3]], coords[[4]])
+      )
     )
-  )
 
-  # return
-  tagAppendChildren(layout, buttons)
+    # return
+    tagAppendChildren(layout, buttons)
+  } else {
+    miniButtonBlock(buttons[[4]], buttons[[5]])
+  }
 
 }
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat")) {
+filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
+                          extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
   stopifnot(is.reactivevalues(external))
@@ -55,37 +59,41 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat")) {
 
     # toggle disable/enable  of `actionbutton` extract/reset/back locations
     observe({
-      shinyjs::toggleState("extract",all(purrr::map_lgl(ivars, ~{input[[.x]]!=""})))
+      if (isTRUE(extended)) {
+        shinyjs::toggleState("extract",all(purrr::map_lgl(ivars, ~{input[[.x]]!=""})))
+      }
       shinyjs::toggleState("back", !is.null(coord()))
       shinyjs::toggleState("reset", !is.null(coord()))
     })
 
-    # extract text input + action and validate input
-    observeEvent(input$extract, {
+    if (isTRUE(extended)) {
+      # extract text input + action and validate input
+      observeEvent(input$extract, {
 
-      # convert text to numeric values
-      purrr::walk(
-        ivars,
-        ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)}
-      )
+        # convert text to numeric values
+        purrr::walk(
+          ivars,
+          ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)}
+        )
 
-      # warnings for explicit coord input
-      shinyFeedback::feedbackWarning(
-        "depth",
-        !dplyr::between(input2$depth, 0, 3000),
-        "Please choose a number between 0 and 3000"
-      )
-      shinyFeedback::feedbackWarning(
-        "lon",
-        !dplyr::between(input2$lon, -179, 180),
-        "Please choose a number between -179.00 and 180.00"
-      )
-      shinyFeedback::feedbackWarning(
-        "lat",
-        !dplyr::between(input2$lat, -89, 90),
-        "Please choose a number between -89.00 and 90.00"
-      )
-    })
+        # warnings for explicit coord input
+        shinyFeedback::feedbackWarning(
+          "depth",
+          !dplyr::between(input2$depth, 0, 3000),
+          "Please choose a number between 0 and 3000"
+        )
+        shinyFeedback::feedbackWarning(
+          "lon",
+          !dplyr::between(input2$lon, -179, 180),
+          "Please choose a number between -179.00 and 180.00"
+        )
+        shinyFeedback::feedbackWarning(
+          "lat",
+          !dplyr::between(input2$lat, -89, 90),
+          "Please choose a number between -89.00 and 90.00"
+        )
+      })
+    }
 
     # clicked points
     observeEvent(external$lon | external$lat | external$depth, {
@@ -131,6 +139,8 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat")) {
       # how many steps back? maximum depth of `input2`
       n_max <- lengths(reactiveValuesToList(input2))  %>% max()
       coord(dplyr::slice_head(coord(), n = nrow(coord()) - n_max))
+      # enable base map plotting (otherwise generates error)
+      if (nrow(coord()) == 0) coord(NULL)
     })
 
     # delete all coordinate points by clicking reset of changing the dataset
@@ -142,12 +152,14 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat")) {
     })
 
 
-    # reset all by button click or reset text input when plot input is selected
-    observeEvent(input$reset | external$lon | external$lat | external$depth, {
-      updateTextInput(inputId = "lon", value = NULL, placeholder = plch)
-      updateTextInput(inputId = "lat", value = NULL, placeholder = plch)
-      updateTextInput(inputId = "depth", value = NULL, placeholder = plch)
-    })
+    if (isTRUE(extended)) {
+      # reset all by button click or reset text input when plot input is selected
+      observeEvent(input$reset | external$lon | external$lat | external$depth, {
+        updateTextInput(inputId = "lon", value = NULL, placeholder = plch)
+        updateTextInput(inputId = "lat", value = NULL, placeholder = plch)
+        updateTextInput(inputId = "depth", value = NULL, placeholder = plch)
+      })
+    }
 
     # return
     list(map = map, coord = coord, code = code)

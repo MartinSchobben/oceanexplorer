@@ -9,7 +9,7 @@
 NOAA_app <- function(server = NOAA_server()) {
 
   ui <- fluidPage(
-    # theme = bslib::bs_theme(bootswatch = "slate"),
+    theme = bslib::bs_theme(bootswatch = "slate"), # nice theming
     shinyjs::useShinyjs(), # use shinyjs
     titlePanel("NOAA WORLD OCEAN ATLAS"),
     sidebarLayout(
@@ -56,7 +56,7 @@ NOAA_server <- function(extended = TRUE) {
   function(input, output, session) {
 
     # plot colors to match shiny ui
-    # thematic::thematic_shiny()
+    thematic::thematic_shiny()
 
     # original data
     withProgress(message = "Retrieving dataset from NOAA server", {
@@ -65,14 +65,18 @@ NOAA_server <- function(extended = TRUE) {
 
     # show locations selection controls when data loaded
     observeEvent(NOAA$data(), {
-      updateTabsetPanel(session, "tabset", selected = "locations")
+      updateTabsetPanel(
+        session,
+        "tabset",
+        selected = if (isTRUE(extended)) "locations" else "Map"
+        )
     })
 
     # initiate plot click filter with null value
     clicked <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
 
     # filter depth
-    filter <- filter_server("depth", NOAA$data, clicked)
+    filter <- filter_server("depth", NOAA$data, clicked, extended = extended)
 
     # plot data
     output_plot <- plot_server("worldmap", filter$map, filter$coord)
