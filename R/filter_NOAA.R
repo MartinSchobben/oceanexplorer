@@ -21,7 +21,7 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
 
 
   # drop singular dimension
-  NOAA <- NOAA %>% abind::adrop()
+  # NOAA <- NOAA %>% abind::adrop()
 
   # find depth intervals
   start_depth <- stars::st_dimensions(NOAA)$depth$values$start
@@ -33,18 +33,22 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
   if (!is.null(coord)) {
     # check length of depth vector
     vc_check <- append(sapply(coord, length), length(depth))
-    assertthat::assert_that(
-      all(sapply(vc_check,  function(x) {x == 1 | x == max(vc_check)})),
-      msg = "Depth and coordinates must be a vector of length 1 or have consistent lengths."
-    )
+    if (!all(sapply(vc_check,  function(x) {x == 1 | x == max(vc_check)}))) {
+     stop("Depth and coordinates must be a vector of length 1 or have consistent lengths.", call. = FALSE)
+    }
 
     pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y))) %>%
       sf::st_sfc(crs = sf::st_crs(x[[1]]))
-    ext <- purrr::map2_dfr(x, unique(depth), ~stars::st_extract(.x, pnt) %>%
-                             tibble::add_column(depth = .y))
+    ext <- purrr::map2_dfr(x, unique(depth), ~extract_coords(.x, pnt, .y))
     return(ext)
   }
   # for plotting only the last depth slice is returned
-  tail(x, 1)[[1]]
+  utils::tail(x, 1)[[1]]
 }
 
+# extract coordinates from a plane
+extract_coords <- function(plane, coords, depth) {
+  tb <- stars::st_extract(plane, coords)
+  tb$depth <- rep(depth, nrow(tb))
+  tb
+}

@@ -39,7 +39,7 @@ table_server <- function(id, NOAA, variable) {
     output$table <- DT::renderDT({
       pretty_table()
       DT::formatRound(
-        DT::datatable(pretty_table()),
+        DT::datatable(pretty_table(), rownames = FALSE),
         columns  = c(variable(), "depth", "longitude", "latitude"),
         digits = c(1, 0, 2, 2)
         )
@@ -66,13 +66,8 @@ table_server <- function(id, NOAA, variable) {
 # table output formatting
 format_table <- function(NOAA, variable) {
 
-  tb <- tibble::as_tibble(NOAA) %>%
-    dplyr::mutate(
-      coordinates = sf::st_as_text(.data$geometry),
-      .keep = "unused"
-      )
-
-  tb <- format_coord(tb)
+  # formatting
+  tb <- format_coord(NOAA)
 
   # rename variable
   tb_nm <- colnames(tb)
@@ -83,7 +78,16 @@ format_table <- function(NOAA, variable) {
 
 format_coord <- function(NOAA, coord) {
 
-  tidyr::separate(NOAA, "coordinates", into = c("geometry", "longitude", "latitude"), sep = "[^[:alnum:]|.|-]+", extra = "drop")
+  # split coords in long and lat
+  coords <- strsplit(sf::st_as_text(NOAA$geometry), "[^[:alnum:]|.|-]+")
+  coords <- do.call(Map, c(f = c, coords)) %>%
+    stats::setNames(c("geometry", "longitude", "latitude"))
 
+  # remove old geometry
+  NOAA <- as.data.frame(NOAA)
+  NOAA_sc <- NOAA[ ,which(colnames(NOAA) != "geometry"), drop = FALSE]
+
+  # combine new
+  cbind(NOAA_sc, coords)
 
 }

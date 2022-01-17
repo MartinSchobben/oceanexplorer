@@ -19,6 +19,16 @@ Plotting the global NOAA WORLD OCEAN ATLAS
 }
 \examples{
 \dontrun{
-get_NOAA("oxygen", 1, "annual") \%>\% plot_NOAA()
+# data
+NOAA <- get_NOAA("oxygen", 1, "annual")
+
+# base (surface depth)
+base <- filter_NOAA(NOAA,  0)
+
+# coordinates
+points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
+
+#plot
+plot_NOAA(base, points)
 }
 }

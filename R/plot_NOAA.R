@@ -8,25 +8,35 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_NOAA("oxygen", 1, "annual") %>% plot_NOAA()
+#' # data
+#' NOAA <- get_NOAA("oxygen", 1, "annual")
+#'
+#' # base (surface depth)
+#' base <- filter_NOAA(NOAA,  0)
+#'
+#' # coordinates
+#' points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
+#'
+#' #plot
+#' plot_NOAA(base, points)
 #' }
 plot_NOAA <- function(NOAA, points = NULL) {
 
   # get species / parameter names
-  var <- stringr::str_sub(attributes(NOAA)$names, 1, 1)
+  var <- substr(attributes(NOAA)$names, 1, 1)
   if (var %in% c("i", "p", "o", "n")) {
     element <- c(i = "SiO", p = "PO", o = "O", n = "NO")
     index <- c(i = 2, p = 4, o = 2, n = 3)
-    sc <- list(ggplot2::scale_fill_viridis_c(substitute(a[b]~"("*mu*"mol kg"^{"-"}*")", list(a = element[var], b = index[var]))))
+    xc <- substitute(a[b]~"("*mu*"mol kg"^{"-"}*")", list(a = element[var], b = index[var]))
   }
   if (var %in% c("t")) {
-    sc <- list(ggplot2::scale_fill_viridis_c(expression('Temp ('*degree~C*')')))
+    xc <- expression('Temp ('*degree~C*')')
   }
   if (var %in% c("s")) {
-    sc <- list(ggplot2::scale_fill_viridis_c("Salinity"))
+    xc <- "Salinity"
   }
   if (var %in% c("I")) {
-    sc <- list(ggplot2::scale_fill_viridis_c(expression("Density (kg m"^{"-3"}*")")))
+    xc <- expression("Density (kg m"^{"-3"}*")")
   }
 
   base <- ggplot2::ggplot() +
@@ -34,14 +44,14 @@ plot_NOAA <- function(NOAA, points = NULL) {
     ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
     ggplot2::scale_x_discrete(expand = c(0, 0)) +
     ggplot2::scale_y_discrete(expand = c(0, 0)) +
-    sc +
+    ggplot2::scale_fill_viridis_c(xc) +
     ggplot2::labs(x = NULL, y = NULL)
   if (!is.null(points)) {
     sf::st_coordinates(points$geometry)
     base +
       ggplot2::geom_point(
         # check what the warning means: 'st_point_on_surface may not give correct results for longitude/latitude data'
-        data = tibble::as_tibble(sf::st_coordinates(points$geometry)),
+        data = as.data.frame(sf::st_coordinates(points$geometry)),
         mapping = ggplot2::aes(x = .data$X, y = .data$Y),
         shape = 21,
         fill = "black"

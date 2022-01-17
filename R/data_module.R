@@ -87,7 +87,7 @@ input_server <- function(id) {
       on.exit(waiter$hide())
 
       # call for data retrieval
-      call_NOAA <- glue::glue(" get_NOAA({glue::double_quote(input$var)}, {input$spat}, {glue::double_quote(input$temp)})")
+      call_NOAA <- glue::glue("get_NOAA({glue::double_quote(input$var)}, {input$spat}, {glue::double_quote(input$temp)})")
 
       # execute
       exec_NOAA <- get_NOAA(input$var, input$spat, input$temp)
@@ -122,7 +122,7 @@ output_server <- function(id, NOAA, variable) {
         paste0(variable(), ".csv")
       },
       content = function(file) {
-        write.csv(pretty_table(), file)
+        utils::write.csv(pretty_table(), file)
       }
     )
 

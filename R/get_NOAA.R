@@ -66,7 +66,7 @@ url_parser <- function(var, spat_res, av_period) {
 
   # temporal resolution
   averaging_periods <- c("annual", month.name, "winter", "spring", "summer", "autumn")
-  assertthat::assert_that(av_period %in% averaging_periods)
+  stopifnot(av_period %in% averaging_periods)
 
   # base path to NCEI server
   base_path <- "https://data.nodc.noaa.gov/thredds/dodsC/ncei/woa"
@@ -91,7 +91,7 @@ url_parser <- function(var, spat_res, av_period) {
     v <- strsplit(var, "")[[1]][1]
   }
   # averaging period
-  tp <- stringr::str_which(averaging_periods, stringr::regex(av_period, ignore_case = TRUE)) - 1
+  tp <- grep(av_period, averaging_periods, ignore.case = TRUE) - 1
   tp <- sprintf(fmt = "%02.0f", tp)
   # grid-cell size
   gr <- if(spat_res > 1) "5d" else "01"

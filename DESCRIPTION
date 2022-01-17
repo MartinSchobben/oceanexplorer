@@ -19,30 +19,23 @@ Suggests:
     vdiffr,
     withr
 Imports: 
-    tibble,
-    rlang (>= 0.4.11),
     stars,
     ncmeta,
     shiny,
     ggplot2,
     dplyr,
     sf (>= 1.0.5),
-    cubelyr,
     waiter,
     bslib (>= 0.3.1),
     thematic,
-    stringr,
     magrittr,
     shinyFeedback,
-    abind,
     purrr,
-    utils,
     miniUI,
     rstudioapi,
     DT,
-    assertthat,
     fs (>= 1.5.2),
     glue (>= 1.6.0),
     shinyjs,
-    tidyr
+    rlang (>= 0.4.11)
 Config/testthat/edition: 3
