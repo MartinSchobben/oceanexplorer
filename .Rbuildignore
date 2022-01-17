@@ -6,3 +6,4 @@
 ^README\.Rmd$
 ^inst/extdata$
 ^man/packages\.bib$
+^\.github$
