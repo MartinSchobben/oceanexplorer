@@ -16,7 +16,7 @@ filter_ui <- function(id, extended = TRUE) {
     textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = plch),
     textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = plch),
     textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = plch),
-    selectizeInput(NS(id, "geom"), h5("Geometry"), choices = "point")
+    textInput(NS(id, "epsg"), h5("EPSG"), "4326")
   )
 
   buttons <- tagList(
@@ -119,7 +119,12 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
         ) {
 
         # execute
-        filter_NOAA(NOAA(), input2$depth, list(lon = input2$lon, lat = input2$lat))
+        filter_NOAA(
+          NOAA(),
+          input2$depth,
+          list(lon = input2$lon, lat = input2$lat),
+          epsg = input2$epsg
+          )
       }
     })
 

@@ -4,6 +4,7 @@
 #' @param depth Depth in meters
 #' @param coord List with named elements: `lon` for longitude in degrees, and
 #'  `lat` for latitude in degrees.
+#' @param epsg Coordinate reference number.
 #' @param output Geometry point (default `"point"`). Additional geometries are
 #'  currently not supported.
 #'
@@ -17,11 +18,10 @@
 #' # filter atlas for specific depth an coordinates
 #' filter_NOAA(NOAAatlas, 30)
 #' }
-filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
+filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL, output = "point") {
 
-
-  # drop singular dimension
-  # NOAA <- NOAA %>% abind::adrop()
+  # add epsg to NOAA standard if none supplied
+  NOAA_crs <- sf::st_crs(NOAA)
 
   # find depth intervals
   start_depth <- stars::st_dimensions(NOAA)$depth$values$start
@@ -32,13 +32,14 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, output = "point") {
   # coordinate selection
   if (!is.null(coord)) {
     # check length of depth vector
-    vc_check <- append(sapply(coord, length), length(depth))
+    vc_check <- append(vapply(coord, length, numeric(1)), length(depth))
     if (!all(sapply(vc_check,  function(x) {x == 1 | x == max(vc_check)}))) {
      stop("Depth and coordinates must be a vector of length 1 or have consistent lengths.", call. = FALSE)
     }
 
-    pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y))) %>%
-      sf::st_sfc(crs = sf::st_crs(x[[1]]))
+    pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y)))
+    # transform crs if needed
+    pnt <- transform_sfc(pnt, NOAA_crs, epsg)
     ext <- purrr::map2_dfr(x, unique(depth), ~extract_coords(.x, pnt, .y))
     return(ext)
   }
@@ -51,4 +52,17 @@ extract_coords <- function(plane, coords, depth) {
   tb <- stars::st_extract(plane, coords)
   tb$depth <- rep(depth, nrow(tb))
   tb
+}
+
+# make simple feature with or without new crs
+transform_sfc <- function(points, epsg_original, epsg_new = NULL) {
+
+
+  if (is.null(epsg_new)) {
+    sf::st_sfc(points, crs = epsg_original)
+  } else {
+    # if coordinate ref not null than first cast in new crs and transform back to data source
+    sf::st_sfc(points, crs = epsg_new) %>%
+      sf::st_transform(crs = epsg_original)
+  }
 }
