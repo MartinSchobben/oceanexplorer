@@ -40,30 +40,15 @@ plot_NOAA <- function(NOAA, points = NULL) {
   }
 
   base <- ggplot2::ggplot() +
-    stars::geom_stars(data = NOAA [1]) +
-    ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
+    stars::geom_stars(data = NOAA)
+
+  if (!is.null(points)) {
+    base <- base +
+      ggplot2::geom_sf(data = points)
+  }
+  base + ggplot2::coord_sf(xlim =c(-180, 180), ylim = c(-90, 90)) +
     ggplot2::scale_x_discrete(expand = c(0, 0)) +
     ggplot2::scale_y_discrete(expand = c(0, 0)) +
     ggplot2::scale_fill_viridis_c(xc) +
     ggplot2::labs(x = NULL, y = NULL)
-  if (!is.null(points)) {
-    sf::st_coordinates(points$geometry)
-    base +
-      ggplot2::geom_point(
-        # check what the warning means: 'st_point_on_surface may not give correct results for longitude/latitude data'
-        data = as.data.frame(sf::st_coordinates(points$geometry)),
-        mapping = ggplot2::aes(x = .data$X, y = .data$Y),
-        shape = 21,
-        fill = "black"
-      )
-      # ggplot2::geom_point(
-      #   data = points,
-      #   ggplot2::aes(geometry = .data$geometry),
-      #   stat = "sf_coordinates",
-      #   shape = 21,
-      #   fill = "black"
-      # )
-  } else {
-    base
-  }
 }
