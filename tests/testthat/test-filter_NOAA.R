@@ -42,7 +42,7 @@ test_that("entries other then vectors of 1 or the same length cause an error", {
 
 test_that("crs will be transformed with new crs", {
   NOAA <- get_NOAA("temperature", 1, "annual")
-  points <- st_point(c(-160.123456789, 12.123456789))
+  points <- sf::st_point(c(-160.123456789, 12.123456789))
   # apparently NOAA uses 4326 (not specified in NETCDF)
   expect_equal(
     transform_sfc(points, sf::st_crs(NOAA), 4326),

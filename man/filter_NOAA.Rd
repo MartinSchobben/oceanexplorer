@@ -4,7 +4,7 @@
 \alias{filter_NOAA}
 \title{Filter NOAA}
 \usage{
-filter_NOAA(NOAA, depth, coord = NULL, output = "point")
+filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, output = "point")
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
@@ -13,6 +13,8 @@ filter_NOAA(NOAA, depth, coord = NULL, output = "point")
 
 \item{coord}{List with named elements: \code{lon} for longitude in degrees, and
 \code{lat} for latitude in degrees.}
+
+\item{epsg}{Coordinate reference number.}
 
 \item{output}{Geometry point (default \code{"point"}). Additional geometries are
 currently not supported.}
