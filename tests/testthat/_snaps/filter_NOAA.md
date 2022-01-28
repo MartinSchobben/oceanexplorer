@@ -29,3 +29,52 @@
       1 20.34319 [°C]     0 POINT (-116.3041 -31.98888)
       2 27.48980 [°C]     0     POINT (117.13 17.39477)
 
+# extraction of coords can use fuzzy search
+
+    Code
+      extract_coords(plane, coords1, 0, 0)
+    Output
+      Simple feature collection with 1 feature and 2 fields
+      Geometry type: POINT
+      Dimension:     XY
+      Bounding box:  xmin: -116.3 ymin: -31.98 xmax: -116.3 ymax: -31.98
+      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
+                 t_an depth              geometry
+      1 20.34319 [°C]     0 POINT (-116.3 -31.98)
+
+---
+
+    Code
+      extract_coords(plane, coords2, 0, 0)
+
+---
+
+    Code
+      extract_coords(plane, coords2, 0, 100)
+    Output
+      Simple feature collection with 1 feature and 2 fields
+      Geometry type: POLYGON
+      Dimension:     XY
+      Bounding box:  xmin: -54.15675 ymin: 46.81397 xmax: -51.44278 ymax: 48.62896
+      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
+      # A tibble: 1 x 3
+         t_an depth                                                           geometry
+         [°C] <dbl>                                                      <POLYGON [°]>
+      1  3.45     0 ((-53.16325 48.59155, -53.17687 48.59661, -53.19924 48.58178, -53~
+
+---
+
+    Code
+      extract_coords(plane, append(coords1, coords2), 0, 100)
+    Output
+      Simple feature collection with 2 features and 2 fields
+      Geometry type: GEOMETRY
+      Dimension:     XY
+      Bounding box:  xmin: -116.3 ymin: -31.98 xmax: -51.44278 ymax: 48.62896
+      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
+      # A tibble: 2 x 3
+         t_an depth                                                           geometry
+         [°C] <dbl>                                                     <GEOMETRY [°]>
+      1 20.3      0                                              POINT (-116.3 -31.98)
+      2  3.45     0 POLYGON ((-53.16325 48.59155, -53.17687 48.59661, -53.19924 48.58~
+

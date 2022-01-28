@@ -72,3 +72,21 @@ test_that("epsg conversion works", {
     )
   )
 })
+
+test_that("extraction of coords can use fuzzy search", {
+  NOAA <- get_NOAA("temperature", 1, "annual")
+  plane <- filter_NOAA(NOAA, 0)
+  points1 <- sf::st_point(c(-116.30, -31.98))
+  coords1 <- transform_sfc(points1, sf::st_crs(NOAA), NULL)
+  points2 <- sf::st_point(c(-52.79878, 47.72121))
+  coords2 <- transform_sfc(points2, sf::st_crs(NOAA), NULL)
+  # should be just a point geom with value
+  expect_snapshot(extract_coords(plane, coords1, 0, 0))
+  # should be just a point geom with NA
+  expect_snapshot(extract_coords(plane, coords2, 0, 0))
+  # should be a polygon
+  expect_snapshot(extract_coords(plane, coords2, 0, 100))
+  # SHOULD BE BOTH GEOMS WITH VALUES
+  expect_snapshot(extract_coords(plane, append(coords1, coords2), 0, 100))
+})
+
