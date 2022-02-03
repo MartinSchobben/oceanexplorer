@@ -24,11 +24,12 @@ plot_ui <- function(id) {
 #' @rdname plot_ui
 #'
 #' @export
-plot_server <- function(id, NOAA, points) {
+plot_server <- function(id, NOAA, points, epsg) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
   stopifnot(is.reactive(points))
+  stopifnot(is.reactive(epsg))
 
   moduleServer(id, function(input, output, session) {
 
@@ -38,9 +39,10 @@ plot_server <- function(id, NOAA, points) {
     # plot
     output$plot <- renderPlot({
       req(NOAA())
-      plot_NOAA(NOAA(), points())
+      plot_NOAA(NOAA(), points = points(), epsg = epsg())
     })
 
+    observe(message(str(epsg())))
     observe({
       selected$depth <- input$depth
       selected$lon <- input$plot_click$x

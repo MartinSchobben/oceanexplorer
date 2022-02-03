@@ -79,7 +79,7 @@ NOAA_server <- function(extended = TRUE) {
     filter <- filter_server("depth", NOAA$data, clicked, extended = extended)
 
     # plot data
-    output_plot <- plot_server("worldmap", filter$map, filter$coord)
+    output_plot <- plot_server("worldmap", filter$map, filter$coord, filter$epsg)
 
     # update `reactivevalue` if plot click selection has been used
     observe({

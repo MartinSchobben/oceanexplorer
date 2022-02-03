@@ -4,7 +4,7 @@
 \alias{filter_NOAA}
 \title{Filter NOAA}
 \usage{
-filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, output = "point")
+filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, fuzzy = 0)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
@@ -16,8 +16,9 @@ filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, output = "point")
 
 \item{epsg}{Coordinate reference number.}
 
-\item{output}{Geometry point (default \code{"point"}). Additional geometries are
-currently not supported.}
+\item{fuzzy}{If no values are returned fuzzy uses a buffer area to calculate
+the point, where fuzzy should be supplied in units of kilometer
+(great circle distance).}
 }
 \value{
 Either a stars object or sf dataframe

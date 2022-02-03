@@ -4,7 +4,7 @@
 \alias{plot_NOAA}
 \title{Plotting the global NOAA WORLD OCEAN ATLAS}
 \usage{
-plot_NOAA(NOAA, points = NULL)
+plot_NOAA(NOAA, points = NULL, epsg = NULL, limit = NULL)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}

@@ -20,7 +20,7 @@
 #' #plot
 #' plot_NOAA(base, points)
 #' }
-plot_NOAA <- function(NOAA, points = NULL) {
+plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
 
   # get species / parameter names
   var <- substr(attributes(NOAA)$names, 1, 1)
@@ -39,20 +39,89 @@ plot_NOAA <- function(NOAA, points = NULL) {
     xc <- expression("Density (kg m"^{"-3"}*")")
   }
 
+  # epsg NULL then use NOAA standard (9122)
+  if (is.null(epsg)) epsg <- sf::st_crs(NOAA); lm_method <- "cross"
+  if (is.null(limit)) limit <- 90
+
+
+  # world map
+  wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) %>%
+    sf::st_as_sfc() %>%
+    sf::st_transform(crs = sf::st_crs(NOAA)) %>%
+    sf::st_wrap_dateline(options = c("WRAPDATELINE=YES", "DATELINEOFFSET=180"))
+
+
+  # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
+  if (epsg == 3031 | epsg == 3995) {
+    if (limit == 90) {
+      #message("If epsg is 3031 and 3995, the lattitude range is set to 55")
+      limit <- 50
+      }
+
+    # method for plotting coords
+    lm_method <- "geometry_bbox"
+
+    # cropping
+    NOAA <- clip_lat(NOAA, epsg, limit)
+    wmap <- clip_lat(wmap, epsg, limit)
+    }
+
   base <- ggplot2::ggplot() +
-    stars::geom_stars(data = NOAA)
+    stars::geom_stars(data = NOAA) +
+    ggplot2::geom_sf(data = wmap, fill = "grey")
 
   if (!is.null(points)) {
     base <- base +
       ggplot2::geom_sf(data = points)
   }
+
   base + ggplot2::coord_sf(
+    lims_method = lm_method,
     xlim =c(-180, 180),
-    ylim = c(-90, 90),
-    crs = sf::st_crs(NOAA) # 9122 is used by NOAA, should I change to 4326?
+    ylim = c(-1 * limit, limit),
+    default_crs = epsg,
+    crs = epsg,
+    expand = FALSE,
+    clip = "off"
     ) +
-    ggplot2::scale_x_discrete(expand = c(0, 0)) +
-    ggplot2::scale_y_discrete(expand = c(0, 0)) +
-    ggplot2::scale_fill_viridis_c(xc) +
-    ggplot2::labs(x = NULL, y = NULL)
+    ggplot2::scale_fill_viridis_c(xc, na.value = "transparent") +
+    ggplot2::labs(x = NULL, y = NULL) +
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_line(
+        color = gray(.25),
+        linetype = 'dashed',
+        size = 0.5
+      ),
+      panel.ontop = TRUE,
+      axis.line = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      panel.background = ggplot2::element_rect(fill = NA)
+    )
+}
+
+clip_lat <- function(obj, epsg, limit = 55) {
+
+  # for stars object we first need cropping and then re-projection
+  if (inherits(obj, "stars")) {
+    x <- c(-180, 180)
+    y <- c(limit, 90)
+    box <- c(xmin = x[1], xmax = x[2])
+    # antarctic bounds
+    if (epsg == 3031) box <- append(box, c(ymin = - 1 * y[2], ymax = -1 * y[1]))
+    # arctic bounds
+    if (epsg == 3995) box <- append(box, c(ymin = y[1], ymax = y[2]))
+    box <- sf::st_bbox(box) # rectangular box
+    sf::st_crs(box) <- sf::st_crs(obj) # original projection
+    obj <- sf::st_crop(obj, box) # cropping
+    sf::st_transform(obj, epsg) # re-projection
+  # for sf object we first need re-projection and then cropping
+  } else if (inherits(obj, "sfc")) {
+    obj <- sf::st_transform(obj, epsg) # re-projection
+    circ <- sf::st_bbox(sf::st_point(c(0,0))) %>% # center aroung pole
+      sf::st_as_sfc() %>%
+      sf::st_as_sf(crs = sf::st_crs(obj)) %>% # albers projection to have an projected crs
+      sf::st_buffer(4000000) # draw circle
+    sf::st_crop(sf::st_make_valid(obj), circ) # cropping (make valid repairs the world map)
+
+}
 }
