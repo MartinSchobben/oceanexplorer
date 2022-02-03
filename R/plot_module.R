@@ -3,6 +3,7 @@
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param points Add locations of extracted point geometry.
+#' @param epsg The coordinate reference system for plotting.
 #'
 #' @return Shiny module.
 #' @export
@@ -39,22 +40,15 @@ plot_server <- function(id, NOAA, points, epsg) {
     # plot
     output$plot <- renderPlot({
       req(NOAA())
+      req(epsg())
       plot_NOAA(NOAA(), points = points(), epsg = epsg())
     })
 
-    observe(message(str(epsg())))
     observe({
       selected$depth <- input$depth
       selected$lon <- input$plot_click$x
       selected$lat <- input$plot_click$y
       })
-
-    # # if depth slide and coordinate plot selection are changed reset the external input
-    # # depth is not reset as we need a 2D surface for the plot
-    # observeEvent(input$slide, {
-    #   selected$lon <- NULL
-    #   selected$lat <- NULL
-    # })
 
     # return `reactivevalues`
     selected

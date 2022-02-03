@@ -10,7 +10,6 @@ test_that("check output type", {
     )
 })
 
-
 test_that("multiple depth entries of the same index create new data output", {
   NOAA <- get_NOAA("temperature", 1, "annual")
   expect_snapshot(
@@ -73,6 +72,36 @@ test_that("epsg conversion works", {
   )
 })
 
+test_that("epsg conversion works", {
+  NOAA <- get_NOAA("temperature", 1, "annual")
+  expect_snapshot(
+    filter_NOAA(
+      NOAA,
+      depth = 0,
+      coord = list(
+        lon = c(-116.3041, 117.12998),
+        lat = c(-31.98888, 17.39477)
+      ),
+      epsg = "4326"
+    )
+  )
+})
+
+test_that("epsg conversion works", {
+  NOAA <- get_NOAA("temperature", 1, "annual")
+  expect_snapshot(
+    filter_NOAA(
+      NOAA,
+      depth = 0,
+      coord = list(
+        lon = c(-116.3041, 117.12998),
+        lat = c(-31.98888, 17.39477)
+      ),
+      epsg = "original"
+    )
+  )
+})
+
 test_that("extraction of coords can use fuzzy search", {
   NOAA <- get_NOAA("temperature", 1, "annual")
   plane <- filter_NOAA(NOAA, 0)
@@ -81,12 +110,20 @@ test_that("extraction of coords can use fuzzy search", {
   points2 <- sf::st_point(c(-52.79878, 47.72121))
   coords2 <- transform_sfc(points2, sf::st_crs(NOAA), NULL)
   # should be just a point geom with value
-  expect_snapshot(extract_coords(plane, coords1, 0, 0))
+  expect_snapshot(
+    extract_coords(plane, coords1, 0, 0)
+  )
   # should be just a point geom with NA
-  expect_snapshot(extract_coords(plane, coords2, 0, 0))
+  expect_snapshot(
+    extract_coords(plane, coords2, 0, 0)
+  )
   # should be a polygon
-  expect_snapshot(extract_coords(plane, coords2, 0, 100))
+  expect_snapshot(
+    extract_coords(plane, coords2, 0, 100)
+  )
   # SHOULD BE BOTH GEOMS WITH VALUES
-  expect_snapshot(extract_coords(plane, append(coords1, coords2), 0, 100))
+  expect_snapshot(
+    extract_coords(plane, append(coords1, coords2), 0, 100)
+  )
 })
 

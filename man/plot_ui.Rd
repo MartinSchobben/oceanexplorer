@@ -7,7 +7,7 @@
 \usage{
 plot_ui(id)
 
-plot_server(id, NOAA, points)
+plot_server(id, NOAA, points, epsg)
 }
 \arguments{
 \item{id}{Namespace id shiny module.}
@@ -15,6 +15,8 @@ plot_server(id, NOAA, points)
 \item{NOAA}{Reactive value of NOAA dataset.}
 
 \item{points}{Add locations of extracted point geometry.}
+
+\item{epsg}{The coordinate reference system for plotting.}
 }
 \value{
 Shiny module.

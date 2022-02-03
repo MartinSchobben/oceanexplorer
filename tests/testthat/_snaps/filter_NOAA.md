@@ -46,6 +46,14 @@
 
     Code
       extract_coords(plane, coords2, 0, 0)
+    Output
+      Simple feature collection with 1 feature and 2 fields
+      Geometry type: POINT
+      Dimension:     XY
+      Bounding box:  xmin: -52.79878 ymin: 47.72121 xmax: -52.79878 ymax: 47.72121
+      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
+           t_an depth                   geometry
+      1 NA [°C]     0 POINT (-52.79878 47.72121)
 
 ---
 
@@ -58,9 +66,9 @@
       Bounding box:  xmin: -54.15675 ymin: 46.81397 xmax: -51.44278 ymax: 48.62896
       CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
       # A tibble: 1 x 3
-         t_an depth                                                           geometry
-         [°C] <dbl>                                                      <POLYGON [°]>
-      1  3.45     0 ((-53.16325 48.59155, -53.17687 48.59661, -53.19924 48.58178, -53~
+        t_an depth                                                            geometry
+        [°C] <dbl>                                                       <POLYGON [°]>
+      1 3.45     0 ((-53.16325 48.59155, -53.17687 48.59661, -53.19924 48.58178, -53.~
 
 ---
 

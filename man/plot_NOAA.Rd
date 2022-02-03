@@ -10,6 +10,10 @@ plot_NOAA(NOAA, points = NULL, epsg = NULL, limit = NULL)
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
 
 \item{points}{Add locations of extracted point geometry.}
+
+\item{epsg}{The epsg used to project the data.}
+
+\item{limit}{The limits of the axis.}
 }
 \value{
 Ggplot

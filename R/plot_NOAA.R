@@ -2,6 +2,8 @@
 #'
 #' @param NOAA Dataset of the WORLD OCEAN ATLAS.
 #' @param points Add locations of extracted point geometry.
+#' @param epsg The epsg used to project the data.
+#' @param limit The limits of the axis.
 #'
 #' @return Ggplot
 #' @export
@@ -39,32 +41,44 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
     xc <- expression("Density (kg m"^{"-3"}*")")
   }
 
-  # epsg NULL then use NOAA standard (9122)
-  if (is.null(epsg)) epsg <- sf::st_crs(NOAA); lm_method <- "cross"
+  # epsg NULL then use NOAA standard (?9122)
+  if (is.null(epsg) || epsg == "original") {
+    epsg <- sf::st_crs(NOAA)
+  } else {
+    epsg <- as.numeric(epsg)
+  }
+
   if (is.null(limit)) limit <- 90
 
-
+  # standard limits method sf coord
+  lim_method <- "cross"
   # world map
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) %>%
     sf::st_as_sfc() %>%
-    sf::st_transform(crs = sf::st_crs(NOAA)) %>%
-    sf::st_wrap_dateline(options = c("WRAPDATELINE=YES", "DATELINEOFFSET=180"))
+    sf::st_transform(crs = epsg)
 
+  # coord transform NOAA and selected points if different from origin
+  if (epsg != sf::st_crs(NOAA)) {
 
-  # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
-  if (epsg == 3031 | epsg == 3995) {
-    if (limit == 90) {
-      #message("If epsg is 3031 and 3995, the lattitude range is set to 55")
-      limit <- 50
-      }
+    if (!is.null(points)) points <- sf::st_transform(points, crs = epsg)
 
-    # method for plotting coords
-    lm_method <- "geometry_bbox"
+    # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
+    if (epsg == 3031 | epsg == 3995) {
+      if (limit == 90) {
+        #message("If epsg is 3031 and 3995, the latitude range is set to 55")
+        limit <- 50
+        }
 
-    # cropping
-    NOAA <- clip_lat(NOAA, epsg, limit)
-    wmap <- clip_lat(wmap, epsg, limit)
+      # method for plotting coords
+      lim_method <- "geometry_bbox"
+
+      # cropping
+      NOAA <- clip_lat(NOAA, epsg, limit)
+      wmap <- clip_lat(wmap, epsg, limit)
     }
+    NOAA <- sf::st_transform(NOAA, crs = epsg)
+
+  }
 
   base <- ggplot2::ggplot() +
     stars::geom_stars(data = NOAA) +
@@ -76,19 +90,18 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
   }
 
   base + ggplot2::coord_sf(
-    lims_method = lm_method,
-    xlim =c(-180, 180),
+    lims_method = lim_method,
+    xlim = c(-180, 180),
     ylim = c(-1 * limit, limit),
     default_crs = epsg,
     crs = epsg,
-    expand = FALSE,
-    clip = "off"
+    expand = FALSE
     ) +
     ggplot2::scale_fill_viridis_c(xc, na.value = "transparent") +
     ggplot2::labs(x = NULL, y = NULL) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(
-        color = gray(.25),
+        color = grDevices::gray(.25),
         linetype = 'dashed',
         size = 0.5
       ),

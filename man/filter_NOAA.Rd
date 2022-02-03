@@ -16,12 +16,12 @@ filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, fuzzy = 0)
 
 \item{epsg}{Coordinate reference number.}
 
-\item{fuzzy}{If no values are returned fuzzy uses a buffer area to calculate
-the point, where fuzzy should be supplied in units of kilometer
-(great circle distance).}
+\item{fuzzy}{If no values are returned, fuzzy uses a buffer area around the
+point to extract values from adjacent grid cells. The fuzzy argument is
+supplied in units of kilometer(great circle distance).}
 }
 \value{
-Either a stars object or sf dataframe
+Either a stars object or sf dataframe.
 }
 \description{
 Filter NOAA

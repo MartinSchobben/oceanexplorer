@@ -5,11 +5,11 @@
 #' @param coord List with named elements: `lon` for longitude in degrees, and
 #'  `lat` for latitude in degrees.
 #' @param epsg Coordinate reference number.
-#' @param fuzzy If no values are returned fuzzy uses a buffer area to calculate
-#'  the point, where fuzzy should be supplied in units of kilometer
-#'  (great circle distance).
+#' @param fuzzy If no values are returned, fuzzy uses a buffer area around the
+#'  point to extract values from adjacent grid cells. The fuzzy argument is
+#'  supplied in units of kilometer(great circle distance).
 #'
-#' @return Either a stars object or sf dataframe
+#' @return Either a stars object or sf dataframe.
 #' @export
 #'
 #' @examples
@@ -24,6 +24,12 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
 
   # add epsg to NOAA standard if none supplied
   NOAA_crs <- sf::st_crs(NOAA)
+
+  if (!is.null(epsg) && epsg == "original") {
+    epsg <- NULL
+  } else if (!is.null(epsg) && is.character(epsg)) {
+    epsg <- as.numeric(epsg)
+  }
 
   # find depth intervals
   start_depth <- stars::st_dimensions(NOAA)$depth$values$start
@@ -58,7 +64,7 @@ extract_coords <- function(plane, coords, depth, fuzzy = 0) {
 
   tb$depth <- rep(depth, nrow(tb))
 
-  if (is.na(tb[[1]]) || fuzzy > 0) {
+  if (any(is.na(tb[[1]])) & fuzzy > 0) {
 
     # filter
     ft <- tb[is.na(tb[[1]]), ]
@@ -73,14 +79,14 @@ extract_coords <- function(plane, coords, depth, fuzzy = 0) {
     tb_ft$id <- ft$id
     # replace NAs
     tb <- rbind(tb, sf::st_as_sf(tb_ft)) %>%
-      dplyr::group_by(id) %>%
+      dplyr::group_by(.data$id) %>%
       dplyr::summarise(
-        dplyr::across(- geometry, .fns = ~mean(.x, na.rm = TRUE)),
+        dplyr::across(- .data$geometry, .fns = ~mean(.x, na.rm = TRUE)),
         .groups = "drop"
         )
 
   }
-  dplyr::select(tb, -id)
+  dplyr::select(tb, -.data$id)
 }
 
 
