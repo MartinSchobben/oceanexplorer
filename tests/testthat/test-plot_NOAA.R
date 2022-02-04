@@ -1,4 +1,9 @@
 test_that("plot of NOAA atlas works", {
+
+  skip_on_ci()
+  skip_on_cran()
+  skip_if_offline()
+
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   # just depth
   base <- filter_NOAA(NOAAatlas, 1)

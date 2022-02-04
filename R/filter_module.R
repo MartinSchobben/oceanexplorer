@@ -16,7 +16,7 @@ filter_ui <- function(id, extended = TRUE) {
     textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = plch),
     textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = plch),
     textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = plch),
-    selectInput(NS(id, "epsg"), h5("EPSG"), c("original", "4326", "3031", "3995"), selected = "original")
+    selectInput(NS(id, "search"), h5("Search"), c("point", "fuzzy"), selected = "point")
   )
 
   buttons <- tagList(
@@ -121,8 +121,7 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
         filter_NOAA(
           NOAA(),
           input2$depth,
-          list(lon = input2$lon, lat = input2$lat),
-          epsg = input$epsg
+          list(lon = input2$lon, lat = input2$lat)
           )
       }
     })
@@ -174,7 +173,7 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     })
 
     # return
-    list(map = map, coord = coord, code = code, epsg = reactive(input$epsg))
+    list(map = map, coord = coord, code = code)
   })
 }
 

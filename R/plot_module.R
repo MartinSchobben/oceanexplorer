@@ -3,13 +3,12 @@
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param points Add locations of extracted point geometry.
-#' @param epsg The coordinate reference system for plotting.
 #'
 #' @return Shiny module.
 #' @export
 plot_ui <- function(id) {
   tagList(
-    tags$br(),
+    selectInput(NS(id, "epsg"), h5("EPSG"), c("original", "4326", "3031", "3995"), selected = "original"),
     plotOutput(NS(id,  "plot"), click = NS(id, "plot_click")),
     sliderInput(
       NS(id, "depth"),
@@ -25,12 +24,11 @@ plot_ui <- function(id) {
 #' @rdname plot_ui
 #'
 #' @export
-plot_server <- function(id, NOAA, points, epsg) {
+plot_server <- function(id, NOAA, points) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
   stopifnot(is.reactive(points))
-  stopifnot(is.reactive(epsg))
 
   moduleServer(id, function(input, output, session) {
 
@@ -40,8 +38,7 @@ plot_server <- function(id, NOAA, points, epsg) {
     # plot
     output$plot <- renderPlot({
       req(NOAA())
-      req(epsg())
-      plot_NOAA(NOAA(), points = points(), epsg = epsg())
+      plot_NOAA(NOAA(), points = points(), epsg = input$epsg)
     })
 
     observe({
