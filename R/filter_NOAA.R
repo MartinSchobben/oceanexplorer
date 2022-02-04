@@ -81,9 +81,10 @@ extract_coords <- function(plane, coords, depth, fuzzy = 0) {
     tb <- rbind(tb, sf::st_as_sf(tb_ft)) %>%
       dplyr::group_by(.data$id) %>%
       dplyr::summarise(
-        dplyr::across(- .data$geometry, .fns = ~mean(.x, na.rm = TRUE)),
+        dplyr::across(-.data$geometry, .fns = ~mean(.x, na.rm = TRUE)),
         .groups = "drop"
-        )
+        ) %>%
+      dplyr::mutate(geometry_search = .data$geometry, geometry = tb$geometry)
 
   }
   dplyr::select(tb, -.data$id)
