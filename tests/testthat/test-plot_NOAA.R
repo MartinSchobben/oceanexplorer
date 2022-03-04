@@ -11,7 +11,7 @@ test_that("plot of NOAA atlas works", {
   points <- filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11,12)))
   vdiffr::expect_doppelganger("NOAA word map epsg = NULL", plot_NOAA(base, points, epsg = NULL))
   vdiffr::expect_doppelganger("NOAA word map epsg = 'original'", plot_NOAA(base, points, epsg = "original"))
-  vdiffr::expect_doppelganger("NOAA word map epsg = 4326", plot_NOAA(base, points, epsg = 4326))
+
   vdiffr::expect_doppelganger("NOAA word map epsg = '4326'", plot_NOAA(base, points, epsg = "4326"))
   vdiffr::expect_doppelganger("NOAA arctic map epsg = 3995", plot_NOAA(base, epsg = 3995))
   vdiffr::expect_doppelganger("NOAA antarctic map epsg = 3031", plot_NOAA(base, epsg = 3031))
