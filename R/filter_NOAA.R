@@ -23,7 +23,7 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
   fuzzy = 0) {
 
   # add epsg to NOAA standard if none supplied
-  NOAA_crs <- sf::st_crs(NOAA)
+  if (is.null(epsg)) epsg <- sf::st_crs(NOAA)
 
   if (!is.null(epsg) && epsg == "original") {
     epsg <- NULL
@@ -45,10 +45,11 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
      stop("Depth and coordinates must be a vector of length 1 or have consistent lengths.", call. = FALSE)
     }
 
-    pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y)))
-    # transform crs if needed
-    pnt <- transform_sfc(pnt, NOAA_crs, epsg)
-    ext <- purrr::map2_dfr(x, unique(depth), ~extract_coords(.x, pnt, .y, fuzzy))
+    # pnt <- purrr::map2(coord$lon, coord$lat, ~sf::st_point(c(.x, .y)))
+    # # transform crs if needed
+    # pnt <- transform_sfc(pnt, NOAA_crs, epsg)
+    pnt <- rlang::inject(cbind(!!!coord, deparse.level = 2))
+    ext <- purrr::map2_dfr(x, unique(depth), ~extract_coords(.x, pnt, .y, epsg = epsg, fuzzy = fuzzy))
     return(ext)
   }
   # for plotting only the last depth slice is returned
@@ -56,13 +57,18 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
 }
 
 # extract coordinates from a plane (fuzzy is in units km)
-extract_coords <- function(plane, coords, depth, fuzzy = 0) {
+extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0) {
   tb <- stars::st_extract(plane, na.rm = TRUE, at = coords)
 
   # add row numbers
   tb$id <- 1:nrow(tb)
 
+  # add depth
   tb$depth <- rep(depth, nrow(tb))
+  # add coordinates in case of matrix
+  if (inherits(coords , "matrix")) {
+    tb <- sf::st_as_sf(cbind(tb, coords), coords = c("lon", "lat"), crs = epsg)
+  }
 
   if (any(is.na(tb[[1]])) & fuzzy > 0) {
 

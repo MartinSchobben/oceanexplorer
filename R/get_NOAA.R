@@ -46,7 +46,7 @@ get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
     NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]]))
   } else {
     # get netcdf
-    NOAA <- suppressWarnings(stars::read_ncdf(NOAA_path[[1]], var = stat)) # suppress warning for unrecognized units
+    NOAA <- stars::read_ncdf(NOAA_path[[1]], var = stat, make_units = FALSE) # suppress warning for unrecognized units
 
     if (isTRUE(cacheNOAA)) {
 
