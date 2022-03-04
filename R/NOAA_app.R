@@ -45,8 +45,7 @@ NOAA_app <- function(server = NOAA_server()) {
       )
     )
   )
-
-
+  # run app
   shinyApp(ui, server)
 }
 #' @rdname NOAA_app

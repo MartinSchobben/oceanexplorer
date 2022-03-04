@@ -18,7 +18,7 @@ Suggests:
     globals (>= 0.14.0),
     roxygen2,
     shinytest (>= 1.5.1),
-    testthat (>= 3.1.1),
+    testthat (>= 3.1.2),
     vdiffr (>= 1.0.2),
     withr
 Imports: 

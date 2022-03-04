@@ -11,7 +11,8 @@ filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, fuzzy = 0)
 
 \item{depth}{Depth in meters}
 
-\item{coord}{List with named elements: \code{lon} for longitude in degrees, and
+\item{coord}{List with named elements, matrix with dimnames, or simple
+feature geometry list column: \code{lon} for longitude in degrees, and
 \code{lat} for latitude in degrees.}
 
 \item{epsg}{Coordinate reference number.}
@@ -30,7 +31,7 @@ Filter NOAA
 \dontrun{
 # get atlas
 NOAAatlas <- get_NOAA("oxygen", 1, "annual")
-# filter atlas for specific depth an coordinates
+# filter atlas for specific depth and coordinate location
 filter_NOAA(NOAAatlas, 30)
 }
 }

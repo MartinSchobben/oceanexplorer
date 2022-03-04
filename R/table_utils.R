@@ -1,0 +1,28 @@
+# table output formatting
+format_table <- function(NOAA, variable) {
+
+  # formatting
+  tb <- format_coord(NOAA)
+
+  # rename variable
+  tb_nm <- colnames(tb)
+  tb_nm[1] <- variable
+  colnames(tb) <- tb_nm
+  print(tb, row.names = FALSE)
+}
+
+format_coord <- function(NOAA, coord) {
+
+  # split coords in long and lat
+  coords <- strsplit(sf::st_as_text(NOAA$geometry), "[^[:alnum:]|.|-]+")
+  coords <- do.call(Map, c(f = c, coords)) %>%
+    stats::setNames(c("geometry", "longitude", "latitude"))
+
+  # remove old geometry
+  NOAA <- as.data.frame(NOAA)
+  NOAA_sc <- NOAA[ ,which(colnames(NOAA) != "geometry"), drop = FALSE]
+
+  # combine new
+  cbind(NOAA_sc, coords)
+
+}
