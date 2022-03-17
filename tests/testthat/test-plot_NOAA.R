@@ -11,25 +11,25 @@ test_that("plot of NOAA atlas works", {
   # original epsg
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = NULL",
-    plot_NOAA(NOAAatlas, points = points, epsg = NULL)
+    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = NULL)
     )
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = 'original'",
-    plot_NOAA(NOAAatlas, points = points, epsg = "original")
+    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "original")
     )
 
   # new projections
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = '4326'",
-    plot_NOAA(NOAAatlas, points = points, epsg = "4326")
+    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "4326")
     )
   vdiffr::expect_doppelganger(
     "NOAA arctic map epsg = 3995",
-    plot_NOAA(NOAAatlas, epsg = 3995)
+    plot_NOAA(NOAAatlas, depth = 0, epsg = 3995)
     )
   vdiffr::expect_doppelganger(
     "NOAA antarctic map epsg = 3031",
-    plot_NOAA(NOAAatlas, epsg = 3031)
+    plot_NOAA(NOAAatlas, depth = 0, epsg = 3031)
     )
 })
 

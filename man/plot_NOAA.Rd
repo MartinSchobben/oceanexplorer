@@ -4,7 +4,14 @@
 \alias{plot_NOAA}
 \title{Plotting the global NOAA WORLD OCEAN ATLAS}
 \usage{
-plot_NOAA(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL)
+plot_NOAA(
+  NOAA,
+  depth = NULL,
+  points = NULL,
+  epsg = NULL,
+  limit = NULL,
+  rng = NULL
+)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
@@ -17,6 +24,9 @@ plot_NOAA(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL)
 and 3995).}
 
 \item{limit}{The limits of the axis.}
+
+\item{rng}{A vector of two numeric values for the range of the environmental
+parameter.}
 }
 \value{
 Ggplot

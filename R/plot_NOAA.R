@@ -6,6 +6,8 @@
 #' @param epsg The epsg used to project the data (currently supported 4326, 3031
 #'  and 3995).
 #' @param limit The limits of the axis.
+#' @param rng A vector of two numeric values for the range of the environmental
+#'  parameter.
 #'
 #' @return Ggplot
 #' @export
@@ -24,31 +26,24 @@
 #' # plot
 #' plot_NOAA(base, points)
 #' }
-plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL) {
+plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NULL,
+                      rng = NULL) {
 
   # get total range of environmental parameter in order to fix color scale over
   # different depth slices
-  rng <- range(NOAA[[1]], na.rm = TRUE)
+  if (is.null(rng)) {
+    rng <- range(NOAA[[1]], na.rm = TRUE)
+  }
 
   # filter a specific depth to obtain a 2D representation
-  base <- filter_NOAA(NOAA,  depth)
+  if (!is.null(depth)) {
+    base <- filter_NOAA(NOAA,  depth)
+  } else {
+    base <- NOAA
+  }
 
   # get species / parameter names
   var <- substr(attributes(base)$names, 1, 1)
-  if (var %in% c("i", "p", "o", "n")) {
-    element <- c(i = "SiO", p = "PO", o = "O", n = "NO")
-    index <- c(i = 2, p = 4, o = 2, n = 3)
-    xc <- substitute(a[b]~"("*mu*"mol kg"^{"-"}*")", list(a = element[var], b = index[var]))
-  }
-  if (var %in% c("t")) {
-    xc <- expression('Temp ('*degree~C*')')
-  }
-  if (var %in% c("s")) {
-    xc <- "Salinity"
-  }
-  if (var %in% c("I")) {
-    xc <- expression("Density (kg m"^{"-3"}*")")
-  }
 
   # epsg NULL then use NOAA standard (?9122)
   if (is.null(epsg) || epsg == "original") {
@@ -110,7 +105,7 @@ plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL)
     crs = epsg,
     expand = FALSE
     ) +
-    ggplot2::scale_fill_viridis_c(xc, limits = rng, na.value = "transparent") +
+    ggplot2::scale_fill_viridis_c(env_parm_labeller(var), limits = rng, na.value = "transparent") +
     ggplot2::labs(x = NULL, y = NULL) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(
