@@ -1,8 +1,10 @@
 #' Plotting the global NOAA WORLD OCEAN ATLAS
 #'
 #' @param NOAA Dataset of the WORLD OCEAN ATLAS.
+#' @param depth Depth in meters.
 #' @param points Add locations of extracted point geometry.
-#' @param epsg The epsg used to project the data.
+#' @param epsg The epsg used to project the data (currently supported 4326, 3031
+#'  and 3995).
 #' @param limit The limits of the axis.
 #'
 #' @return Ggplot
@@ -11,21 +13,28 @@
 #' @examples
 #' \dontrun{
 #' # data
-#' NOAA <- get_NOAA("oxygen", 1, "annual")
+#' base <- get_NOAA("oxygen", 1, "annual")
 #'
-#' # base (surface depth)
-#' base <- filter_NOAA(NOAA,  0)
+#' # plot
+#' plot_NOAA(base)
 #'
 #' # coordinates
 #' points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
 #'
-#' #plot
+#' # plot
 #' plot_NOAA(base, points)
 #' }
-plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
+plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL) {
+
+  # get total range of environmental parameter in order to fix color scale over
+  # different depth slices
+  rng <- range(NOAA[[1]], na.rm = TRUE)
+
+  # filter a specific depth to obtain a 2D representation
+  base <- filter_NOAA(NOAA,  depth)
 
   # get species / parameter names
-  var <- substr(attributes(NOAA)$names, 1, 1)
+  var <- substr(attributes(base)$names, 1, 1)
   if (var %in% c("i", "p", "o", "n")) {
     element <- c(i = "SiO", p = "PO", o = "O", n = "NO")
     index <- c(i = 2, p = 4, o = 2, n = 3)
@@ -43,8 +52,8 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
 
   # epsg NULL then use NOAA standard (?9122)
   if (is.null(epsg) || epsg == "original") {
-    epsg <- sf::st_crs(NOAA)
-  } else {
+    epsg <- sf::st_crs(base)
+  } else if (grepl("^[0-9]*$", epsg)) {
     epsg <- as.numeric(epsg)
   }
 
@@ -53,17 +62,17 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
   # standard limits method sf coord
   lim_method <- "cross"
   # world map
-  wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) %>%
-    sf::st_as_sfc() %>%
+  wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
+    sf::st_as_sfc() |>
     sf::st_transform(crs = epsg)
 
   # coord transform NOAA and selected points if different from origin
-  if (epsg != sf::st_crs(NOAA)) {
+  if (epsg != sf::st_crs(base)) {
 
     if (!is.null(points)) points <- sf::st_transform(points, crs = epsg)
 
     # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
-    if (epsg == 3031 | epsg == 3995) {
+    if (epsg == 3031 || epsg == 3995) {
       if (limit == 90) {
         #message("If epsg is 3031 and 3995, the latitude range is set to 55")
         limit <- 50
@@ -72,16 +81,20 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
       # method for plotting coords
       lim_method <- "geometry_bbox"
 
-      # cropping
-      NOAA <- clip_lat(NOAA, epsg, limit)
+      # cropping and recasting of raster
+      base <- clip_lat(base, epsg, limit) |> sf::st_transform(crs = epsg)
       wmap <- clip_lat(wmap, epsg, limit)
+    # } else if (epsg == "+proj=moll") {
+    #   base <- sf::st_transform(base, crs = epsg)
+    } else {
+      # for non-polar coordinates `st_warp` can be used to recast raster
+      base <- stars::st_warp(base, crs = epsg)
     }
-    NOAA <- sf::st_transform(NOAA, crs = epsg)
 
   }
 
   base <- ggplot2::ggplot() +
-    stars::geom_stars(data = NOAA) +
+    stars::geom_stars(data = base) +
     ggplot2::geom_sf(data = wmap, fill = "grey")
 
   if (!is.null(points)) {
@@ -97,7 +110,7 @@ plot_NOAA <- function(NOAA, points = NULL, epsg = NULL, limit = NULL) {
     crs = epsg,
     expand = FALSE
     ) +
-    ggplot2::scale_fill_viridis_c(xc, na.value = "transparent") +
+    ggplot2::scale_fill_viridis_c(xc, limits = rng, na.value = "transparent") +
     ggplot2::labs(x = NULL, y = NULL) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(
@@ -126,11 +139,12 @@ clip_lat <- function(obj, epsg, limit = 55) {
     box <- sf::st_bbox(box) # rectangular box
     sf::st_crs(box) <- sf::st_crs(obj) # original projection
     obj <- sf::st_crop(obj, box) # cropping
+    # stars::st_warp(obj, epsg)
     sf::st_transform(obj, epsg) # re-projection
   # for sf object we first need re-projection and then cropping
   } else if (inherits(obj, "sfc")) {
     obj <- sf::st_transform(obj, epsg) # re-projection
-    circ <- sf::st_bbox(sf::st_point(c(0,0))) %>% # center aroung pole
+    circ <- sf::st_bbox(sf::st_point(c(0,0))) %>% # center around pole
       sf::st_as_sfc() %>%
       sf::st_as_sf(crs = sf::st_crs(obj)) %>% # albers projection to have an projected crs
       sf::st_buffer(4000000) # draw circle

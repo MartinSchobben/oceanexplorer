@@ -4,14 +4,17 @@
 \alias{plot_NOAA}
 \title{Plotting the global NOAA WORLD OCEAN ATLAS}
 \usage{
-plot_NOAA(NOAA, points = NULL, epsg = NULL, limit = NULL)
+plot_NOAA(NOAA, depth = 0, points = NULL, epsg = NULL, limit = NULL)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
 
+\item{depth}{Depth in meters.}
+
 \item{points}{Add locations of extracted point geometry.}
 
-\item{epsg}{The epsg used to project the data.}
+\item{epsg}{The epsg used to project the data (currently supported 4326, 3031
+and 3995).}
 
 \item{limit}{The limits of the axis.}
 }
@@ -24,15 +27,15 @@ Plotting the global NOAA WORLD OCEAN ATLAS
 \examples{
 \dontrun{
 # data
-NOAA <- get_NOAA("oxygen", 1, "annual")
+base <- get_NOAA("oxygen", 1, "annual")
 
-# base (surface depth)
-base <- filter_NOAA(NOAA,  0)
+# plot
+plot_NOAA(base)
 
 # coordinates
 points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
 
-#plot
+# plot
 plot_NOAA(base, points)
 }
 }

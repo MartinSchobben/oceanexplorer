@@ -38,7 +38,7 @@ plot_server <- function(id, NOAA, points) {
     # plot
     output$plot <- renderPlot({
       req(NOAA())
-      plot_NOAA(NOAA(), points = points(), epsg = input$epsg)
+      plot_NOAA(NOAA(), depth = input$depth, points = points(), epsg = input$epsg)
     })
 
     observe({

@@ -1,7 +1,7 @@
 # box clipping works for stars
 
     Code
-      clip_lat(base, 3031)
+      clip_lat(NOAAatlas, 3031)
     Output
       stars object with 2 dimensions and 1 attribute
       attribute(s):

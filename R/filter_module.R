@@ -13,9 +13,9 @@
 filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
-    textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = plch),
-    textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = plch),
-    textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = plch),
+    textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = "meters"),
+    textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = "degrees"),
+    textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = "degrees"),
     selectInput(NS(id, "search"), h5("Search"), c("point", "fuzzy"), selected = "point")
   )
 
@@ -104,10 +104,10 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     })
 
     # slider filter
-    map <- reactive({
-      req(external$depth)
-      filter_NOAA(NOAA(), external$depth)
-      })
+    # map <- reactive({
+    #   req(external$depth)
+    #   filter_NOAA(NOAA(), external$depth)
+    #   })
 
     # coordinate extraction
     extract <- reactive({
@@ -166,15 +166,15 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     observeEvent(input$reset | input$back| external$lon | external$lat |
                    external$depth, {
       if (isTRUE(extended)) {
-        updateTextInput(inputId = "lon", value = character(0), placeholder = plch)
-        updateTextInput(inputId = "lat", value = character(0), placeholder = plch)
-        updateTextInput(inputId = "depth", value = character(0), placeholder = plch)
+        updateTextInput(inputId = "lon", value = character(0), placeholder = "degrees")
+        updateTextInput(inputId = "lat", value = character(0), placeholder = "degrees")
+        updateTextInput(inputId = "depth", value = character(0), placeholder = "meters")
       }
     })
 
     # return
-    list(map = map, coord = coord, code = code)
+    list(coord = coord, code = code)
   })
 }
 
-plch <- "number or comma delimited vector"
+
