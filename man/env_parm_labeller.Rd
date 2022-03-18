@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{env_parm_labeller}
 \alias{env_parm_labeller}
-\title{Title}
+\title{Parsing expressions for plot labels}
 \usage{
 env_parm_labeller(var)
 }
@@ -10,8 +10,8 @@ env_parm_labeller(var)
 \item{var}{Environmental parameter.}
 }
 \value{
-
+Expression
 }
 \description{
-Title
+Parsing expressions for plot labels
 }

@@ -1,8 +1,8 @@
-#' Title
+#' Parsing expressions for plot labels
 #'
 #' @param var Environmental parameter.
 #'
-#' @return
+#' @return Expression
 #' @export
 env_parm_labeller <- function(var) {
   # get species / parameter names

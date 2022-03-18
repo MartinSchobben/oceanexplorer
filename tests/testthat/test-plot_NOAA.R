@@ -34,6 +34,7 @@ test_that("plot of NOAA atlas works", {
 })
 
 test_that("box clipping works for stars",{
+  skip_on_ci()
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   # just depth
   NOAAatlas <- filter_NOAA(NOAAatlas, 1)
@@ -41,6 +42,7 @@ test_that("box clipping works for stars",{
 })
 
 test_that("box clipping works for sf",{
+  skip_on_ci()
   NOAA <- get_NOAA("oxygen", 1, "annual")
   # sf world map
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) %>%
