@@ -26,8 +26,8 @@
 #' # plot
 #' plot_NOAA(base, points)
 #' }
-plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NULL,
-                      rng = NULL) {
+plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL,
+                      limit = NULL, rng = NULL) {
 
   # get total range of environmental parameter in order to fix color scale over
   # different depth slices
@@ -66,7 +66,8 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
 
     if (!is.null(points)) points <- sf::st_transform(points, crs = epsg)
 
-    # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
+    # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55
+    # degree lat
     if (epsg == 3031 || epsg == 3995) {
       if (limit == 90) {
         #message("If epsg is 3031 and 3995, the latitude range is set to 55")
@@ -105,7 +106,11 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
     crs = epsg,
     expand = FALSE
     ) +
-    ggplot2::scale_fill_viridis_c(env_parm_labeller(var), limits = rng, na.value = "transparent") +
+    ggplot2::scale_fill_viridis_c(
+      env_parm_labeller(var),
+      limits = rng,
+      na.value = "transparent"
+    ) +
     ggplot2::labs(x = NULL, y = NULL) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(
@@ -141,9 +146,10 @@ clip_lat <- function(obj, epsg, limit = 55) {
     obj <- sf::st_transform(obj, epsg) # re-projection
     circ <- sf::st_bbox(sf::st_point(c(0,0))) %>% # center around pole
       sf::st_as_sfc() %>%
-      sf::st_as_sf(crs = sf::st_crs(obj)) %>% # albers projection to have an projected crs
+      # alters projection to have an projected crs
+      sf::st_as_sf(crs = sf::st_crs(obj)) %>%
       sf::st_buffer(4000000) # draw circle
-    sf::st_crop(sf::st_make_valid(obj), circ) # cropping (make valid repairs the world map)
-
-}
+    # cropping (make valid repairs the world map)
+    sf::st_crop(sf::st_make_valid(obj), circ)
+  }
 }

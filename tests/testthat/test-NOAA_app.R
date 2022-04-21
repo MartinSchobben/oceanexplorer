@@ -11,3 +11,4 @@ test_that("consistent performance of NOAA_app", {
   # which runs on Linux.
   expect_pass(testApp(test_path("apps/NOAA_app/"), compareImages = FALSE))
 })
+

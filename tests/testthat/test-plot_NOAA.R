@@ -6,7 +6,8 @@ test_that("plot of NOAA atlas works", {
 
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   # points
-  points <- filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11,12)))
+  crds <- list(lon = c(-160, -120), lat =  c(11,12))
+  points <- filter_NOAA(NOAAatlas, 1, crds)
 
   # original epsg
   vdiffr::expect_doppelganger(

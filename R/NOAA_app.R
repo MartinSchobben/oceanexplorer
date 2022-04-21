@@ -9,8 +9,11 @@
 NOAA_app <- function(server = NOAA_server()) {
 
   ui <- fluidPage(
+
     theme = bslib::bs_theme(bootswatch = "slate"), # nice theming
+
     shinyjs::useShinyjs(), # use shinyjs
+
     titlePanel("NOAA WORLD OCEAN ATLAS"),
     sidebarLayout(
       sidebarPanel(
@@ -25,7 +28,8 @@ NOAA_app <- function(server = NOAA_server()) {
         waiter::use_waiter(),
         conditionalPanel(
           condition = "output.citation==null",
-          h4("Select variable of interest and click \"Load data\" to display results."),
+          h4(paste0("Select variable of interest and click ",
+                    "\"Load data\" to display results.")),
           ns = NS("NOAA")
         ),
         conditionalPanel(
@@ -101,12 +105,14 @@ NOAA_server <- function(extended = TRUE) {
 
         # code (only loading)
         if (isTruthy(NOAA$code()) & !isTruthy(output_table())) {
-          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code()))
+          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-",
+                                        NOAA$code()))
           invisible(stopApp())
         }
         # code (loading and filter extraction)
         if (isTruthy(NOAA$code()) & isTruthy(output_table())) {
-          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-", NOAA$code(), "\n", output_table()))
+          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-",
+                                        NOAA$code(), "\n", output_table()))
           invisible(stopApp())
         }
 

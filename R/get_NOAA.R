@@ -65,7 +65,8 @@ get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
 url_parser <- function(var, spat_res, av_period) {
 
   # temporal resolution
-  averaging_periods <- c("annual", month.name, "winter", "spring", "summer", "autumn")
+  averaging_periods <- c("annual", month.name, "winter", "spring", "summer",
+                         "autumn")
   stopifnot(av_period %in% averaging_periods)
 
   # base path to NCEI server
@@ -98,12 +99,14 @@ url_parser <- function(var, spat_res, av_period) {
   # complete file name
   file <- paste0(paste("woa18", deca, paste0(v, tp), gr, sep = "_"), ".nc")
   # complete file path
-  file_path <- paste(var, deca, if(spat_res > 1) "5deg" else "1.00", file, sep = "/")
+  file_path <- paste(var, deca, if(spat_res > 1) "5deg" else "1.00", file,
+                     sep = "/")
 
   # check whether exist locally
   local_path <- fs::path("extdata", fs::path_ext_remove(file_path), ext = "rds")
   # if not exist make external path to server
-  if (class(try(fs::path_package("oceanexplorer", local_path), silent = TRUE))[1] != "fs_path") {
+  noaa_path <- try(fs::path_package("oceanexplorer", local_path), silent = TRUE)
+  if (!inherits(noaa_path, "fs_path")) {
     external_path <- paste(base_path, file_path, sep = "/")
     list(external = external_path, local = local_path)
   } else {

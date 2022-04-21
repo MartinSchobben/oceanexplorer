@@ -41,7 +41,9 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
   )
 
   if (isTRUE(extended)) {
-    layout <- tagList(fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]])))
+    layout <- tagList(
+      fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]]))
+    )
     tagAppendChildren(layout, load)
   } else {
     fillRow(fillCol(vars), fillCol(load))
@@ -53,6 +55,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
 citation_ui <- function(id) {
 
   tagList(tags$br(), tags$br(), uiOutput(NS(id,  "citation")))
+
 }
 #' @rdname input_ui
 #'
@@ -85,7 +88,8 @@ input_server <- function(id) {
       on.exit(waiter$hide())
 
       # call for data retrieval
-      call_NOAA <- glue::glue("get_NOAA({glue::double_quote(input$var)}, {input$spat}, {glue::double_quote(input$temp)})")
+      call_NOAA <- glue::glue("get_NOAA({glue::double_quote(input$var)},",
+                              "{input$spat}, {glue::double_quote(input$temp)})")
 
       # execute
       exec_NOAA <- get_NOAA(input$var, input$spat, input$temp)
@@ -94,7 +98,11 @@ input_server <- function(id) {
     })
 
     # output
-    list(data = reactive(x()$data), code = reactive(x()$code), variable = reactive(input$var))
+    list(
+      data = reactive(x()$data),
+      code = reactive(x()$code),
+      variable = reactive(input$var)
+    )
   })
 }
 #' @rdname input_ui
@@ -127,13 +135,40 @@ output_server <- function(id, NOAA, variable) {
   })
 }
 
-# cite the poapers
+# cite the papers
 vc_cite <- c(
-  temperature = "Locarnini, R. A., A. V. Mishonov, O. K. Baranova, T. P. Boyer, M. M. Zweng, H. E. Garcia, J. R. Reagan, D. Seidov, K. Weathers, C. R. Paver, and I. Smolyar, 2018. World Ocean Atlas 2018, Volume 1: Temperature. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 81, 52pp.",
-  salinity = "Zweng, M. M., J. R. Reagan, D. Seidov, T. P. Boyer, R. A. Locarnini, H. E. Garcia, A. V. Mishonov, O. K. Baranova, K. Weathers, C. R. Paver, and I. Smolyar, 2018. World Ocean Atlas 2018, Volume 2: Salinity. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 82, 50pp.",
-  oxygen = "Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 3: Dissolved Oxygen, Apparent Oxygen Utilization, and Oxygen Saturation. A. Mishonov Technical Ed.; NOAA Atlas NESDIS 83, 38pp.",
-  nutrients = "Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 4: Dissolved Inorganic Nutrients (phosphate, nitrate and nitrate+nitrite, silicate). A. Mishonov Technical Ed.; NOAA Atlas NESDIS 84, 35pp.",
-  density = "Locarnini, R.A., T.P. Boyer, A.V. Mishonov, J.R. Reagan, M.M. Zweng, O.K. Baranova, H.E. Garcia, D. Seidov, K.W. Weathers, C.R. Paver, and I.V. Smolyar (2019). World Ocean Atlas 2018, Volume 5: Density. A. Mishonov, Technical Editor. NOAA Atlas NESDIS 85, 41pp."
+  temperature = paste0(
+    "Locarnini, R. A., A. V. Mishonov, O. K. Baranova, T. P. Boyer, M. M. ",
+    "Zweng, H. E. Garcia, J. R. Reagan, D. Seidov, K. Weathers, C. R. Paver, ",
+    "and I. Smolyar, 2018. World Ocean Atlas 2018, Volume 1: Temperature. A. ",
+    "Mishonov Technical Ed.; NOAA Atlas NESDIS 81, 52pp."
+  ),
+  salinity = paste0(
+    "Zweng, M. M., J. R. Reagan, D. Seidov, T. P. Boyer, R. A. Locarnini, H. ",
+    "E. Garcia, A. V. Mishonov, O. K. Baranova, K. Weathers, C. R. Paver, and",
+    "I. Smolyar, 2018. World Ocean Atlas 2018, Volume 2: Salinity. A.  ",
+    "Mishonov Technical Ed.; NOAA Atlas NESDIS 82, 50pp."
+  ),
+  oxygen = paste0(
+    "Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. ",
+    "Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and  ",
+    "J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 3: Dissolved Oxygen,  ",
+    "Apparent Oxygen Utilization, and Oxygen Saturation. A. Mishonov ",
+    "Technical Ed.; NOAA Atlas NESDIS 83, 38pp."
+  ),
+  nutrients = paste0(
+    "Garcia, H. E., K. Weathers, C. R. Paver, I. Smolyar, T. P. Boyer, R. A. ",
+    "Locarnini, M. M. Zweng, A. V. Mishonov, O. K. Baranova, D. Seidov, and ",
+    "J. R. Reagan, 2018. World Ocean Atlas 2018, Volume 4: Dissolved Inorganic",
+    " Nutrients (phosphate, nitrate and nitrate+nitrite, silicate). A.  ",
+    "Mishonov Technical Ed.; NOAA Atlas NESDIS 84, 35pp."
+  ),
+  density = paste0(
+    "Locarnini, R.A., T.P. Boyer, A.V. Mishonov, J.R. Reagan, M.M. Zweng,  ",
+    "O.K. Baranova, H.E. Garcia, D. Seidov, K.W. Weathers, C.R. Paver, and  ",
+    "I.V. Smolyar (2019). World Ocean Atlas 2018, Volume 5: Density. A. ",
+    "Mishonov, Technical Editor. NOAA Atlas NESDIS 85, 41pp."
+  )
 )
 
 citations <- function(x) {
@@ -145,5 +180,4 @@ citations <- function(x) {
       "(Click here for the original papers)")
     )
   )
-
-  }
+}

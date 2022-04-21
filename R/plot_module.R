@@ -8,8 +8,16 @@
 #' @export
 plot_ui <- function(id) {
   tagList(
-    selectInput(NS(id, "epsg"), h5("EPSG"), c("original", "4326", "3031", "3995"), selected = "original"),
-    plotOutput(NS(id,  "plot"), click = NS(id, "plot_click")),
+    selectInput(
+      NS(id, "epsg"),
+      h5("EPSG"),
+      c("original", "4326", "3031", "3995"),
+      selected = "original"
+    ),
+    plotOutput(
+      NS(id,  "plot"),
+      click = NS(id, "plot_click")
+    ),
     sliderInput(
       NS(id, "depth"),
       h5("depth (meter)"),
@@ -18,7 +26,9 @@ plot_ui <- function(id) {
       value = 0,
       width = "100%"
     ),
-    tags$caption("Variable averaged over a time span ranging from 1955 to 2017.")
+    tags$caption(
+      "Variable averaged over a time span ranging from 1955 to 2017."
+    )
   )
 }
 #' @rdname plot_ui
