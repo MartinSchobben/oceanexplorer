@@ -45,49 +45,21 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
   # get species / parameter names
   var <- substr(attributes(base)$names, 1, 1)
 
-  # epsg NULL then use NOAA standard (?9122)
-  if (is.null(epsg) || epsg == "original") {
-    epsg <- sf::st_crs(base)
-  } else if (grepl("^[0-9]*$", epsg)) {
-    epsg <- as.numeric(epsg)
-  }
-
   if (is.null(limit)) limit <- 90
 
   # standard limits method sf coord
   lim_method <- "cross"
+
   # world map
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
-    sf::st_as_sfc() |>
-    sf::st_transform(crs = epsg)
+    sf::st_as_sf()
 
   # coord transform NOAA and selected points if different from origin
-  if (epsg != sf::st_crs(base)) {
+  base <- reproject(base, epsg)
+  wmap <- reproject(wmap, epsg)
+  if (!is.null(points)) points <- reproject(points, epsg)
 
-    if (!is.null(points)) points <- sf::st_transform(points, crs = epsg)
-
-    # antarctic (3031) and arctic (3995) projection are clipped at -55 and 55 degree lat
-    if (epsg == 3031 || epsg == 3995) {
-      if (limit == 90) {
-        #message("If epsg is 3031 and 3995, the latitude range is set to 55")
-        limit <- 50
-        }
-
-      # method for plotting coords
-      lim_method <- "geometry_bbox"
-
-      # cropping and recasting of raster
-      base <- clip_lat(base, epsg, limit) |> sf::st_transform(crs = epsg)
-      wmap <- clip_lat(wmap, epsg, limit)
-    # } else if (epsg == "+proj=moll") {
-    #   base <- sf::st_transform(base, crs = epsg)
-    } else {
-      # for non-polar coordinates `st_warp` can be used to recast raster
-      base <- stars::st_warp(base, crs = epsg)
-    }
-
-  }
-
+  # base plot
   base <- ggplot2::ggplot() +
     stars::geom_stars(data = base) +
     ggplot2::geom_sf(data = wmap, fill = "grey")
@@ -97,15 +69,20 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
       ggplot2::geom_sf(data = points)
   }
 
-  base + ggplot2::coord_sf(
-    lims_method = lim_method,
-    xlim = c(-180, 180),
-    ylim = c(-1 * limit, limit),
-    default_crs = epsg,
-    crs = epsg,
-    expand = FALSE
+  base +
+    ggplot2::coord_sf(
+      lims_method = "cross",
+      xlim = c(-180, 180),
+      ylim = c(-1 * limit, limit),
+      ndiscr = 100,
+      # default_crs = epsg,
+      expand = FALSE
     ) +
-    ggplot2::scale_fill_viridis_c(env_parm_labeller(var), limits = rng, na.value = "transparent") +
+    ggplot2::scale_fill_viridis_c(
+      env_parm_labeller(var),
+      limits = rng,
+      na.value = "transparent"
+    ) +
     ggplot2::labs(x = NULL, y = NULL) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_line(
@@ -144,6 +121,7 @@ clip_lat <- function(obj, epsg, limit = 55) {
       sf::st_as_sf(crs = sf::st_crs(obj)) %>% # albers projection to have an projected crs
       sf::st_buffer(4000000) # draw circle
     sf::st_crop(sf::st_make_valid(obj), circ) # cropping (make valid repairs the world map)
+ }
+}
 
-}
-}
+

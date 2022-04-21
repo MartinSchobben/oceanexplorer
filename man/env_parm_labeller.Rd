@@ -4,7 +4,7 @@
 \alias{env_parm_labeller}
 \title{Parsing expressions for plot labels}
 \usage{
-env_parm_labeller(var)
+env_parm_labeller(var, prefix = character(1), postfix = character(1))
 }
 \arguments{
 \item{var}{Environmental parameter.}

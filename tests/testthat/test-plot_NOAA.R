@@ -12,25 +12,25 @@ test_that("plot of NOAA atlas works", {
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = NULL",
     plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = NULL)
-    )
+  )
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = 'original'",
     plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "original")
-    )
+  )
 
   # new projections
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = '4326'",
     plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "4326")
-    )
+  )
   vdiffr::expect_doppelganger(
     "NOAA arctic map epsg = 3995",
     plot_NOAA(NOAAatlas, depth = 0, epsg = 3995)
-    )
+  )
   vdiffr::expect_doppelganger(
     "NOAA antarctic map epsg = 3031",
     plot_NOAA(NOAAatlas, depth = 0, epsg = 3031)
-    )
+  )
 })
 
 test_that("box clipping works for stars",{

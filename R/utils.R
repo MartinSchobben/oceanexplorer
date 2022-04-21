@@ -38,3 +38,43 @@ env_parm_labeller <- function(var, prefix = character(1), postfix = character(1)
     stop("Parameter is unkown.", call. = FALSE)
   }
 }
+
+#' Reprojecting spatial objects to new epsg
+#'
+#' @param var Environmental parameter.
+#'
+#' @return sf or stars object
+#' @export
+reproject <- function(obj, epsg = NULL, ...) {
+
+  # epsg NULL, "", or "original" then use crs of supplied object
+  if (is.null(epsg) || epsg == "original" || epsg == character(1)) {
+    return(obj)
+  } else if (inherits(epsg, "crs")) {
+    # coord transform NOAA and selected points if different from origin
+    if (epsg == sf::st_crs(obj)) return(obj)
+  } else if (grepl("^[0-9]*$", epsg)) {
+    epsg <- as.numeric(epsg)
+    # coord transform NOAA and selected points if different from origin
+    if (sf::st_crs(epsg) == sf::st_crs(obj)) return(obj)
+  }
+
+  UseMethod("reproject")
+}
+#' @rdname reproject
+#'
+#' @export
+reproject.sf <- function(obj, epsg) {
+  sf::st_transform(obj, crs = epsg)
+}
+#' @rdname reproject
+#'
+#' @export
+reproject.stars <- function(obj, epsg) {
+  trywarp <- try(stars::st_warp(base, crs = epsg), silent = TRUE)
+  if (inherits(trywarp, "try-error")) {
+    sf::st_transform(obj, crs = epsg)
+  } else {
+    trywarp
+  }
+}
