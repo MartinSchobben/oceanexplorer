@@ -13,10 +13,30 @@
 filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
-    textInput(NS(id, "depth"), h5("Depth"), NULL, placeholder = "meters"),
-    textInput(NS(id, "lon"), h5("Longitude"),NULL, placeholder = "degrees"),
-    textInput(NS(id, "lat"), h5("Latitude"), NULL, placeholder = "degrees"),
-    selectInput(NS(id, "search"), h5("Search"), c("point", "fuzzy"), selected = "point")
+    textInput(
+      NS(id, "depth"),
+      h5("Depth"),
+      NULL,
+      placeholder = "meters"
+    ),
+    textInput(
+      NS(id, "lon"),
+      h5("Longitude"),
+      NULL,
+      placeholder = "degrees"
+    ),
+    textInput(
+      NS(id, "lat"),
+      h5("Latitude"),
+      NULL,
+      placeholder = "degrees"
+    ),
+    selectInput(
+      NS(id, "search"),
+      h5("Search"),
+      c("point", "fuzzy"),
+      selected = "point"
+    )
   )
 
   buttons <- tagList(
@@ -59,7 +79,10 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     # toggle disable/enable  of `actionbutton` extract/reset/back locations
     observe({
       if (isTRUE(extended)) {
-        shinyjs::toggleState("extract",all(purrr::map_lgl(ivars, ~{input[[.x]]!=""})))
+        shinyjs::toggleState(
+          "extract",
+          all(purrr::map_lgl(ivars, ~{input[[.x]]!=""}))
+        )
       }
       shinyjs::toggleState("back", !is.null(coord()))
       shinyjs::toggleState("reset", !is.null(coord()))
@@ -72,7 +95,8 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
         # convert text to numeric values
         purrr::walk(
           ivars,
-          ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",", quiet = TRUE)}
+          ~{input2[[.x]] <- scan(textConnection(input[[.x]]), sep = ",",
+                                 quiet = TRUE)}
         )
 
         # warnings for explicit coord input
@@ -103,12 +127,6 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
 
     })
 
-    # slider filter
-    # map <- reactive({
-    #   req(external$depth)
-    #   filter_NOAA(NOAA(), external$depth)
-    #   })
-
     # coordinate extraction
     extract <- reactive({
       if (
@@ -137,13 +155,15 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
       }
     })
 
-    # delete previous extracted coordinate points by first storing the step length
+    # delete previous extracted coordinate points by first storing the step
+    # length
     n_max <- reactiveVal(numeric(0))
     observe({
       # how many steps back? maximum depth of `input2`
       step <- lengths(reactiveValuesToList(input2))  %>% max()
       if (step > 0) n_max(c(isolate(n_max()), step))
     })
+
     # and then deleting the last observations
     observeEvent(input$back, {
       coord(dplyr::slice_head(coord(), n = nrow(coord()) - rev(n_max())[1]))
@@ -166,9 +186,21 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     observeEvent(input$reset | input$back| external$lon | external$lat |
                    external$depth, {
       if (isTRUE(extended)) {
-        updateTextInput(inputId = "lon", value = character(0), placeholder = "degrees")
-        updateTextInput(inputId = "lat", value = character(0), placeholder = "degrees")
-        updateTextInput(inputId = "depth", value = character(0), placeholder = "meters")
+        updateTextInput(
+          inputId = "lon",
+          value = character(0),
+          placeholder = "degrees"
+        )
+        updateTextInput(
+          inputId = "lat",
+          value = character(0),
+          placeholder = "degrees"
+        )
+        updateTextInput(
+          inputId = "depth",
+          value = character(0),
+          placeholder = "meters"
+        )
       }
     })
 
