@@ -1,0 +1,13 @@
+app <- ShinyDriver$new("../../")
+app$snapshotInit("mytest")
+
+app$setInputs(`NOAA-go` = "click")
+app$setInputs(`depth-depth` = "10")
+app$setInputs(`depth-lat` = "1")
+app$setInputs(`depth-lat` = "10")
+app$setInputs(`depth-lon` = "1")
+app$setInputs(`depth-lon` = "10")
+app$setInputs(`depth-extract` = "click")
+app$setInputs(`depth-reset` = "click")
+app$setInputs(`worldmap-depth` = 366)
+app$snapshotDownload("download-download")
