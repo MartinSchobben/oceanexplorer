@@ -2,18 +2,25 @@
 % Please edit documentation in R/utils.R
 \name{reproject}
 \alias{reproject}
-\alias{reproject.sf}
-\alias{reproject.stars}
+\alias{reproject_}
+\alias{reproject_.sf}
+\alias{reproject_.stars}
 \title{Reprojecting spatial objects to new epsg}
 \usage{
-reproject(obj, epsg, ...)
+reproject(obj, epsg = NULL, ...)
 
-\method{reproject}{sf}(obj, epsg)
+reproject_(obj, epsg = NULL, ...)
 
-\method{reproject}{stars}(obj, epsg)
+\method{reproject_}{sf}(obj, epsg)
+
+\method{reproject_}{stars}(obj, epsg)
 }
 \arguments{
-\item{var}{Environmental parameter.}
+\item{obj}{The sf or stars object to be reprojected.}
+
+\item{epsg}{The projection.}
+
+\item{...}{Currently not supported.}
 }
 \value{
 sf or stars object

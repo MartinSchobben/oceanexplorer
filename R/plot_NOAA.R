@@ -29,6 +29,10 @@
 plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NULL,
                       rng = NULL) {
 
+  # epsg_check
+  epsg <- epsg_check(NOAA, epsg)
+  if (epsg == "original") epsg <- sf::st_crs(NOAA)
+
   # get total range of environmental parameter in order to fix color scale over
   # different depth slices
   if (is.null(rng)) {
@@ -37,7 +41,7 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
 
   # filter a specific depth to obtain a 2D representation
   if (!is.null(depth)) {
-    base <- filter_NOAA(NOAA,  depth)
+    base <- filter_NOAA(NOAA, epsg = epsg)
   } else {
     base <- NOAA
   }
@@ -45,16 +49,15 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
   # get species / parameter names
   var <- substr(attributes(base)$names, 1, 1)
 
+  # defaults
   if (is.null(limit)) limit <- 90
-
-  # standard limits method sf coord
   lim_method <- "cross"
 
   # world map
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
     sf::st_as_sf()
 
-  # coord transform NOAA and selected points if different from origin
+  # coord transform NOAA, wmap and selected points if different from origin
   base <- reproject(base, epsg)
   wmap <- reproject(wmap, epsg)
   if (!is.null(points)) points <- reproject(points, epsg)
@@ -69,13 +72,18 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
       ggplot2::geom_sf(data = points)
   }
 
+  if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) | epsg == sf::st_crs(3995)) {
+    limit <- 50
+    lim_method <- "geometry_bbox"
+  }
+
   base +
     ggplot2::coord_sf(
-      lims_method = "cross",
+      lims_method = lim_method,
       xlim = c(-180, 180),
       ylim = c(-1 * limit, limit),
-      ndiscr = 100,
-      # default_crs = epsg,
+      default_crs = epsg,
+      crs = epsg,
       expand = FALSE
     ) +
     ggplot2::scale_fill_viridis_c(
@@ -96,32 +104,4 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL, limit = NU
       panel.background = ggplot2::element_rect(fill = NA)
     )
 }
-
-clip_lat <- function(obj, epsg, limit = 55) {
-
-  # for stars object we first need cropping and then re-projection
-  if (inherits(obj, "stars")) {
-    x <- c(-180, 180)
-    y <- c(limit, 90)
-    box <- c(xmin = x[1], xmax = x[2])
-    # antarctic bounds
-    if (epsg == 3031) box <- append(box, c(ymin = - 1 * y[2], ymax = -1 * y[1]))
-    # arctic bounds
-    if (epsg == 3995) box <- append(box, c(ymin = y[1], ymax = y[2]))
-    box <- sf::st_bbox(box) # rectangular box
-    sf::st_crs(box) <- sf::st_crs(obj) # original projection
-    obj <- sf::st_crop(obj, box) # cropping
-    # stars::st_warp(obj, epsg)
-    sf::st_transform(obj, epsg) # re-projection
-  # for sf object we first need re-projection and then cropping
-  } else if (inherits(obj, "sfc")) {
-    obj <- sf::st_transform(obj, epsg) # re-projection
-    circ <- sf::st_bbox(sf::st_point(c(0,0))) %>% # center around pole
-      sf::st_as_sfc() %>%
-      sf::st_as_sf(crs = sf::st_crs(obj)) %>% # albers projection to have an projected crs
-      sf::st_buffer(4000000) # draw circle
-    sf::st_crop(sf::st_make_valid(obj), circ) # cropping (make valid repairs the world map)
- }
-}
-
 

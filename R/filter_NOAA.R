@@ -20,15 +20,21 @@
 #' # filter atlas for specific depth and coordinate location
 #' filter_NOAA(NOAAatlas, 30)
 #' }
-filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
-  fuzzy = 0) {
+filter_NOAA <- function(NOAA, depth = 0, coord = NULL, epsg = NULL,
+                        fuzzy = 0) {
 
-  # add epsg to NOAA standard if none supplied or "original"
-  if (is.null(epsg) || epsg == "original") {
+  # epsg check
+  epsg <- epsg_check(NOAA, epsg)
+
+  # coordinate check (most important in case of coord supplied)
+  coord_check(coord, depth)
+
+  # reproject data if supplied epsg is different, otherwise epsg will be set
+  # to epsg of data
+  if (epsg != "original") {
+    NOAA <- reproject(NOAA, epsg)
+  } else {
     epsg <- sf::st_crs(NOAA)
-    # convert epsg to numeric if needded
-  } else if (!is.null(epsg) && is.character(epsg)) {
-    epsg <- as.numeric(epsg)
   }
 
   # find depth intervals
@@ -42,54 +48,80 @@ filter_NOAA <- function(NOAA, depth, coord = NULL, epsg = NULL,
 
   # coordinate selection
   if (!is.null(coord)) {
-    # check length of depth vector
-    if (!inherits(coord, c("sf", "sfc"))) {
-      vc_check <- append(vapply(coord, length, numeric(1)), length(depth))
-    } else {
-      vc_check <- append(nrow(coord), length(depth))
-    }
-    vc_check <- vapply(
-      vc_check,
-      function(x) {x == 1 | x == max(vc_check)},
-      logical(1)
-      )
-    if (!all(vc_check)) {
-     stop(paste0("Depth and coordinates must be a vector of length 1 or have ",
-                 "consistent lengths."), call. = FALSE)
-    }
 
-    # if list class coerce to matrix
-    if (inherits(coord, "list")) {
-      coord <- rlang::inject(cbind(!!!coord, deparse.level = 2))
-    } else if (inherits(coord, c("sf", "sfc"))) {
+    # get coordinates into right format
+    coord <- cast_coords(coord, epsg)
 
-      # transform crs of coordinates if required to original data format
-      if (sf::st_crs(coord)!= sf::st_crs(NOAA)) {
-        coord <- sf::st_transform(coord, crs = sf::st_crs(NOAA))
-      }
-
-    } else if (!inherits(coord, "matrix")) {
-      stop(paste0("Class supplied to `coord` unsupported."), call. = FALSE)
-    }
-
-    ext <- purrr::map2_dfr(
+    # extract coordinates from raster data and return sf object
+    purrr::map2_dfr(
       plane,
       unique(depth),
       ~extract_coords(.x, coord, .y, epsg = epsg, fuzzy = fuzzy)
     )
-    return(ext)
-  }
-  # transform crs of depth plane if required
-  if (sf::st_crs(NOAA)!= epsg) {
-    # for plotting only the last depth slice is returned
-    sf::st_transform(utils::tail(plane, 1)[[1]], crs = epsg)
+
   } else {
-    utils::tail(plane, 1)[[1]]
+    # in case of no coordinates the upper depth plane is returned  as a stars
+    # object
+    plane[[1]]
+  }
+}
+
+# check the supplied coordinates
+coord_check <- function(coord, depth) {
+
+  # check length of depth vector
+  if (!inherits(coord, c("sf", "sfc"))) {
+    vc_check <- append(vapply(coord, length, numeric(1)), length(depth))
+  } else {
+    vc_check <- append(nrow(coord), length(depth))
+  }
+
+  vc_check <- vapply(
+    vc_check,
+    function(x) {x == 1 | x == max(vc_check)},
+    logical(1)
+  )
+
+  if (!all(vc_check)) {
+    stop(paste0("Depth and coordinates must be a vector of length 1 or have ",
+                "consistent lengths."), call. = FALSE)
+  }
+
+}
+
+# cast the coordinates in a unified formats (matrix or sf output)
+cast_coords <- function(coord, epsg) {
+
+  # if list class coerce to matrix
+  if (inherits(coord, "list")) {
+
+    rlang::inject(cbind(!!! coord, deparse.level = 2))
+
+  } else if (inherits(coord, c("sf", "sfc"))) {
+
+    # transform crs of coordinates if required to original data format
+    if (sf::st_crs(coord) != epsg) {
+
+      sf::st_transform(coord, crs = epsg)
+
+    } else {
+
+      coord
+    }
+
+
+  } else if (inherits(coord, "matrix")) {
+
+    coord
+
+  } else {
+    stop(paste0("Class supplied to `coord` unsupported."), call. = FALSE)
   }
 }
 
 # extract coordinates from a plane (fuzzy is in units km)
 extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0) {
+
   tb <- stars::st_extract(plane, na.rm = TRUE, at = coords)
 
   # add row numbers

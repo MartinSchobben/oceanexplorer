@@ -1,7 +1,7 @@
 test_that("check output type", {
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   expect_s3_class(
-    filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11,12))),
+    filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11, 12))),
     "sf"
     )
   expect_s3_class(
@@ -11,30 +11,26 @@ test_that("check output type", {
 })
 
 test_that("that different coord classes generate the same results", {
-  NOAA <- get_NOAA("temperature", 1, "annual")
+
   lon <- c(-116.3041, -40.58253, -9.306224)
   lat <- c(-31.98888, 17.39477, -31.98888)
   depth <- c(0, 0, 0)
-  # coord supplied as list
-  ls_NOAA <- filter_NOAA(NOAA, depth, coord = list(lon = lon, lat = lat))
-  # coord supplied as matrix
-  mat_NOAA <- filter_NOAA(NOAA, depth, coord = cbind(lon, lat))
+
   # coord supplied as sfc of point geometries
-  sfc <- sf::st_as_sf(as.data.frame(cbind(lon, lat)), coords = c("lon", "lat"), crs = 4326)
-  sfc_NOAA <- filter_NOAA(NOAA, depth, coord = sfc)
-  expect_equal(ls_NOAA, mat_NOAA)
-  expect_equal(ls_NOAA, sfc_NOAA)
-  expect_equal(mat_NOAA, sfc_NOAA)
-  expect_snapshot(ls_NOAA)
-  expect_snapshot(mat_NOAA)
-  expect_snapshot(sfc_NOAA)
+  sfc <- sf::st_as_sf(as.data.frame(cbind(lon, lat)), coords = c("lon", "lat"),
+                      crs = 4326)
+
+  # tests
+  expect_snapshot(cast_coords(list(lon = lon, lat = lat)))
+  expect_snapshot(cast_coords(cbind(lon, lat)))
+  expect_snapshot(cast_coords(sfc, epsg = 4326))
+  expect_snapshot(cast_coords(sfc, epsg = 3031))
 })
 
 test_that("entries other then vectors of 1 or the same length cause an error", {
   NOAA <- get_NOAA("temperature", 1, "annual")
   expect_error(
-    filter_NOAA(
-      NOAA,
+    coord_check(
       depth = c(0, 0, 0),
       coord = list(
         lon = c(-116.3041, 117),
@@ -62,32 +58,61 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
 
 
 test_that("check that epsg of depth plane and coordinates is similar", {
+  # data
   NOAA <- get_NOAA("temperature", 1, "annual")
+  # coords
   lon <- c(-116.3041, 117.12998)
   lat <- c(-31.98888, 17.39477)
   # for matrix coord
   plane_original <- filter_NOAA(NOAA, depth = 0)
   point_original <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat))
   plane_4326 <- filter_NOAA(NOAA, depth = 0, epsg = 4326)
-  point_4326 <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat), epsg = 4326)
-  expect_true(sf::st_crs(plane_original) == sf::st_crs(point_original))
-  expect_true(sf::st_crs(plane_4326) == sf::st_crs(point_4326))
+  point_4326 <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat),
+                            epsg = 4326)
+  # tests
+  expect_true(
+    sf::st_crs(plane_original) == sf::st_crs(point_original)
+  )
+  expect_true(
+    sf::st_crs(plane_4326) == sf::st_crs(point_4326)
+  )
+
   # for list coord
   plane_original <- filter_NOAA(NOAA, depth = 0)
-  point_original <- filter_NOAA(NOAA, depth = 0, coord = list(lon = lon, lat = lat))
+  point_original <- filter_NOAA(NOAA, depth = 0, coord = list(lon = lon,
+                                                              lat = lat))
   plane_4326 <- filter_NOAA(NOAA, depth = 0, epsg = 4326)
-  point_4326 <- filter_NOAA(NOAA, depth = 0, coord = list(lon = lon, lat = lat), epsg = 4326)
-  expect_true(sf::st_crs(plane_original) == sf::st_crs(point_original))
-  expect_true(sf::st_crs(plane_4326) == sf::st_crs(point_4326))
+  point_4326 <- filter_NOAA(NOAA, depth = 0, coord = list(lon = lon, lat = lat),
+                            epsg = 4326)
+
+  # tests
+  expect_true(
+    sf::st_crs(plane_original) == sf::st_crs(point_original)
+  )
+  expect_true(
+    sf::st_crs(plane_4326) == sf::st_crs(point_4326)
+  )
+
   # for sfc coord
-  sfc_original <- sf::st_as_sf(as.data.frame(cbind(lon, lat)), coords = c("lon", "lat"), crs = sf::st_crs(NOAA))
-  sfc_4326 <- sf::st_as_sf(as.data.frame(cbind(lon, lat)), coords = c("lon", "lat"), crs = 4326)
+  sfc_original <- sf::st_as_sf(
+    as.data.frame(cbind(lon, lat)),
+    coords = c("lon", "lat"),
+    crs = sf::st_crs(NOAA)
+  )
+  sfc_4326 <- sf::st_as_sf(as.data.frame(cbind(lon, lat)),
+                           coords = c("lon", "lat"), crs = 4326)
   plane_original <- filter_NOAA(NOAA, depth = 0)
   point_original <- filter_NOAA(NOAA, depth = 0, coord = sfc_original)
   plane_4326 <- filter_NOAA(NOAA, depth = 0, epsg = 4326)
   point_4326 <- filter_NOAA(NOAA, depth = 0, coord = sfc_4326, epsg = 4326)
-  expect_true(sf::st_crs(plane_original) == sf::st_crs(point_original))
-  expect_true(sf::st_crs(plane_4326) == sf::st_crs(point_4326))
+
+  # tests
+  expect_true(
+    sf::st_crs(plane_original) == sf::st_crs(point_original)
+  )
+  expect_true(
+    sf::st_crs(plane_4326) == sf::st_crs(point_4326)
+  )
 })
 
 test_that("epsg conversion works with character vector", {
