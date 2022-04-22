@@ -4,7 +4,7 @@
 \alias{filter_NOAA}
 \title{Filter NOAA}
 \usage{
-filter_NOAA(NOAA, depth, coord = NULL, epsg = NULL, fuzzy = 0)
+filter_NOAA(NOAA, depth = 0, coord = NULL, epsg = NULL, fuzzy = 0)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}

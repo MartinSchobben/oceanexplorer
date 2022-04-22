@@ -59,6 +59,7 @@ bibtex::write.bib(
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
+[![Codecov test coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
 <!-- badges: end -->
 
 The goal of oceanexplorer is to enable easy access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
@@ -109,9 +110,17 @@ Slice a specific interval from the array with `filter_NOAA()`, like so:
 
 In addition, the sliced array can be plotted, like so:
 
-```{r plot}
+```{r plot1}
 # plot the NOAA world ocean atlas for oxygen content
 plot_NOAA(oxy_omz)
+```
+
+The same plot can be produced by taking the original data and supplying a value to the `depth` argument and specifying the range of oxygen content to `oxy_omz`.
+
+
+```{r plot2}
+# plot the NOAA world ocean atlas for oxygen content
+plot_NOAA(oxy_global, depth = 200, rng = range(oxy_omz[[1]]))
 ```
 
 
@@ -125,7 +134,7 @@ NOAA_app()
 ```
 
 
-Or, the RStudio addin can be launch within the RStudio viewer pain by executing the following code, or by using the `Addins` drop down menu in the taskbar.
+Or, the RStudio addin can be launched within the RStudio viewer pain by executing the following code, or by using the `Addins` drop down menu in the taskbar.
 
 ```{r addin, eval = FALSE}
 # launch an interactive shiny session

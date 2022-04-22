@@ -2,8 +2,13 @@ Package: oceanexplorer
 Title: Explore our planet's ocean with the NOAA database
 Version: 0.0.0.9000
 Authors@R: 
-    person("Martin", "Schobben", , "schobbenmartin@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-8560-0037"))
+    person(
+     "Martin",  
+     "Schobben", 
+     email = "schobbenmartin@gmail.com", 
+     role = c("aut", "cre"),
+     comment = c(ORCID = "0000-0001-8560-0037")
+    )
 Description: This package enables easy exploration of the NOAA WORLD OCEAN ATLAS. 
   It includes functions to extract NetCDF data from the repository and codes to 
   visualise several physical and chemical parameters of the ocean. A Shiny app
@@ -13,6 +18,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Suggests: 
+    covr,
     devtools (>= 2.4.3),
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
@@ -41,5 +47,5 @@ Imports:
     glue (>= 1.6.0),
     shinyjs (>= 2.1.0),
     rlang (>= 0.4.11),
-    maps
+    maps (>= 3.4.0)
 Config/testthat/edition: 3

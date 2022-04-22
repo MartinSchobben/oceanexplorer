@@ -67,12 +67,12 @@ NOAA_server <- function(extended = TRUE) {
     })
 
     # show locations selection controls when data loaded
-    observeEvent(NOAA$data(), {
+    observeEvent(NOAA$data() , {
       updateTabsetPanel(
         session,
         "tabset",
         selected = if (isTRUE(extended)) "locations" else "Map"
-        )
+      )
     })
 
     # initiate plot click filter with null value

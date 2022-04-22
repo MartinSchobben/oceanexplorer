@@ -2,7 +2,7 @@ test_that("plot of NOAA atlas works", {
 
   skip_on_ci()
   skip_on_cran()
-  skip_if_offline()
+  skip_on_covr()
 
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   # points
@@ -35,19 +35,33 @@ test_that("plot of NOAA atlas works", {
 })
 
 test_that("box clipping works for stars",{
+
   skip_on_ci()
+  skip_on_cran()
+  skip_on_covr()
+
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
   # just depth
-  NOAAatlas <- filter_NOAA(NOAAatlas, 1)
-  expect_snapshot(clip_lat(NOAAatlas, 3031))
+  NOAAatlas <- filter_NOAA(NOAAatlas)
+
+  expect_snapshot(
+    clip_lat(NOAAatlas, 3031)
+  )
 })
 
 test_that("box clipping works for sf",{
+
   skip_on_ci()
+  skip_on_cran()
+  skip_on_covr()
+
   NOAA <- get_NOAA("oxygen", 1, "annual")
   # sf world map
-  wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) %>%
-    sf::st_as_sfc() %>%
+  wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
+    sf::st_as_sf() |>
     sf::st_transform(crs = sf::st_crs(NOAA))
-  expect_snapshot(clip_lat(wmap, 3031))
+
+  expect_snapshot(
+    clip_lat(wmap, 3031)
+  )
 })

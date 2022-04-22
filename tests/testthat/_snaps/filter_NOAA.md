@@ -1,47 +1,52 @@
 # that different coord classes generate the same results
 
     Code
-      ls_NOAA
+      cast_coords(list(lon = lon, lat = lat))
     Output
-      Simple feature collection with 3 features and 2 fields
-      Geometry type: POINT
-      Dimension:     XY
-      Bounding box:  xmin: -116.3041 ymin: -31.98888 xmax: -9.306224 ymax: 17.39477
-      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
-            t_an depth                    geometry
-      1 20.34319     0 POINT (-116.3041 -31.98888)
-      2 25.45511     0  POINT (-40.58253 17.39477)
-      3 19.95131     0 POINT (-9.306224 -31.98888)
+                   lon       lat
+      [1,] -116.304100 -31.98888
+      [2,]  -40.582530  17.39477
+      [3,]   -9.306224 -31.98888
 
 ---
 
     Code
-      mat_NOAA
+      cast_coords(cbind(lon, lat))
     Output
-      Simple feature collection with 3 features and 2 fields
-      Geometry type: POINT
-      Dimension:     XY
-      Bounding box:  xmin: -116.3041 ymin: -31.98888 xmax: -9.306224 ymax: 17.39477
-      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
-            t_an depth                    geometry
-      1 20.34319     0 POINT (-116.3041 -31.98888)
-      2 25.45511     0  POINT (-40.58253 17.39477)
-      3 19.95131     0 POINT (-9.306224 -31.98888)
+                   lon       lat
+      [1,] -116.304100 -31.98888
+      [2,]  -40.582530  17.39477
+      [3,]   -9.306224 -31.98888
 
 ---
 
     Code
-      sfc_NOAA
+      cast_coords(sfc, epsg = 4326)
     Output
-      Simple feature collection with 3 features and 2 fields
+      Simple feature collection with 3 features and 0 fields
       Geometry type: POINT
       Dimension:     XY
       Bounding box:  xmin: -116.3041 ymin: -31.98888 xmax: -9.306224 ymax: 17.39477
-      CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs
-            t_an depth                    geometry
-      1 20.34319     0 POINT (-116.3041 -31.98888)
-      2 25.45511     0  POINT (-40.58253 17.39477)
-      3 19.95131     0 POINT (-9.306224 -31.98888)
+      Geodetic CRS:  WGS 84
+                           geometry
+      1 POINT (-116.3041 -31.98888)
+      2  POINT (-40.58253 17.39477)
+      3 POINT (-9.306224 -31.98888)
+
+---
+
+    Code
+      cast_coords(sfc, epsg = 3031)
+    Output
+      Simple feature collection with 3 features and 0 fields
+      Geometry type: POINT
+      Dimension:     XY
+      Bounding box:  xmin: -10929700 ymin: -3049349 xmax: -1112783 ymax: 12759770
+      Projected CRS: WGS 84 / Antarctic Polar Stereographic
+                          geometry
+      1  POINT (-6168778 -3049349)
+      2 POINT (-10929699 12759771)
+      3   POINT (-1112783 6790734)
 
 # epsg conversion works with character vector
 

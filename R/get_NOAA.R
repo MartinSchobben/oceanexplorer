@@ -42,8 +42,8 @@ get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
   NOAA_path <- url_parser(var, spat_res, av_period)
 
   if (length(NOAA_path) == 1) {
-    # get stars
-    NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]]))
+    # get data and make stars
+    NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]])) |> stars::st_as_stars()
   } else {
     # get netcdf ('make_units' = suppress warning for unrecognized units)
     NOAA <- stars::read_ncdf(NOAA_path[[1]], var = stat, make_units = FALSE)

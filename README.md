@@ -10,8 +10,10 @@ yet, or the repository is only intended to be a limited example, demo,
 or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--01--17-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--04--22-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
 <!-- badges: end -->
 
 The goal of oceanexplorer is to enable easy access and exploration of
@@ -20,7 +22,9 @@ ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
 the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 <figure>
-<img src="man/figures/oceanexplorer-demo.gif" style="width:95.0%" alt="Demo of the ocean explorer" /><figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
+<img src="man/figures/oceanexplorer-demo.gif" style="width:95.0%"
+alt="Demo of the ocean explorer" />
+<figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
 </figure>
 
 ## Credits
@@ -28,10 +32,10 @@ the US agency [NOAA](https://www.ncei.noaa.gov/).
 The construction of the R (R Core Team 2021) package *oceanexplorer* and
 associated documentation was aided by the packages; *devtools* (Wickham,
 Hester, et al. 2021), *roxygen2* (Wickham, Danenberg, et al. 2021),
-*testthat* (Wickham 2021), *knitr* (Xie 2014, 2015), *rmarkdown* (Xie,
-Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020), and the
-superb guidance in the book: *R packages: organize, test, document, and
-share your code*, by Wickham (2015).
+*testthat* (Wickham 2021), *knitr* (Xie 2014 ; Xie 2015), *rmarkdown*
+(Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020),
+and the superb guidance in the book: *R packages: organize, test,
+document, and share your code*, by Wickham (2015).
 
 Data transformation, cleaning and visualization is performed with:
 *dplyr* (Wickham, François, et al. 2021), *tibble* (Müller and Wickham
@@ -92,7 +96,18 @@ In addition, the sliced array can be plotted, like so:
 plot_NOAA(oxy_omz)
 ```
 
-<img src="man/figures/README-plot-1.png" width="100%" />
+<img src="man/figures/README-plot1-1.png" width="100%" />
+
+The same plot can be produced by taking the original data and supplying
+a value to the `depth` argument and specifying the range of oxygen
+content to `oxy_omz`.
+
+``` r
+# plot the NOAA world ocean atlas for oxygen content
+plot_NOAA(oxy_global, depth = 200, rng = range(oxy_omz[[1]]))
+```
+
+<img src="man/figures/README-plot2-1.png" width="100%" />
 
 # Interactive exploration
 
@@ -104,7 +119,7 @@ of the datasets.
 NOAA_app()
 ```
 
-Or, the RStudio addin can be launch within the RStudio viewer pain by
+Or, the RStudio addin can be launched within the RStudio viewer pain by
 executing the following code, or by using the `Addins` drop down menu in
 the taskbar.
 
