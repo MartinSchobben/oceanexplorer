@@ -46,7 +46,6 @@ plot_server <- function(id, NOAA, points) {
     selected <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
 
     # plot
-    observe(message(glue::glue("{paste(input$epsg)}")))
     output$plot <- renderPlot({
 
       req(NOAA)
