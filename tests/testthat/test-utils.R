@@ -111,3 +111,9 @@ test_that("epsg check is consitent", {
     "Unknown format supplied to epsg."
   )
 })
+
+test_that("stereographic projections plot click values can be converted", {
+  expect_snapshot(
+    convert_stereo(9332793, 7376573, 3031)
+  )
+})

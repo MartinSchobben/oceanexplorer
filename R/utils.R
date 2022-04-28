@@ -92,7 +92,7 @@ epsg_check <- function(obj, epsg) {
 }
 
 
-# for 3031 and 3995 we also require clipping of laitudes at 50 degrees
+# for 3031 and 3995 we require clipping of latitudes at 50 degrees
 clip_lat <- function(obj, epsg, limit = 0) {
 
   # epsg check
@@ -139,3 +139,18 @@ clip_lat <- function(obj, epsg, limit = 0) {
   }
 }
 
+# for 3031 and 3995 we also require converting of coordinates to cartesian
+# coordinates upon graph selection
+convert_stereo <- function(lon, lat, epsg) {
+
+  # convert meters to degrees (convert to numeric if needed)
+  coord <- sf::st_point(c(as.numeric(lon), as.numeric(lat))) |>
+    sf::st_sfc(crs = as.numeric(epsg)) |>
+    sf::st_transform(crs = 4326) |>
+    sf::st_coordinates()
+
+  colnames(coord) <- c("lon", "lat")
+  # return
+  coord
+
+}

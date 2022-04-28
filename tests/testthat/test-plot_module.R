@@ -4,6 +4,7 @@ test_that("module for plotting works", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_on_covr()
   skip_if_offline()
 
 

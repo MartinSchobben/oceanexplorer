@@ -51,20 +51,46 @@ plot_server <- function(id, NOAA, points) {
       req(NOAA)
       req(input$epsg)
 
+      # coordinates (convert to meters for stereographic projections)
+      if (req(input$epsg) == "3031" | input$epsg == "3995") {
+       pts <- sf::st_transform(points(), crs = as.numeric(input$epsg))
+      } else {
+        pts <- points()
+      }
+
       plot_NOAA(
         NOAA(),
         depth = input$depth,
-        points = points(),
+        points = pts,
         epsg = input$epsg
       )
 
     })
 
+
+    # convert stereographic coordinates which are returned as meters instead of
+    # degrees
     observe({
+
+      req(input$plot_click$x)
+      req(input$plot_click$y)
+
+      # depth
       selected$depth <- input$depth
-      selected$lon <- input$plot_click$x
-      selected$lat <- input$plot_click$y
-     })
+
+      # coordinates (convert to degrees for stereographic projections)
+      if (req(input$epsg) == "3031" | input$epsg == "3995") {
+        crd <- convert_stereo(input$plot_click$x, input$plot_click$y,
+                              input$epsg)
+        selected$lon <- crd[ ,"lon", drop = TRUE]
+        selected$lat <- crd[ ,"lat", drop = TRUE]
+
+      } else {
+
+        selected$lon <- input$plot_click$x
+        selected$lat <- input$plot_click$y
+      }
+    })
 
     # return `reactivevalues`
     selected

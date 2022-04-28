@@ -97,25 +97,29 @@ NOAA_server <- function(extended = TRUE) {
     # download
     output_server("download", filter$coord, NOAA$variable)
 
+
     # emit code (RStudio addin)
     if (isFALSE(extended)) {
+
+      # collect code
+      emit <- reactiveValues(code = "library(oceanexplorer) \n")
+
+      # code (only loading)
+      observeEvent(NOAA$code(), {
+        emit$code <- paste0(emit$code, "NOAA <- ", NOAA$code())
+      })
+
+      # code (loading and filter extraction)
+      observeEvent(output_table(), {
+
+          emit$code <- paste0(emit$code, "\n", output_table())
+
+      })
+
       # listen for 'done'.
       observeEvent(input$done, {
-        req(NOAA$code())
-
-        # code (only loading)
-        if (isTruthy(NOAA$code()) & !isTruthy(output_table())) {
-          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-",
-                                        NOAA$code()))
-          invisible(stopApp())
-        }
-        # code (loading and filter extraction)
-        if (isTruthy(NOAA$code()) & isTruthy(output_table())) {
-          rstudioapi::insertText(paste0("library(oceanexplorer) \nNOAA <-",
-                                        NOAA$code(), "\n", output_table()))
-          invisible(stopApp())
-        }
-
+        rstudioapi::insertText(emit$code)
+        invisible(stopApp())
       })
     }
   }

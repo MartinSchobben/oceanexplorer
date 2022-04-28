@@ -88,7 +88,7 @@ input_server <- function(id) {
       on.exit(waiter$hide())
 
       # call for data retrieval
-      call_NOAA <- glue::glue("get_NOAA({glue::double_quote(input$var)},",
+      call_NOAA <- glue::glue("get_NOAA({glue::double_quote(input$var)}, ",
                               "{input$spat}, {glue::double_quote(input$temp)})")
 
       # execute

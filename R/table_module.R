@@ -37,13 +37,13 @@ table_server <- function(id, NOAA, variable) {
 
     # table
     output$table <- DT::renderDT({
-      pretty_table()
+      # pretty_table()
       DT::formatRound(
         DT::datatable(pretty_table(), rownames = FALSE),
         columns  = c(variable(), "depth", "longitude", "latitude"),
         digits = c(1, 0, 2, 2)
-        )
-      })
+      )
+    })
 
     # return code for the specific operation
     reactive({
@@ -59,6 +59,5 @@ table_server <- function(id, NOAA, variable) {
          )"
       )
     })
-
   })
 }
