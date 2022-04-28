@@ -1,6 +1,6 @@
 ---
 output: github_document
-bibliography: "man/packages.bib"
+bibliography: "vignettes/packages.bib"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -17,10 +17,10 @@ knitr::opts_chunk$set(
 
 ```{r pkgs, echo=FALSE, message=FALSE, eval=FALSE}
 # following code for loading and writing the bibtex references for the used pkgs
-pkgs <- c("dplyr", "tibble", "stringr", "magrittr",
-          "ggplot2", "rlang", "purrr", "devtools", 
+pkgs <- c("dplyr", "tibble", "stringr", "ggplot2", "rlang", "purrr", "devtools", 
           "roxygen2", "testthat", "knitr", "rmarkdown", "stars", "sf", 
-          "thematic", "bslib", "shiny", "ncmeta", "waiter")  
+          "thematic", "bslib", "shiny", "ncmeta", "waiter", "shinyWidgets", 
+          "shinyjs")  
 # Get the R reference
 rref <- citation()
 # Create ref key
@@ -33,7 +33,7 @@ hadley1 <- bibentry(
   year = "2015",
   publisher = " O'Reilly Media, Inc.",
   url = "https://r-pkgs.org/"
-  )
+)
 hadley2 <- bibentry(
   key = "Wickham2020",
   bibtype = "Book",
@@ -42,13 +42,13 @@ hadley2 <- bibentry(
   year = "2020",
   publisher = " O'Reilly Media, Inc.",
   url = "https://mastering-shiny.org/"
-  )
-knitr::write_bib(pkgs, "man/packages.bib", prefix = "")
-pkgs <- bibtex::read.bib("man/packages.bib")
+)
+knitr::write_bib(pkgs, "vignettes/packages.bib", prefix = "")
+pkgs <- bibtex::read.bib("vignettes/packages.bib")
 bibtex::write.bib(
   purrr::reduce(list(rref, hadley1, hadley2, pkgs), append), 
-  file = "man/packages.bib"
-  )
+  file = "vignettes/packages.bib"
+)
 ```
 
 
@@ -71,11 +71,11 @@ The goal of oceanexplorer is to enable easy access and exploration of the [WORLD
 
 The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
 
-Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], *stringr* [@stringr], *magrittr* [@magrittr], and *rlang* [@rlang].
+Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], *stringr* [@stringr], and *rlang* [@rlang].
 
 In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf], *stars* [@stars], and *ncmeta* [@ncmeta].
 
-The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020]. was a great help in learning how to develop such applications. Furthermore, the packages *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
+The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020]. was a great help in learning how to develop such applications. Furthermore, the packages *shinyjs* [@shinyjs], *shinyWidgets* [@shinyWidgets],  *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
 
 
 ## Installation

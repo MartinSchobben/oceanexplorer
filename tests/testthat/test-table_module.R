@@ -1,4 +1,4 @@
-NOAA <- reactiveVal(get_NOAA("oxygen", 1, "annual") %>%
+NOAA <- reactiveVal(get_NOAA("oxygen", 1, "annual") |>
                       filter_NOAA(30, list(lat = 10, lon= -120)))
 
 
@@ -18,7 +18,7 @@ testServer(table_server, args = vars, {
 test_that("table is formatted correctly", {
 
   # filtered data
-  fl_NOAA <- get_NOAA("oxygen", 1, "annual") %>%
+  fl_NOAA <- get_NOAA("oxygen", 1, "annual") |>
     filter_NOAA(30, list(lat = 10, lon= -120))
 
   # initiate externals

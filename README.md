@@ -10,7 +10,7 @@ yet, or the repository is only intended to be a limited example, demo,
 or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--04--22-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--04--28-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
@@ -29,29 +29,30 @@ alt="Demo of the ocean explorer" />
 
 ## Credits
 
-The construction of the R (R Core Team 2021) package *oceanexplorer* and
+The construction of the R (R Core Team 2022) package *oceanexplorer* and
 associated documentation was aided by the packages; *devtools* (Wickham,
 Hester, et al. 2021), *roxygen2* (Wickham, Danenberg, et al. 2021),
-*testthat* (Wickham 2021), *knitr* (Xie 2014 ; Xie 2015), *rmarkdown*
+*testthat* (Wickham 2022), *knitr* (Xie 2014 ; Xie 2015), *rmarkdown*
 (Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020),
 and the superb guidance in the book: *R packages: organize, test,
 document, and share your code*, by Wickham (2015).
 
 Data transformation, cleaning and visualization is performed with:
-*dplyr* (Wickham, François, et al. 2021), *tibble* (Müller and Wickham
-2021), *stringr* (Wickham 2019), *magrittr* (Bache and Wickham 2020),
-and *rlang* (Henry and Wickham 2021).
+*dplyr* (Wickham et al. 2022), *tibble* (Müller and Wickham 2021),
+*stringr* (Wickham 2019), and *rlang* (Henry and Wickham 2022).
 
 In addition, this package relies on a set of packages for spatial data
-analysis: *sf* (Pebesma 2021a), *stars* (Pebesma 2021b), and *ncmeta*
+analysis: *sf* (Pebesma 2022), *stars* (Pebesma 2021), and *ncmeta*
 (Sumner 2020).
 
 The app is build with *shiny* (Chang et al. 2021) and the guidance in
 the book: *Mastering Shiny: Build Interactive Apps, Reports &
 Dashboards* (Wickham 2020). was a great help in learning how to develop
-such applications. Furthermore, the packages *waiter* (Coene 2021),
-*bslib* (Sievert and Cheng 2021) and *thematic* (Sievert, Schloerke, and
-Cheng 2021) ensure user friendliness and visually pleasing graphics.
+such applications. Furthermore, the packages *shinyjs* (Attali 2021),
+*shinyWidgets* (Perrier, Meyer, and Granjon 2022), *waiter* (Coene
+2022), *bslib* (Sievert and Cheng 2021) and *thematic* (Sievert,
+Schloerke, and Cheng 2021) ensure user friendliness and visually
+pleasing graphics.
 
 ## Installation
 
@@ -132,11 +133,10 @@ NOAA_addin()
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 
-<div id="ref-magrittr" class="csl-entry">
+<div id="ref-shinyjs" class="csl-entry">
 
-Bache, Stefan Milton, and Hadley Wickham. 2020. *Magrittr: A
-Forward-Pipe Operator for r*.
-<https://CRAN.R-project.org/package=magrittr>.
+Attali, Dean. 2021. *Shinyjs: Easily Improve the User Experience of Your
+Shiny Apps in Seconds*. <https://deanattali.com/shinyjs/>.
 
 </div>
 
@@ -151,14 +151,14 @@ Borges. 2021. *Shiny: Web Application Framework for r*.
 
 <div id="ref-waiter" class="csl-entry">
 
-Coene, John. 2021. *Waiter: Loading Screen for Shiny*.
+Coene, John. 2022. *Waiter: Loading Screen for Shiny*.
 <https://CRAN.R-project.org/package=waiter>.
 
 </div>
 
 <div id="ref-rlang" class="csl-entry">
 
-Henry, Lionel, and Hadley Wickham. 2021. *Rlang: Functions for Base
+Henry, Lionel, and Hadley Wickham. 2022. *Rlang: Functions for Base
 Types and Core r and Tidyverse Features*.
 <https://CRAN.R-project.org/package=rlang>.
 
@@ -171,23 +171,31 @@ Müller, Kirill, and Hadley Wickham. 2021. *Tibble: Simple Data Frames*.
 
 </div>
 
+<div id="ref-stars" class="csl-entry">
+
+Pebesma, Edzer. 2021. *Stars: Spatiotemporal Arrays, Raster and Vector
+Data Cubes*. <https://CRAN.R-project.org/package=stars>.
+
+</div>
+
 <div id="ref-sf" class="csl-entry">
 
-Pebesma, Edzer. 2021a. *Sf: Simple Features for r*.
+———. 2022. *Sf: Simple Features for r*.
 <https://CRAN.R-project.org/package=sf>.
 
 </div>
 
-<div id="ref-stars" class="csl-entry">
+<div id="ref-shinyWidgets" class="csl-entry">
 
-———. 2021b. *Stars: Spatiotemporal Arrays, Raster and Vector Data
-Cubes*. <https://CRAN.R-project.org/package=stars>.
+Perrier, Victor, Fanny Meyer, and David Granjon. 2022. *shinyWidgets:
+Custom Inputs Widgets for Shiny*.
+<https://CRAN.R-project.org/package=shinyWidgets>.
 
 </div>
 
 <div id="ref-rversion" class="csl-entry">
 
-R Core Team. 2021. *R: A Language and Environment for Statistical
+R Core Team. 2022. *R: A Language and Environment for Statistical
 Computing*. Vienna, Austria: R Foundation for Statistical Computing.
 <https://www.R-project.org/>.
 
@@ -239,7 +247,7 @@ Dashboards.* O’Reilly Media, Inc. <https://mastering-shiny.org/>.
 
 <div id="ref-testthat" class="csl-entry">
 
-———. 2021. *Testthat: Unit Testing for r*.
+———. 2022. *Testthat: Unit Testing for r*.
 <https://CRAN.R-project.org/package=testthat>.
 
 </div>
@@ -254,7 +262,7 @@ Wickham, Hadley, Peter Danenberg, Gábor Csárdi, and Manuel Eugster.
 
 <div id="ref-dplyr" class="csl-entry">
 
-Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021.
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022.
 *Dplyr: A Grammar of Data Manipulation*.
 <https://CRAN.R-project.org/package=dplyr>.
 

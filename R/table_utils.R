@@ -15,7 +15,7 @@ format_coord <- function(NOAA, coord) {
 
   # split coords in long and lat
   coords <- strsplit(sf::st_as_text(NOAA$geometry), "[^[:alnum:]|.|-]+")
-  coords <- do.call(Map, c(f = c, coords)) %>%
+  coords <- do.call(Map, c(f = c, coords)) |>
     stats::setNames(c("geometry", "longitude", "latitude"))
 
   # remove old geometry

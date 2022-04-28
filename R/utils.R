@@ -23,7 +23,8 @@ reproject <- function(obj, epsg, ...) {
 #' @export
 reproject.sf <- function(obj, epsg, ...) {
 
-  if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) | epsg == sf::st_crs(3995)) {
+  if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) |
+      epsg == sf::st_crs(3995)) {
     # clipping of latitudes for polar/orthographic projections
     clip_lat(obj, epsg)
   } else {
@@ -36,7 +37,8 @@ reproject.sf <- function(obj, epsg, ...) {
 reproject.stars <- function(obj, epsg, ...) {
   # polar/orthographic projections require sf::st_transform to be able to be plotted
   # with geom_sf
-  if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) | epsg == sf::st_crs(3995)) {
+  if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) |
+      epsg == sf::st_crs(3995)) {
     # clipping of latitudes for polar projection
     clip_lat(obj, epsg)
   } else {
@@ -117,7 +119,7 @@ clip_lat <- function(obj, epsg, limit = 0) {
     sf::st_crs(box) <- sf::st_crs(obj)
     # cropping
     obj <- sf::st_crop(obj, box)
-    # re-projection (onyl sf_transform seems to work in combination with ggplot)
+    # re-projection (only sf_transform seems to work in combination with ggplot)
     sf::st_transform(obj, epsg)
 
   } else if (inherits(obj, "sf")) {
@@ -125,10 +127,10 @@ clip_lat <- function(obj, epsg, limit = 0) {
     # for sf object we first need re-projection and then cropping
     obj <- sf::st_transform(obj, epsg)
     # center around pole
-    circ <- sf::st_bbox(sf::st_point(c(0,0))) %>%
-      sf::st_as_sfc() %>%
+    circ <- sf::st_bbox(sf::st_point(c(0,0))) |>
+      sf::st_as_sfc() |>
       # alters projection to have an projected crs
-      sf::st_as_sf(crs = sf::st_crs(obj)) %>%
+      sf::st_as_sf(crs = sf::st_crs(obj)) |>
       # draw circle
       sf::st_buffer(12500000)
 

@@ -75,7 +75,8 @@ plot_server <- function(id, NOAA, points) {
       req(input$epsg)
 
       # coordinates (convert to meters for stereographic projections)
-      if (req(input$epsg) == "3031" | input$epsg == "3995") {
+      if ((req(input$epsg) == "3031" | input$epsg == "3995") &
+          !is.null(points())) {
         pts <- sf::st_transform(points(), crs = as.numeric(input$epsg))
       } else {
         pts <- points()

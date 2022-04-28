@@ -159,12 +159,12 @@ extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0) {
     tb_ft$id <- ft$id
 
     # replace NAs
-    tb <- rbind(tb, sf::st_as_sf(tb_ft)) %>%
-      dplyr::group_by(.data$id) %>%
+    tb <- rbind(tb, sf::st_as_sf(tb_ft)) |>
+      dplyr::group_by(.data$id) |>
       dplyr::summarise(
         dplyr::across(-.data$geometry, .fns = ~mean(.x, na.rm = TRUE)),
         .groups = "drop"
-        ) %>%
+      ) |>
       dplyr::mutate(geometry_search = .data$geometry, geometry = tb$geometry)
 
   }

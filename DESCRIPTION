@@ -22,6 +22,8 @@ Suggests:
     devtools (>= 2.4.3),
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
+    knitr,
+    rmarkdown,
     roxygen2,
     shinytest (>= 1.5.1),
     testthat (>= 3.1.2),
@@ -37,7 +39,6 @@ Imports:
     waiter (>= 0.2.5),
     bslib (>= 0.3.1),
     thematic (>= 0.1.2.1),
-    magrittr (>= 2.0.1),
     shinyFeedback (>= 0.4.0),
     purrr (>= 0.3.4),
     miniUI (>= 0.1.1.1),
@@ -50,3 +51,4 @@ Imports:
     maps (>= 3.4.0),
     shinyWidgets (>= 0.6.4)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

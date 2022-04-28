@@ -96,7 +96,7 @@ input_server <- function(id) {
       } else {
         citations(input$var)
       }
-    }) %>%
+    }) |>
       bindEvent(input$go)
 
     # input data

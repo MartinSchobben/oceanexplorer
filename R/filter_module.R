@@ -90,7 +90,7 @@ filter_ui <- function(id, extended = TRUE) {
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
+filter_server <- function(id, NOAA, external, ivars = c("depth","lon" , "lat"),
                           extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
@@ -170,7 +170,6 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
       }
     })
 
-
     # store coordinate points
     coord <- reactiveVal(NULL)
     observeEvent(extract(), {
@@ -186,24 +185,26 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     n_max <- reactiveVal(numeric(0))
     observe({
       # how many steps back? maximum depth of `input2`
-      step <- lengths(reactiveValuesToList(input2))  %>% max()
+      step <- lengths(reactiveValuesToList(input2)) |> max()
       if (step > 0) n_max(c(isolate(n_max()), step))
     })
 
     # and then deleting the last observations
     observeEvent(input$back, {
-      coord(dplyr::slice_head(coord(), n = nrow(coord()) - rev(n_max())[1]))
-      # delete last n_max
-      n_max(utils::head(n_max(), -1))
-      # enable base map plotting (otherwise generates error)
-      if (nrow(coord()) == 0) coord(NULL)
+      if (length(n_max()) > 1) {
+        coord(dplyr::slice_head(coord(), n = nrow(coord()) - rev(n_max())[1]))
+        # delete last n_max
+        n_max(utils::head(n_max(), -1))
+      } else {
+        # enable base map plotting (otherwise generates error)
+        coord(NULL)
+      }
       purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL
     })
 
     # delete all coordinate points by clicking reset of changing the dataset
-    observe({
-      input$reset
-      NOAA()
+    observeEvent(input$reset,{
+      # NOAA()
       coord(NULL) # set stored data to NULL
       purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL
     })

@@ -29,7 +29,6 @@
         "htmlwidgets",
         "jquerylib",
         "jsonlite",
-        "magrittr",
         "promises"
       ]
     },
@@ -233,6 +232,22 @@
       "Hash": "0f22be39ec1d141fd03683c06f3a6e67",
       "Requirements": []
     },
+    "covr": {
+      "Package": "covr",
+      "Version": "3.5.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "6d80a9fc3c0c8473153b54fa54719dfd",
+      "Requirements": [
+        "crayon",
+        "digest",
+        "httr",
+        "jsonlite",
+        "rex",
+        "withr",
+        "yaml"
+      ]
+    },
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.4.2",
@@ -332,7 +347,6 @@
         "generics",
         "glue",
         "lifecycle",
-        "magrittr",
         "pillar",
         "rlang",
         "tibble",
@@ -625,14 +639,6 @@
         "units"
       ]
     },
-    "magrittr": {
-      "Package": "magrittr",
-      "Version": "2.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "cdc87ecd81934679d1557633d8e1fe51",
-      "Requirements": []
-    },
     "maps": {
       "Package": "maps",
       "Version": "3.4.0",
@@ -812,7 +818,6 @@
         "R6",
         "Rcpp",
         "later",
-        "magrittr",
         "rlang"
       ]
     },
@@ -839,7 +844,6 @@
       "Repository": "CRAN",
       "Hash": "97def703420c8ab10d8f0e6c72101e02",
       "Requirements": [
-        "magrittr",
         "rlang"
       ]
     },
@@ -876,6 +880,16 @@
       "Repository": "CRAN",
       "Hash": "c1078316e1d4f70275fc1ea60c0bc431",
       "Requirements": []
+    },
+    "rex": {
+      "Package": "rex",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ae34cd56890607370665bee5bd17812f",
+      "Requirements": [
+        "lazyeval"
+      ]
     },
     "rlang": {
       "Package": "rlang",
@@ -974,7 +988,6 @@
         "DBI",
         "Rcpp",
         "classInt",
-        "magrittr",
         "s2",
         "units"
       ]
@@ -1018,6 +1031,20 @@
         "fontawesome",
         "htmltools",
         "jsonlite",
+        "shiny"
+      ]
+    },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.6.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "02fba70d7c5c1ab0754d9c0108c029eb",
+      "Requirements": [
+        "bslib",
+        "htmltools",
+        "jsonlite",
+        "sass",
         "shiny"
       ]
     },
@@ -1110,7 +1137,6 @@
       "Hash": "0759e6b6c0957edb1311028a49a35e76",
       "Requirements": [
         "glue",
-        "magrittr",
         "stringi"
       ]
     },
@@ -1140,7 +1166,6 @@
         "evaluate",
         "jsonlite",
         "lifecycle",
-        "magrittr",
         "pkgload",
         "praise",
         "processx",
@@ -1175,7 +1200,6 @@
         "ellipsis",
         "fansi",
         "lifecycle",
-        "magrittr",
         "pillar",
         "pkgconfig",
         "rlang",
@@ -1194,7 +1218,6 @@
         "ellipsis",
         "glue",
         "lifecycle",
-        "magrittr",
         "purrr",
         "rlang",
         "tibble",
