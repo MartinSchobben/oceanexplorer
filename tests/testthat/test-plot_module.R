@@ -6,6 +6,7 @@ test_that("module for plotting works", {
   skip_on_ci()
   skip_on_covr()
   skip_if_offline()
+  skip("Use for manual checks")
 
 
   appdir <- test_path("apps", "plot_module")

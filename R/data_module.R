@@ -13,16 +13,31 @@
 input_ui <- function(id, citation = NULL, extended = TRUE) {
 
   vars <- tagList(
+    actionLink(
+      NS(id, "varhelper"),
+      "",
+      icon = icon('question-circle')
+    ),
     selectInput(
       NS(id, "var"),
       h5("Variable"),
       choices = c("temperature", "phosphate", "nitrate", "silicate", "oxygen",
                   "salinity", "density")
     ),
+    actionLink(
+      NS(id, "spathelper"),
+      "",
+      icon = icon('question-circle')
+    ),
     selectInput(
       NS(id, "spat"),
       h5("Resolution"),
       choices = c(1, 5)
+    ),
+    actionLink(
+      NS(id, "temphelper"),
+      "",
+      icon = icon('question-circle')
     ),
     selectInput(
       NS(id, "temp"),
@@ -42,7 +57,10 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
 
   if (isTRUE(extended)) {
     layout <- tagList(
-      fluidRow(column(6, vars[[1]], vars[[2]]), column(6, vars[[3]]))
+      fluidRow(
+        column(6,  tags$br(), vars[[1]], vars[[2]], vars[[3]], vars[[4]]),
+        column(6,  tags$br(), vars[[5]], vars[[6]])
+        )
     )
     tagAppendChildren(layout, load)
   } else {
@@ -95,6 +113,49 @@ input_server <- function(id) {
       exec_NOAA <- get_NOAA(input$var, input$spat, input$temp)
 
       list(data = exec_NOAA, code = call_NOAA)
+    })
+
+    # helper modals
+    observeEvent(input$varhelper, {
+      showModal(
+        modalDialog(
+          title = "Oceanographic variables",
+          HTML(
+            paste0("Select the oceanographic variable of interest. See the ",
+                    "following technical paper for more information: ",
+                   technical),
+            )
+        )
+      )
+    })
+
+    observeEvent(input$spathelper, {
+      showModal(
+        modalDialog(
+          title = "Available grid resolution",
+          HTML(
+            paste0("Select the grid resolution for mean fields on a 1- or ",
+                   "5-degree longitude/latitude grid . See the ",
+                   "following technical paper for more information: ",
+                   technical),
+          )
+        )
+      )
+    })
+
+    observeEvent(input$temphelper, {
+      showModal(
+        modalDialog(
+          title = "Available time periods",
+          HTML(
+            paste0("Select the time period over which the mean is calculated. ",
+                   "The period can be annual, North Hemisphere seasonal ",
+                   "(e.g. Spring, three-month periods) and monthly. See the ",
+                   "following technical paper for more information: ",
+                   technical),
+          )
+        )
+      )
     })
 
     # output
@@ -176,8 +237,15 @@ citations <- function(x) {
   HTML(
     paste(vc_cite[x],
     a(
-      href="https://www.ncei.noaa.gov/products/world-ocean-atlas",
-      "(Click here for the original papers)")
+      href = "https://www.ncei.noaa.gov/products/world-ocean-atlas",
+      "(Click here for the original papers)"
+      )
     )
   )
 }
+
+technical <- a(
+  href =  "https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf",
+  "NOAA World Ocean Atlas 2018 Product Documentation"
+)
+

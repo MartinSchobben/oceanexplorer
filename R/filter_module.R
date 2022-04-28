@@ -13,11 +13,21 @@
 filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
+    actionLink(
+      NS(id, "depthhelper"),
+      "",
+      icon = icon('question-circle')
+    ),
     textInput(
       NS(id, "depth"),
       h5("Depth"),
       NULL,
       placeholder = "meters"
+    ),
+    actionLink(
+      NS(id, "lonhelper"),
+      "",
+      icon = icon('question-circle')
     ),
     textInput(
       NS(id, "lon"),
@@ -25,11 +35,21 @@ filter_ui <- function(id, extended = TRUE) {
       NULL,
       placeholder = "degrees"
     ),
+    actionLink(
+      NS(id, "lathelper"),
+      "",
+      icon = icon('question-circle')
+    ),
     textInput(
       NS(id, "lat"),
       h5("Latitude"),
       NULL,
       placeholder = "degrees"
+    ),
+    actionLink(
+      NS(id, "searchhelper"),
+      "",
+      icon = icon('question-circle')
     ),
     selectInput(
       NS(id, "search"),
@@ -44,15 +64,20 @@ filter_ui <- function(id, extended = TRUE) {
     tags$br(),
     actionButton(NS(id, "extract"), label = h5("Extract")),
     actionButton(NS(id, "reset"), label = h5("Reset")),
-    actionButton(NS(id, "back"), label = h5("Back"))
+    actionButton(NS(id, "back"), label = h5("Back")),
+    actionLink(
+      NS(id, "selecthelper"),
+      "",
+      icon = icon('question-circle')
+    )
   )
 
   if (isTRUE(extended)) {
     layout <- tagList(
       fluidRow(
         shinyFeedback::useShinyFeedback(),
-        column(6, coords[[1]], coords[[2]]),
-        column(6, coords[[3]], coords[[4]])
+        column(6, tags$br(), coords[[1]], coords[[2]], coords[[3]], coords[[4]]),
+        column(6, tags$br(), coords[[5]], coords[[6]], coords[[7]], coords[[8]])
       )
     )
 
@@ -184,8 +209,8 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
     })
 
     # reset all by button click or reset text input when plot input is selected
-    observeEvent(input$reset | input$back| external$lon | external$lat |
-                   external$depth, {
+    observeEvent({input$reset | input$back | external$lon | external$lat |
+                   external$depth}, {
       if (isTRUE(extended)) {
         updateTextInput(
           inputId = "lon",
@@ -203,6 +228,63 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon", "lat"),
           placeholder = "meters"
         )
       }
+    })
+
+    # helper modals
+    observeEvent({input$depthhelper | input$lonhelper| input$lathelper} , {
+      showModal(
+        modalDialog(
+          title = "Location information",
+          HTML(
+            paste0("The text fields: \"depth\", \"longitude\", and ",
+                   "\"latitude\" specify the location to extract ",
+                   "oceanographic variables. Alternatively, one can click on ",
+                   "the plot to obtain the values. It is possible to extract ",
+                   "multiple locations at once by providing a comma separated ",
+                   "list (e.g., \"120, 130, 140\"). Note, that depth and ",
+                   "coordinate vectors should be of the same length, or one ",
+                   "of the two should have length one. The data is extracted ",
+                   "only when all three fields have been filled, and by ",
+                   "subsequently clicking the button \"Extract\"."),
+          )
+        )
+      )
+    }, ignoreInit = TRUE)
+
+    observeEvent(input$searchhelper , {
+      showModal(
+        modalDialog(
+          title = "Selector",
+          HTML(
+            paste0("Data extraction can be achieved in two modes; \"point\" ",
+                   "and \"fuzzy\", where the former results in a very precise ",
+                   "search, the latter option searches in an area with a ",
+                   "circumference of 50 km around the selected coordinate ",
+                   "point. The returned value of a fuzzy search is therefore ",
+                   "an average of the search area. Currently, fuzzy search is ",
+                   "not yet implemented."),
+          )
+        )
+      )
+    })
+
+    observeEvent(input$selecthelper , {
+      showModal(
+        modalDialog(
+          title = "Extractions",
+          HTML(
+            paste0("The button \"Extract\" uses the information supplied ",
+                   " in the text fields: \"depth\", \"longitude\", and ",
+                   "\"latitude\" to extract the oceanographic variable. ",
+                   "Hence the button is only active when those fields have ",
+                   "been filled, and otherwise remains greyed-out. The ",
+                   "buttons: \"Reset\" and \"Back\" revert all, or the last ",
+                   "extraction, respectively. These two operations can be ","
+                   used for data extracted by clicking on the interactive ",
+                   "plot and/or obtained by using the text field search.")
+          )
+        )
+      )
     })
 
     # return

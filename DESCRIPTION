@@ -47,5 +47,6 @@ Imports:
     glue (>= 1.6.0),
     shinyjs (>= 2.1.0),
     rlang (>= 0.4.11),
-    maps (>= 3.4.0)
+    maps (>= 3.4.0),
+    shinyWidgets (>= 0.6.4)
 Config/testthat/edition: 3

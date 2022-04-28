@@ -8,11 +8,34 @@
 #' @export
 plot_ui <- function(id) {
   tagList(
-    selectInput(
-      NS(id, "epsg"),
-      h5("EPSG"),
-      c("original", "4326", "3031", "3995"),
-      selected = "original"
+    fluidRow(
+      column(
+        width = 6,
+        selectInput(
+          NS(id, "epsg"),
+          h5("EPSG"),
+          c("original", "4326", "3031", "3995"),
+          selected = "original"
+        ),
+        actionLink(
+          NS(id, "epsghelper"),
+          "",
+          icon = icon('question-circle')
+        )
+      ),
+      column(
+        width = 6,
+
+        shinyWidgets::materialSwitch(
+          NS(id, "fixed"),
+          h5("Fix variable scale")
+        ),
+        actionLink(
+          NS(id, "fixedhelper"),
+          "",
+          icon = icon('question-circle')
+        )
+      )
     ),
     plotOutput(
       NS(id,  "plot"),
@@ -53,16 +76,28 @@ plot_server <- function(id, NOAA, points) {
 
       # coordinates (convert to meters for stereographic projections)
       if (req(input$epsg) == "3031" | input$epsg == "3995") {
-       pts <- sf::st_transform(points(), crs = as.numeric(input$epsg))
+        pts <- sf::st_transform(points(), crs = as.numeric(input$epsg))
       } else {
         pts <- points()
       }
 
+      # fixed oceanographic variable scale or adapted to depth slice
+      if (!isTruthy(input$fixed)) {
+        NOAA <- NOAA()
+        depth <- input$depth
+        rng <- NULL
+      } else {
+        NOAA <- filter_NOAA(NOAA(), depth = input$depth)
+        depth <- NULL
+        rng <- range(NOAA[[1]], na.rm = TRUE)
+      }
+
       plot_NOAA(
-        NOAA(),
-        depth = input$depth,
+        NOAA,
+        depth = depth,
         points = pts,
-        epsg = input$epsg
+        epsg = input$epsg,
+        rng = rng
       )
 
     })
@@ -90,6 +125,37 @@ plot_server <- function(id, NOAA, points) {
         selected$lon <- input$plot_click$x
         selected$lat <- input$plot_click$y
       }
+    })
+
+    # helper modal
+    observeEvent(input$epsghelper , {
+      showModal(
+        modalDialog(
+          title = "EPSG Geodetic Parameter Dataset",
+          HTML(
+            paste0("The \"EPSG\" drop-down menu enables selection some of ",
+                   " commonly used projections, such as \"4326\". And, two ",
+                   "projections \"3031\" and \"3995\" for stereographic of ",
+                   "the Antarctic and Arctic regions, respectively. ",
+                   "The option \"original\" refers to the original projection ",
+                   "of the NOAA WOC data.")
+          )
+        )
+      )
+    })
+
+    observeEvent(input$fixedhelper , {
+      showModal(
+        modalDialog(
+          title = "Fixating the oceanographic variable scale",
+          HTML(
+            paste0("This toggle switch determines whether the variable scale ",
+                   "is fixed for the current depth slice or the whole  ",
+                   "dataset. Loosening the variable scale can help highlight ",
+                   "nuanced differences in certain variables (e.g. phosphate).")
+          )
+        )
+      )
     })
 
     # return `reactivevalues`
