@@ -16,7 +16,7 @@ env_parm_labeller <- function(var, prefix = character(1), postfix = character(1)
     index <- c(i = 2, p = 4, o = 2, n = 3)
     as.expression(
       substitute(
-        prefix ~ a[b]~"("*mu*"mol kg"^{"-"}*")" ~ postfix,
+        prefix ~ a[b]~"("*mu*"mol kg"^{"-1"}*")" ~ postfix,
         list(
           prefix = rlang::sym(prefix),
           postfix = rlang::sym(postfix),
