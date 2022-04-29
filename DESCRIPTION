@@ -22,6 +22,7 @@ Suggests:
     devtools (>= 2.4.3),
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
+    here,
     knitr,
     rmarkdown,
     roxygen2,
@@ -52,3 +53,4 @@ Imports:
     shinyWidgets (>= 0.6.4)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://utrechtuniversity.github.io/oceanexplorer/

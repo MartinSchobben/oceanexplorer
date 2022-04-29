@@ -97,7 +97,6 @@ NOAA_server <- function(extended = TRUE) {
     # download
     output_server("download", filter$coord, NOAA$variable)
 
-
     # emit code (RStudio addin)
     if (isFALSE(extended)) {
 

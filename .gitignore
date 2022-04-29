@@ -13,3 +13,4 @@ tests/**/*.png
 # shiny test
 inst/appdir/
 inst/doc
+docs
