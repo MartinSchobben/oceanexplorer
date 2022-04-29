@@ -36,7 +36,7 @@ The [World Ocean Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect
 -   Users with minimal programming experience as a hybrid graphical that can be easily integrated in an R workflow (RStudio addin).
 -   Users with an R programming background can easily load NOAA data into R.
 
-I will now in reversed order explain some of the basic usage .. of all three application types.
+I will now in reversed order explain some of the basic use cases of all three application types.
 
 But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by *sf* [@sf] for vectors and *stars* [@stars] for raster data (e.g. the NOAA data). I highly recommend reading the accompanying documentation of these packages:
 
