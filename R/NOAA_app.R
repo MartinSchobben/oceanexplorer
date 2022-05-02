@@ -22,6 +22,17 @@ NOAA_app <- function(server = NOAA_server()) {
           tabPanel("parameters", input_ui("NOAA")),
           tabPanel("locations", filter_ui("depth"))
           ),
+        tags$br(),
+        HTML(
+          paste0(
+            "See the website for more help: ",
+            a(
+              href = "https://utrechtuniversity.github.io/oceanexplorer/",
+              "utrechtuniversity.github.io/oceanexplorer"
+            )
+          )
+        ),
+        tags$br(),
         citation_ui("NOAA")
         ),
       mainPanel(

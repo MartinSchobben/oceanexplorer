@@ -139,7 +139,7 @@ plot_server <- function(id, NOAA, points) {
                    "projections \"3031\" and \"3995\" for stereographic of ",
                    "the Antarctic and Arctic regions, respectively. ",
                    "The option \"original\" refers to the original projection ",
-                   "of the NOAA WOC data.")
+                   "of the NOAA WOA data.")
           )
         )
       )
