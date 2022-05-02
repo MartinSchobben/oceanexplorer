@@ -72,8 +72,8 @@
 <p>The <a href="https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html" class="external-link">World Ocean Atlas</a> of the US agency <a href="https://www.ncei.noaa.gov/" class="external-link">NOAA</a> contains high-resolution oceanographic variables, such as temperature, salinity and nutrient concentrations, with high standard quality checks. This package facilitates easy access and exploration of this data and targets three different audiences:</p>
 <ul>
 <li>Users with no programming experience by means of graphical user interface (Shiny app).</li>
-<li>Users with minimal programming experience as a hybrid graphical that can be easily integrated in an R workflow (RStudio addin).</li>
-<li>Users with an R programming background can easily load NOAA data into R.</li>
+<li>Users with minimal programming experience as a hybrid graphical-programming interface that can be easily integrated in an R workflow (RStudio addin).</li>
+<li>Users with an R programming background.</li>
 </ul>
 <p>I will now in reversed order explain some of the basic use cases of all three application types.</p>
 <p>But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by <em>sf</em> <span class="citation">(Pebesma 2022)</span> for vectors and <em>stars</em> <span class="citation">(Pebesma 2021)</span> for raster data (e.g. the NOAA data). I highly recommend reading the accompanying documentation of these packages:</p>
@@ -86,7 +86,7 @@
 <div class="section level3">
 <h3 id="shiny-app">Shiny app<a class="anchor" aria-label="anchor" href="#shiny-app"></a>
 </h3>
-<p>The shiny app is hosted by Utrecht University and can be found here: <em>link to be included</em>. It allows exploration of the NOAA database. Data of selected point can be extracted as a csv file.</p>
+<p>The shiny app is hosted by Utrecht University and can be found here: <a href="https://utrecht-university.shinyapps.io/oceanexplorer/" class="external-link uri">https://utrecht-university.shinyapps.io/oceanexplorer/</a>. The app allows exploration of the NOAA database and selected data points can be extracted as a csv file.</p>
 <div class="section level4">
 <h4 id="load-noaa-data">Load NOAA data<a class="anchor" aria-label="anchor" href="#load-noaa-data"></a>
 </h4>
@@ -103,13 +103,13 @@
 <div class="section level4">
 <h4 id="filter-noaa-data">Filter NOAA data<a class="anchor" aria-label="anchor" href="#filter-noaa-data"></a>
 </h4>
-<p>The last action also automatically drops us in the “locations” tab for the left most field, which allows us to select specific regions on the now displayed world map of the variable of interest.</p>
+<p>The last action also automatically drops us in the “locations” tab (in the left most field), which allows us to select specific regions on the now displayed world map of the variable of interest.</p>
 <p><img src="get-started-screenshot2.png" width="90%"></p>
 <p><strong>Locations tab (Left)</strong></p>
 <p>This field allows filtering of the dataset.</p>
 <ul>
-<li>The text fields: “depth”, “longitude”, and “latitude” specify the location to extract oceanographic variables. Alternatively, one can click on the plot (“map” tab) to obtain the values. It is possible to extract multiple locations at once by providing a comma separated list (e.g., 120, 130, 140) to the text field on the left (“locations” tab). Note, that depth and coordinate vectors should be of the same length, or one of the two should have length one. The data is extracted only when all three text fields have been filled, and by “subsequently clicking the button”Extract".</li>
-<li>Data extraction can be achieved in two modes; “point” and “fuzzy”, where the former results in a very precise search, the latter option searches in an area with a circumference of 50,km around the selected coordinate point. The returned value of a fuzzy search is therefore an average of the search area. Currently, fuzzy search is not yet implemented."</li>
+<li>The text fields: “depth”, “longitude”, and “latitude” specify the location to extract oceanographic variables. Alternatively, one can click on the plot (“map” tab) to obtain the values. It is possible to extract multiple locations at once by providing a comma separated list (e.g., 120, 130, 140) to the text field on the left (“locations” tab). Note, that depth and coordinate vectors should be of the same length, or one of the two should have length one. The data is extracted only when all three text fields have been filled, and by subsequently clicking the button “Extract”.</li>
+<li>Data extraction can be achieved in two modes; “point” and “fuzzy”, where the former results in a very precise search, the latter option searches in an area with a circumference of 50<span class="math inline">\(\,\)</span>km around the selected coordinate point. The returned value of a fuzzy search is therefore an average of the search area. Currently, fuzzy search is not yet implemented."</li>
 <li>The button “Extract” uses the information supplied in the text fields: “depth”, “longitude”, and “latitude” to extract the oceanographic variable. Hence the button is only active when those fields have been filled, and otherwise remains greyed-out. The buttons: “Reset” and “Back” revert all, or the last extraction, respectively. These two operations can be used for data extracted by clicking on the interactive plot and/or obtained by using the text field search.</li>
 </ul>
 <p><strong>Map tab (right)</strong></p>
@@ -133,7 +133,7 @@
 <div class="section level3">
 <h3 id="rstudio-addin">RStudio addin<a class="anchor" aria-label="anchor" href="#rstudio-addin"></a>
 </h3>
-<p>The RStudio addin has much the same functionality as the Shiny app except that it has fewer option for data entry. But this tools is great for integration in R scripts as the addin emits the code used for your data selection and filtering operation. The emitted code is actually the code used to generate the graphical output and is the backbone of the Shiny app and RStudio addin.</p>
+<p>The RStudio addin has more-or-less the same functionality as the Shiny app except that it has fewer options. This tool is, however, great for integration in R scripts, as the addin emits the code used for your data selection and filtering operation. The emitted code is actually the code used to generate the graphical output and is the backbone of the Shiny app and RStudio addin.</p>
 <p><img src="get-started-screenshot4.png" width="90%"></p>
 <p>Clicking on the “Done” button terminates the application and emits the code at the point where the cursor currently resides.</p>
 </div>
@@ -144,8 +144,8 @@
 <div class="section level4">
 <h4 id="loading-the-package-and-data">Loading the package and data<a class="anchor" aria-label="anchor" href="#loading-the-package-and-data"></a>
 </h4>
-<p>In this case we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below sealevel.</p>
-<p>First we extract the data by proving the variable, grid resolution, and the averaging period.</p>
+<p>In this case we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below seablevel.</p>
+<p>First, we extract the data by proving the variable, grid resolution, and the averaging period.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://utrechtuniversity.github.io/oceanexplorer/">oceanexplorer</a></span><span class="op">)</span>
 <span class="op">(</span><span class="va">WOA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_NOAA.html">get_NOAA</a></span><span class="op">(</span><span class="st">"phosphate"</span>, <span class="fl">1</span>, <span class="st">"December"</span><span class="op">)</span><span class="op">)</span>
@@ -178,7 +178,7 @@
 <div class="section level3">
 <h3 id="filter-agulhas-basin-data-point">Filter Agulhas Basin data point<a class="anchor" aria-label="anchor" href="#filter-agulhas-basin-data-point"></a>
 </h3>
-<p>Finally we can filter a data point at the same depth from the Agulhas Basin.</p>
+<p>Finally, we can filter a data point at the same depth from the Agulhas Basin.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="op">-</span><span class="fl">46</span>, lon <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 1 feature and 2 fields</span>
@@ -188,7 +188,7 @@
 <span class="co">#&gt; CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs</span>
 <span class="co">#&gt;       p_an depth       geometry</span>
 <span class="co">#&gt; 1 1.777159  1000 POINT (20 -46)</span></code></pre></div>
-<p>Where we can also show this on the previous plot.</p>
+<p>We can then also plot these extraction points on the world map.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, points <span class="op">=</span> <span class="va">pts</span><span class="op">)</span></code></pre></div>
 <p><img src="oceanexplorer_files/figure-html/plot2-1.png" width="672"></p>
