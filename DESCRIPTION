@@ -1,5 +1,5 @@
 Package: oceanexplorer
-Title: Explore our planet's ocean with the NOAA database
+Title: Explore our Planet's Oceans with NOAA
 Version: 0.0.0.9001
 Authors@R: 
     person(
@@ -53,4 +53,6 @@ Imports:
     shinyWidgets (>= 0.6.4)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-URL: https://utrechtuniversity.github.io/oceanexplorer/
+URL: 
+  https://utrechtuniversity.github.io/oceanexplorer/
+  https://utrecht-university.shinyapps.io/oceanexplorer/

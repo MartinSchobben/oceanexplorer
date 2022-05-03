@@ -67,6 +67,10 @@ The goal of oceanexplorer is to enable easy access and exploration of the [WORLD
 
 ![Demo of the ocean explorer](man/figures/oceanexplorer-demo.gif){width=95%}
 
+## Check the app
+
+Check the beta-version of the app here: https://utrecht-university.shinyapps.io/oceanexplorer/
+
 ## Credits
 
 The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 

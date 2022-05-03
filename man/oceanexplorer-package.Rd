@@ -4,14 +4,14 @@
 \name{oceanexplorer-package}
 \alias{oceanexplorer}
 \alias{oceanexplorer-package}
-\title{oceanexplorer: Explore our planet's ocean with the NOAA database}
+\title{oceanexplorer: Explore our Planet's Oceans with NOAA}
 \description{
 This package enables easy exploration of the NOAA WORLD OCEAN ATLAS. It includes functions to extract NetCDF data from the repository and codes to visualise several physical and chemical parameters of the ocean. A Shiny app further allows a more interactive exploration of the data.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://utrechtuniversity.github.io/oceanexplorer/}
+  \item \url{https://utrechtuniversity.github.io/oceanexplorer/ https://utrecht-university.shinyapps.io/oceanexplorer/}
 }
 
 }
