@@ -101,6 +101,8 @@ input_server <- function(id) {
 
     # input data
     x <- eventReactive(input$go, {
+
+      # make the waiting more informative with a spinner
       waiter <- waiter::Waiter$new()
       waiter$show()
       on.exit(waiter$hide())
