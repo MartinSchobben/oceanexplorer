@@ -24,24 +24,28 @@ table_server <- function(id, NOAA, variable) {
 
   # check for reactive
   stopifnot(is.reactive(NOAA))
+  stopifnot(is.reactivevalues(variable))
 
   moduleServer(id, function(input, output, session) {
 
     # format
     pretty_table <- reactive({
+      # require the following
       req(NOAA())
-      req(variable())
-
-      format_table(NOAA(), variable())
+      req(variable$parm)
+      # format table
+      format_table(NOAA(), variable$parm, variable$spat, variable$temp)
     })
 
     # table
     output$table <- DT::renderDT({
-      # pretty_table()
+      # columns names
+      nms <- c(variable$parm, "depth", "longitude", "latitude", "spatial")
+      # round digits
       DT::formatRound(
         DT::datatable(pretty_table(), rownames = FALSE),
-        columns  = c(variable(), "depth", "longitude", "latitude"),
-        digits = c(1, 0, 2, 2)
+        columns = nms,
+        digits = c(1, 0, 2, 2, 0)
       )
     })
 

@@ -158,11 +158,19 @@ input_server <- function(id) {
       )
     })
 
+    # assign parameter information to `reactiveValues`
+    var <- reactiveValues(parm = NULL, spat = NULL, temp = NULL)
+    observe({
+      var$parm <- input$var
+      var$spat <- input$spat
+      var$temp <- input$temp
+    })
+
     # output
     list(
       data = reactive(x()$data),
       code = reactive(x()$code),
-      variable = reactive(input$var)
+      variable = var
     )
   })
 }
@@ -171,22 +179,23 @@ input_server <- function(id) {
 #' @export
 output_server <- function(id, NOAA, variable) {
 
-  stopifnot(is.reactive(variable))
+  stopifnot(is.reactivevalues(variable))
   stopifnot(is.reactive(NOAA))
 
   moduleServer(id, function(input, output, session) {
 
     # format
     pretty_table <- reactive({
+      # require
       req(NOAA())
-      req(variable())
-
-      format_table(NOAA(), variable())
+      req(variable$parm)
+      # format table
+      format_table(NOAA(), variable$parm, variable$spat, variable$temp)
     })
 
     output$download <- downloadHandler(
       filename = function() {
-        paste0(variable(), ".csv")
+        paste0(variable$parm, ".csv")
       },
       content = function(file) {
         utils::write.csv(pretty_table(), file)

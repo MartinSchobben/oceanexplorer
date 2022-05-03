@@ -91,9 +91,10 @@ filter_ui <- function(id, extended = TRUE) {
 #'
 #' @export
 filter_server <- function(id, NOAA, external, ivars = c("depth","lon" , "lat"),
-                          extended = TRUE) {
+                          variable, extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))
+  stopifnot(is.reactivevalues(variable))
   stopifnot(is.reactivevalues(external))
 
   moduleServer(id, function(input, output, session) {
@@ -203,7 +204,8 @@ filter_server <- function(id, NOAA, external, ivars = c("depth","lon" , "lat"),
     })
 
     # delete all coordinate points by clicking reset of changing the dataset
-    observeEvent(input$reset,{
+    # delete when loading a new variable (listening to reactive: `variable`)
+    observeEvent({input$reset; variable$parm; variable$spat; variable$temp},{
       # NOAA()
       coord(NULL) # set stored data to NULL
       purrr::walk(ivars, ~{input2[[.x]] <- NULL}) # set input to NULL

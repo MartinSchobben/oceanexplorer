@@ -89,8 +89,9 @@ NOAA_server <- function(extended = TRUE) {
     # initiate plot click filter with null value
     clicked <- reactiveValues(lon = NULL, lat = NULL, depth = NULL)
 
-    # filter depth
-    filter <- filter_server("depth", NOAA$data, clicked, extended = extended)
+    # filter depth (new variable resets dataset)
+    filter <- filter_server("depth", NOAA$data, clicked,
+                            variable = NOAA$variable, extended = extended)
 
     # plot data
     output_plot <- plot_server("worldmap", NOAA$data, filter$coord)
