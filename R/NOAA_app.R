@@ -25,6 +25,16 @@ NOAA_app <- function(server = NOAA_server()) {
         tags$br(),
         HTML(
           paste0(
+            "R package: ",
+            a(
+              href = "https://github.com/UtrechtUniversity/oceanexplorer",
+              "install_github('UtrechtUniversity/oceanexplorer')"
+            )
+          )
+        ),
+        tags$br(),
+        HTML(
+          paste0(
             "See the website for more help: ",
             a(
               href = "https://utrechtuniversity.github.io/oceanexplorer/",
