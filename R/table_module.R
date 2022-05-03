@@ -3,7 +3,7 @@
 #' @param id Namespace id shiny module.
 #' @param download Add download button.
 #' @param NOAA Reactive value of NOAA dataset.
-#' @param variable Reactive value for selected variable name.
+#' @param variable Reactivevalues for selected variable information.
 #'
 #' @return Shiny module.
 #' @export

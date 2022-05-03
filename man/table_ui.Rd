@@ -16,7 +16,7 @@ table_server(id, NOAA, variable)
 
 \item{NOAA}{Reactive value of NOAA dataset.}
 
-\item{variable}{Reactive value for selected variable name.}
+\item{variable}{Reactivevalues for selected variable information.}
 }
 \value{
 Shiny module.

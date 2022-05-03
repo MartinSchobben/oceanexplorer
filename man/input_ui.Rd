@@ -29,7 +29,7 @@ output_server(id, NOAA, variable)
 \item{NOAA}{Reactive value for the dataset containing the locations
 coordinates.}
 
-\item{variable}{Reactive value for the selected variable name.}
+\item{variable}{Reactivevalues for selected variable information.}
 }
 \value{
 Shiny module.

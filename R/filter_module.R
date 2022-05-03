@@ -4,6 +4,7 @@
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param external Reactive values for latitude, longitude and depth from plot
 #'  module.
+#' @param variable Reactivevalues for selected variable information.
 #' @param ivars Character vector for the variables for filtering.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).

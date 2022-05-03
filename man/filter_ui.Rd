@@ -12,6 +12,7 @@ filter_server(
   NOAA,
   external,
   ivars = c("depth", "lon", "lat"),
+  variable,
   extended = TRUE
 )
 }
@@ -27,6 +28,8 @@ filter_server(
 module.}
 
 \item{ivars}{Character vector for the variables for filtering.}
+
+\item{variable}{Reactivevalues for selected variable information.}
 }
 \value{
 Shiny module.
