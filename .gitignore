@@ -15,4 +15,3 @@ docs
 build-oceanexplorer.sh
 # shiny deploy
 rsconnect
-app.R

@@ -110,8 +110,28 @@ input_server <- function(id) {
                               "{input$spat}, {glue::double_quote(input$temp)})")
 
       # execute
-      exec_NOAA <- get_NOAA(input$var, input$spat, input$temp)
+      exec_NOAA <- try(get_NOAA(input$var, input$spat, input$temp), silent = TRUE)
 
+      # notification when data does exist
+      exists <- inherits(exec_NOAA, "try-error")
+      shinyFeedback::feedbackDanger(
+        "var",
+        exists,
+        "This data is not available. Try another combination of parameters"
+      )
+      shinyFeedback::feedbackDanger(
+        "spat",
+        exists,
+        "This data is not available. Try another combination of parameters"
+      )
+      shinyFeedback::feedbackDanger(
+        "temp",
+        exists,
+        "This data is not available. Try another combination of parameters"
+      )
+      req(!exists, cancelOutput = TRUE)
+
+      # return data and call
       list(data = exec_NOAA, code = call_NOAA)
     })
 

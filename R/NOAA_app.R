@@ -14,6 +14,8 @@ NOAA_app <- function(server = NOAA_server()) {
 
     shinyjs::useShinyjs(), # use shinyjs
 
+    shinyFeedback::useShinyFeedback(), # feedback
+
     titlePanel("NOAA WORLD OCEAN ATLAS"),
     sidebarLayout(
       sidebarPanel(

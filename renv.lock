@@ -29,6 +29,7 @@
         "htmlwidgets",
         "jquerylib",
         "jsonlite",
+        "magrittr",
         "promises"
       ]
     },
@@ -347,6 +348,7 @@
         "generics",
         "glue",
         "lifecycle",
+        "magrittr",
         "pillar",
         "rlang",
         "tibble",
@@ -478,6 +480,16 @@
       "Repository": "CRAN",
       "Hash": "ac5c6baf7822ce8732b343f14c072c4d",
       "Requirements": []
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "24b224366f9c2e7534d2344d10d59211",
+      "Requirements": [
+        "rprojroot"
+      ]
     },
     "highr": {
       "Package": "highr",
@@ -638,6 +650,14 @@
         "sf",
         "units"
       ]
+    },
+    "magrittr": {
+      "Package": "magrittr",
+      "Version": "2.0.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7ce2733a9826b3aeb1775d56fd305472",
+      "Requirements": []
     },
     "maps": {
       "Package": "maps",
@@ -818,6 +838,7 @@
         "R6",
         "Rcpp",
         "later",
+        "magrittr",
         "rlang"
       ]
     },
@@ -844,6 +865,7 @@
       "Repository": "CRAN",
       "Hash": "97def703420c8ab10d8f0e6c72101e02",
       "Requirements": [
+        "magrittr",
         "rlang"
       ]
     },
@@ -898,6 +920,25 @@
       "Repository": "CRAN",
       "Hash": "3bf0219f19d9f5b3c682acbb3546a151",
       "Requirements": []
+    },
+    "rmarkdown": {
+      "Package": "rmarkdown",
+      "Version": "2.14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "31b60a882fabfabf6785b8599ffeb8ba",
+      "Requirements": [
+        "bslib",
+        "evaluate",
+        "htmltools",
+        "jquerylib",
+        "jsonlite",
+        "knitr",
+        "stringr",
+        "tinytex",
+        "xfun",
+        "yaml"
+      ]
     },
     "roxygen2": {
       "Package": "roxygen2",
@@ -988,6 +1029,7 @@
         "DBI",
         "Rcpp",
         "classInt",
+        "magrittr",
         "s2",
         "units"
       ]
@@ -1137,6 +1179,7 @@
       "Hash": "0759e6b6c0957edb1311028a49a35e76",
       "Requirements": [
         "glue",
+        "magrittr",
         "stringi"
       ]
     },
@@ -1166,6 +1209,7 @@
         "evaluate",
         "jsonlite",
         "lifecycle",
+        "magrittr",
         "pkgload",
         "praise",
         "processx",
@@ -1200,6 +1244,7 @@
         "ellipsis",
         "fansi",
         "lifecycle",
+        "magrittr",
         "pillar",
         "pkgconfig",
         "rlang",
@@ -1218,6 +1263,7 @@
         "ellipsis",
         "glue",
         "lifecycle",
+        "magrittr",
         "purrr",
         "rlang",
         "tibble",
@@ -1237,6 +1283,16 @@
         "purrr",
         "rlang",
         "vctrs"
+      ]
+    },
+    "tinytex": {
+      "Package": "tinytex",
+      "Version": "0.38",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "759d047596ac173433985deddf313450",
+      "Requirements": [
+        "xfun"
       ]
     },
     "units": {
