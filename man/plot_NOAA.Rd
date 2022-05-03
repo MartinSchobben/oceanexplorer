@@ -4,14 +4,7 @@
 \alias{plot_NOAA}
 \title{Plotting the global NOAA WORLD OCEAN ATLAS}
 \usage{
-plot_NOAA(
-  NOAA,
-  depth = NULL,
-  points = NULL,
-  epsg = NULL,
-  limit = NULL,
-  rng = NULL
-)
+plot_NOAA(NOAA, depth = NULL, points = NULL, epsg = NULL, rng = NULL)
 }
 \arguments{
 \item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
@@ -22,8 +15,6 @@ plot_NOAA(
 
 \item{epsg}{The epsg used to project the data (currently supported 4326, 3031
 and 3995).}
-
-\item{limit}{The limits of the axis.}
 
 \item{rng}{A vector of two numeric values for the range of the environmental
 parameter.}

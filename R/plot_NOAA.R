@@ -5,7 +5,6 @@
 #' @param points Add locations of extracted point geometry.
 #' @param epsg The epsg used to project the data (currently supported 4326, 3031
 #'  and 3995).
-#' @param limit The limits of the axis.
 #' @param rng A vector of two numeric values for the range of the environmental
 #'  parameter.
 #'
@@ -27,7 +26,7 @@
 #' plot_NOAA(base, points)
 #' }
 plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL,
-                      limit = NULL, rng = NULL) {
+                      rng = NULL) {
 
   # epsg_check
   epsg <- epsg_check(NOAA, epsg)
@@ -48,7 +47,6 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL,
   var <- substr(attributes(NOAA)$names, 1, 1)
 
   # defaults
-  if (is.null(limit)) limit <- 90
   lim_method <- "cross"
 
   # world map
@@ -72,15 +70,12 @@ plot_NOAA <- function(NOAA, depth = NULL, points = NULL, epsg = NULL,
 
   if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) |
       epsg == sf::st_crs(3995)) {
-    limit <- 50
     lim_method <- "geometry_bbox"
   }
 
   base +
     ggplot2::coord_sf(
       lims_method = lim_method,
-      xlim = c(-180, 180),
-      ylim = c(-1 * limit, limit),
       default_crs = epsg,
       crs = epsg,
       expand = FALSE
