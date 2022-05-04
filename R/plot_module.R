@@ -74,10 +74,12 @@ plot_server <- function(id, NOAA, points) {
       req(NOAA)
       req(input$epsg)
 
-      # coordinates (convert to meters for stereographic projections)
+      # coordinates (convert to meters for stereographic projections) and clip
+      # out of bounds points
       if ((req(input$epsg) == "3031" | input$epsg == "3995") &
           !is.null(points())) {
-        pts <- sf::st_transform(points(), crs = as.numeric(input$epsg))
+        # re-project and clip out of bound data points
+        pts <- clip_lat(points(), epsg = input$epsg)
       } else {
         pts <- points()
       }

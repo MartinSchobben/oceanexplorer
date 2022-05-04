@@ -117,3 +117,16 @@ test_that("stereographic projections plot click values can be converted", {
     convert_stereo(9332793, 7376573, 3031)
   )
 })
+
+test_that("point is clipped when re-projected to 3031", {
+  # get data
+  NOAA <- get_NOAA("temperature", 1, "annual")
+  # coords
+  lon <- c(-116.3041, 117.12998)
+  lat <- c(-31.98888, 17.39477)
+  # filter
+  points <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat))
+  expect_snapshot(
+    clip_lat(points, "3031")
+  )
+})

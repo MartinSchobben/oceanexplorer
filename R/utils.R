@@ -15,7 +15,6 @@ reproject <- function(obj, epsg, ...) {
     return(obj)
   }
 
-
   UseMethod("reproject")
 }
 #' @rdname reproject
@@ -99,7 +98,6 @@ clip_lat <- function(obj, epsg, limit = 0) {
 
   # epsg check
   epsg <- epsg_check(obj, epsg)
-
 
   if (inherits(obj, "stars")) {
 
