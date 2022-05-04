@@ -6,15 +6,11 @@
       stars object with 2 dimensions and 1 attribute
       attribute(s):
                 Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
-      o_an  181.1851 212.1127 254.0271 264.3293 322.4746 390.5813 10120
+      o_an  181.1851 202.0076 213.0899 233.6797 251.1976 365.3462 15986
       dimension(s):
-          from  to offset delta                       refsys point
-      lon    1 360     NA    NA WGS 84 / Antarctic Polar ...    NA
-      lat    1  90     NA    NA WGS 84 / Antarctic Polar ...    NA
-                                   values x/y
-      lon [360x90] -12260188,...,12260188 [x]
-      lat [360x90] -12260188,...,12260188 [y]
-      curvilinear grid
+        from  to    offset   delta                       refsys point values x/y
+      x    1 204 -12367396  121249 WGS 84 / Antarctic Polar ...    NA   NULL [x]
+      y    1 204  12367396 -121249 WGS 84 / Antarctic Polar ...    NA   NULL [y]
 
 # box clipping works for sf
 

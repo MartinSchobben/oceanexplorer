@@ -120,7 +120,7 @@ clip_lat <- function(obj, epsg, limit = 0) {
     # cropping
     obj <- sf::st_crop(obj, box)
     # re-projection (only sf_transform seems to work in combination with ggplot)
-    sf::st_transform(obj, epsg)
+    stars::st_warp(obj, crs = epsg)
 
   } else if (inherits(obj, "sf")) {
 
