@@ -28,7 +28,7 @@ plot_ui <- function(id) {
 
         shinyWidgets::materialSwitch(
           NS(id, "fixed"),
-          h5("Fix variable scale")
+          h5("Fixate variable scale")
         ),
         actionLink(
           NS(id, "fixedhelper"),
@@ -45,7 +45,7 @@ plot_ui <- function(id) {
       NS(id, "depth"),
       h5("depth (meter)"),
       min = 0,
-      max = 3000,
+      max = 5450,
       value = 0,
       width = "100%"
     ),
@@ -85,7 +85,7 @@ plot_server <- function(id, NOAA, points) {
       }
 
       # fixed oceanographic variable scale or adapted to depth slice
-      if (!isTruthy(input$fixed)) {
+      if (isTruthy(input$fixed)) {
         NOAA <- NOAA()
         depth <- input$depth
         rng <- NULL
@@ -104,7 +104,6 @@ plot_server <- function(id, NOAA, points) {
       )
 
     })
-
 
     # convert stereographic coordinates which are returned as meters instead of
     # degrees
@@ -154,8 +153,10 @@ plot_server <- function(id, NOAA, points) {
           HTML(
             paste0("This toggle switch determines whether the variable scale ",
                    "is fixed for the current depth slice or the whole  ",
-                   "dataset. Loosening the variable scale can help highlight ",
-                   "nuanced differences in certain variables (e.g. phosphate).")
+                   "dataset. Loosening the variable scale (default) can help ",
+                   "highlight nuanced differences in certain variables ",
+                   "(e.g. phosphate). Fixating the scale references the ",
+                   "value against the whole ocean (i.e. all depth layers).")
           )
         )
       )
