@@ -22,8 +22,8 @@ Suggests:
     devtools (>= 2.4.3),
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
-    here,
     knitr,
+    ncmeta,
     rmarkdown,
     roxygen2,
     shinytest (>= 1.5.1),
@@ -32,7 +32,6 @@ Suggests:
     withr
 Imports: 
     stars (>= 0.5.5),
-    ncmeta (>= 0.3.0),
     shiny (>= 1.7.1),
     ggplot2 (>= 3.3.5),
     dplyr (>= 1.0.7),

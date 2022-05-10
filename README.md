@@ -51,12 +51,11 @@ Data transformation, cleaning and visualization is performed with:
 *stringr* (Wickham 2019), and *rlang* (Henry and Wickham 2022).
 
 In addition, this package relies on a set of packages for spatial data
-analysis: *sf* (Pebesma 2022), *stars* (Pebesma 2021), and *ncmeta*
-(Sumner 2020).
+analysis: *sf* (Pebesma 2022) and *stars* (Pebesma 2021).
 
 The app is build with *shiny* (Chang et al. 2021) and the guidance in
 the book: *Mastering Shiny: Build Interactive Apps, Reports &
-Dashboards* (Wickham 2020). was a great help in learning how to develop
+Dashboards* (Wickham 2020) was a great help in learning how to develop
 such applications. Furthermore, the packages *shinyjs* (Attali 2021),
 *shinyWidgets* (Perrier, Meyer, and Granjon 2022), *waiter* (Coene
 2022), *bslib* (Sievert and Cheng 2021) and *thematic* (Sievert,
@@ -223,13 +222,6 @@ Themes for Shiny and Rmarkdown*.
 Sievert, Carson, Barret Schloerke, and Joe Cheng. 2021. *Thematic:
 Unified and Automatic Theming of Ggplot2, Lattice, and Base r Graphics*.
 <https://CRAN.R-project.org/package=thematic>.
-
-</div>
-
-<div id="ref-ncmeta" class="csl-entry">
-
-Sumner, Michael. 2020. *Ncmeta: Straightforward NetCDF Metadata*.
-<https://github.com/hypertidy/ncmeta>.
 
 </div>
 

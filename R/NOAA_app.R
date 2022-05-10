@@ -8,6 +8,9 @@
 #' @export
 NOAA_app <- function(server = NOAA_server()) {
 
+  # add resources
+  addResourcePath('img', system.file('www/img', package = 'oceanexplorer'))
+
   ui <- fluidPage(
 
     theme = bslib::bs_theme(bootswatch = "slate"), # nice theming

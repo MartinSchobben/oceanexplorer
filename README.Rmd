@@ -81,9 +81,9 @@ The construction of the R [@rversion] package *oceanexplorer* and associated doc
 
 Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], *stringr* [@stringr], and *rlang* [@rlang].
 
-In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf], *stars* [@stars], and *ncmeta* [@ncmeta].
+In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf] and *stars* [@stars].
 
-The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020]. was a great help in learning how to develop such applications. Furthermore, the packages *shinyjs* [@shinyjs], *shinyWidgets* [@shinyWidgets],  *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
+The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020] was a great help in learning how to develop such applications. Furthermore, the packages *shinyjs* [@shinyjs], *shinyWidgets* [@shinyWidgets],  *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
 
 
 ## Installation
