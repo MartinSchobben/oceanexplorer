@@ -71,6 +71,10 @@ The goal of oceanexplorer is to enable easy access and exploration of the [WORLD
 
 Check the beta-version of the app here: https://utrecht-university.shinyapps.io/oceanexplorer/
 
+## Funding
+
+This project was funded by ERC Starting grant number 802835, OceaNice, awarded to Peter Bijl.
+
 ## Credits
 
 The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 

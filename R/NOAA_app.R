@@ -70,6 +70,18 @@ NOAA_app <- function(server = NOAA_server()) {
           ns = NS("NOAA")
         )
       )
+    ),
+    # footer
+    tags$hr(),
+    tags$div(
+      HTML(
+        paste0(
+          "This project was funded by ERC Starting grant number 802835, ",
+          "OceaNice, awarded to Peter Bijl.    ",
+          tags$img(src = "img/oceanice-logo.jpg", width = "150px")
+        )
+      ),
+      style ="text-align: right;"
     )
   )
   # run app
