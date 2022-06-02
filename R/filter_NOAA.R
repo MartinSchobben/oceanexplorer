@@ -71,8 +71,24 @@ coord_check <- function(coord, depth) {
 
   # check length of depth vector
   if (!inherits(coord, c("sf", "sfc"))) {
+
+    # in case of lists or matrices coordinates must have names "lon" and "lat"
+    nms <- colnames(coord) # matrix
+    if (is.null(nms)) nms <- names(coord) # list
+
+    if (all(nms[1] != "lon", nms[2] != "lat")) {
+
+      stop("When supplying coordinates for the extraction of oceanographic ",
+           "parameters, the list or matrix must have the names \"lon\" and ",
+           "\"lat\" for the first and second element or column, respectively.",
+           call. = FALSE)
+    }
+
     vc_check <- append(vapply(coord, length, numeric(1)), length(depth))
+
   } else {
+
+
     vc_check <- append(nrow(coord), length(depth))
   }
 

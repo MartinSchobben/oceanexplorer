@@ -1,5 +1,9 @@
 test_that("check output type", {
+
+  # get data
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+
+  # check classes
   expect_s3_class(
     filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11, 12))),
     "sf"
@@ -56,13 +60,31 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
   )
 })
 
+test_that("wrong names for matrices or list of coordinates causes an error", {
+
+  # get data
+  NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # wrong names for coordinate matrices and lists
+  expect_error(
+    filter_NOAA(NOAA, depth = 0, coord = list(lat = c(-116), lon = c(-31))),
+    NULL
+  )
+  expect_error(
+    filter_NOAA(NOAA, depth = 0, coord = cbind(lat = c(-116), lon = c(-31))),
+    NULL
+  )
+})
 
 test_that("check that epsg of depth plane and coordinates is similar", {
+
   # data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
   # coords
   lon <- c(-116.3041, 117.12998)
   lat <- c(-31.98888, 17.39477)
+
   # for matrix coord
   plane_original <- filter_NOAA(NOAA, depth = 0)
   point_original <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat))
