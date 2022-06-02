@@ -5,6 +5,8 @@ bibliography: "vignettes/packages.bib"
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<a href="https://utrechtuniversity.github.io/oceanexplorer/"><img src="man/figures/logo.jpg" align="right" height="56" /></a>
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
