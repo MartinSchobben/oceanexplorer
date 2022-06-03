@@ -180,14 +180,14 @@
 </h3>
 <p>Finally, we can filter a data point at the same depth from the Agulhas Basin.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">46</span>, lat <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fl">20</span>, lat <span class="op">=</span> <span class="op">-</span><span class="fl">46</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 1 feature and 2 fields</span>
 <span class="co">#&gt; Geometry type: POINT</span>
 <span class="co">#&gt; Dimension:     XY</span>
-<span class="co">#&gt; Bounding box:  xmin: -46 ymin: 20 xmax: -46 ymax: 20</span>
+<span class="co">#&gt; Bounding box:  xmin: 20 ymin: -46 xmax: 20 ymax: -46</span>
 <span class="co">#&gt; CRS:           +proj=longlat +a=6378137 +f=0.0033528105624174 +pm=0 +no_defs</span>
 <span class="co">#&gt;       p_an depth       geometry</span>
-<span class="co">#&gt; 1 1.777159  1000 POINT (-46 20)</span></code></pre></div>
+<span class="co">#&gt; 1 2.157131  1000 POINT (20 -46)</span></code></pre></div>
 <p>We can then also plot these extraction points on the world map.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, points <span class="op">=</span> <span class="va">pts</span><span class="op">)</span></code></pre></div>
