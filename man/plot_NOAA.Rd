@@ -2,28 +2,45 @@
 % Please edit documentation in R/plot_NOAA.R
 \name{plot_NOAA}
 \alias{plot_NOAA}
-\title{Plotting the global NOAA WORLD OCEAN ATLAS}
+\title{Plotting the global NOAA World Ocean Atlas}
 \usage{
-plot_NOAA(NOAA, depth = NULL, points = NULL, epsg = NULL, rng = NULL)
+plot_NOAA(NOAA, depth = 0, points = NULL, epsg = NULL, rng = NULL)
 }
 \arguments{
-\item{NOAA}{Dataset of the WORLD OCEAN ATLAS.}
+\item{NOAA}{Dataset of the NOAA World Ocean Atlas
+(\code{\link[stars:read_stars]{stars}}).}
 
 \item{depth}{Depth in meters.}
 
-\item{points}{Add locations of extracted point geometry.}
+\item{points}{Add locations of extracted point geometry
+(\code{\link[sf:st_sf]{sf}} object).}
 
 \item{epsg}{The epsg used to project the data (currently supported 4326, 3031
 and 3995).}
 
-\item{rng}{A vector of two numeric values for the range of the environmental
-parameter.}
+\item{rng}{A vector of two numeric values for the range of the oceanographic
+variable.}
 }
 \value{
-Ggplot
+\code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
 }
 \description{
-Plotting the global NOAA WORLD OCEAN ATLAS
+Plots the NOAA World Ocean Atlas on worldmap including optional
+filtered locations.
+}
+\details{
+A worldmap is plotted as an \code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
+object which by default will plot the surface layer of the selected
+oceanographic variable. One can plot different depth slices by selecting
+the appropriate depth in meters (e.g., \code{code = 100}). It is, furthermore
+, possible to visualize the locations of data extractions with
+\code{\link[oceanexplorer:filter_NOAA]{filter_NOAA()}}. See the examples
+below for a more detailed overview of this workflow. Different projections
+of the worldmap can be selected by supplying an \code{epsg}. Currently only
+three projections are allowed: 4326, 3031, and 3995, besides the original.
+It is possible to fix the range of the color scale (for the oceanographic
+variable) to a custom range. For example, one can fix the color scale
+to the total range of the ocean (instead of the current depth slice).
 }
 \examples{
 \dontrun{

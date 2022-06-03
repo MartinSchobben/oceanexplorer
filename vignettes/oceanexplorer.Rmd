@@ -140,7 +140,7 @@ plot_NOAA(WOA, depth = 1000)
 Finally, we can filter a data point at the same depth from the Agulhas Basin.
 
 ```{r filter}
-(pts <- filter_NOAA(WOA, depth = 1000, coord = list(lon = -46, lat = 20)))
+(pts <- filter_NOAA(WOA, depth = 1000, coord = list(lon = 20, lat = -46)))
 ```
 
 We can then also plot these extraction points on the world map.
