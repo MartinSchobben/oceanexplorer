@@ -1,17 +1,21 @@
+# secrets and environmental variables
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
 # make sure not to commit the original NOAA files
 inst/**/*.rds
 tests/**/*.rds
 tests/**/*.svg
 tests/**/*.json
 tests/**/*.png
+
 # shiny test
 inst/appdir/
 inst/doc
 docs
 build-oceanexplorer.sh
+
 # shiny deploy
 rsconnect

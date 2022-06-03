@@ -16,6 +16,7 @@ test_that("check output type", {
 
 test_that("that different coord classes generate the same results", {
 
+  # coordinates
   lon <- c(-116.3041, -40.58253, -9.306224)
   lat <- c(-31.98888, 17.39477, -31.98888)
   depth <- c(0, 0, 0)
@@ -193,4 +194,3 @@ test_that("extraction of coords can use fuzzy search", {
     extract_coords(plane, rbind(coords1, coords2), 0, sf::st_crs(NOAA), 100)
   )
 })
-

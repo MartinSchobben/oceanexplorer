@@ -1,6 +1,23 @@
 #' Filter NOAA
 #'
-#' @param NOAA Dataset of the WORLD OCEAN ATLAS.
+#' This function aids filtering of NOAA datasets.
+#'
+#' This function helps filtering relevant data from NOAA World Ocean Atlas
+#' 3D arrays (longitude, latitude, and depth) which have been stored with
+#' \code{stars::\link[stars:read_stars]{read_stars()}}. An 2D stars object is
+#' returned if only providing a depth. An \code{\link[sf:st_sf]{sf}} is
+#' returned, when further providing coordinates, as a list
+#' (e.g. \code{list(lon = -120, lat = 12)}), a matrix
+#' (e.g. \code{cbind(lon = -120, lat = 12)}), or an
+#' \code{\link[sf:st_sf]{sf}} object with POINT geometries. In the
+#' latter case it is import to follow the GeoJSON conventions for the order in
+#' `sf` vectors with `x` (`lon` = longitude) followed by `y` (`lat` = latitude),
+#' see also;
+#' \href{https://r-spatial.github.io/sf/articles/sf1.html}{Simple Features for R}.
+#'
+#'
+#' @param NOAA Dataset of the NOAA World Ocean Atlas
+#'  (\code{\link[stars:read_stars]{stars}}).
 #' @param depth Depth in meters
 #' @param coord List with named elements, matrix with dimnames, or simple
 #'  feature geometry list column: `lon` for longitude in degrees, and
@@ -8,17 +25,19 @@
 #' @param epsg Coordinate reference number.
 #' @param fuzzy If no values are returned, fuzzy uses a buffer area around the
 #'  point to extract values from adjacent grid cells. The fuzzy argument is
-#'  supplied in units of kilometer(great circle distance).
+#'  supplied in units of kilometer (great circle distance).
 #'
-#' @return Either a stars object or sf dataframe.
+#' @return Either a \code{\link[stars:read_stars]{stars}} object or
+#'  \code{\link[sf:st_sf]{sf}} dataframe.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # get atlas
 #' NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+#'
 #' # filter atlas for specific depth and coordinate location
-#' filter_NOAA(NOAAatlas, 30)
+#' filter_NOAA(NOAAatlas, 30, list(lon = c(-160, -120), lat =  c(11, 12)))
 #' }
 filter_NOAA <- function(NOAA, depth = 0, coord = NULL, epsg = NULL,
                         fuzzy = 0) {
@@ -70,7 +89,12 @@ filter_NOAA <- function(NOAA, depth = 0, coord = NULL, epsg = NULL,
 coord_check <- function(coord, depth) {
 
   # check length of depth vector
-  if (!inherits(coord, c("sf", "sfc"))) {
+  if (inherits(coord, c("sf", "sfc"))) {
+
+    # length sf object
+    vc_check <- append(nrow(coord), length(depth))
+
+  } else if (!is.null(coord)) {
 
     # in case of lists or matrices coordinates must have names "lon" and "lat"
     nms <- colnames(coord) # matrix
@@ -88,8 +112,9 @@ coord_check <- function(coord, depth) {
 
   } else {
 
+    # if default NULL is propagated
+    vc_check <- coord
 
-    vc_check <- append(nrow(coord), length(depth))
   }
 
   vc_check <- vapply(

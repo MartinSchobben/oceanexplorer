@@ -1,23 +1,8 @@
-# NOAA <- reactiveVal(get_NOAA("oxygen", 1, "annual") |>
-#                       filter_NOAA(30, list(lat = 10, lon= -120)))
-# variable <- reactiveValues(parm = "oxygen", spat = 1, temp = "annual")
-# vars <- list(NOAA = NOAA, variable = variable)
-#
-# testServer(table_server, args = vars, {
-#
-#   print(variable$parm)
-#   print(NOAA())
-#
-#   print(pretty_table())
-#
-# })
-
-
 test_that("table is formatted correctly", {
 
   # filtered data
   fl_NOAA <- get_NOAA("oxygen", 1, "annual") |>
-    filter_NOAA(30, list(lat = 10, lon= -120))
+    filter_NOAA(30, list(lon = -120, lat = -10))
 
   # initiate externals
   NOAA <- reactiveVal(NULL)
@@ -39,6 +24,4 @@ test_that("table is formatted correctly", {
 
   })
 })
-
-
 
