@@ -6,7 +6,7 @@
 \alias{oceanexplorer-package}
 \title{oceanexplorer: Explore our Planet's Oceans with NOAA}
 \description{
-This package enables easy exploration of the NOAA WORLD OCEAN ATLAS. It includes functions to extract NetCDF data from the repository and codes to visualise several physical and chemical parameters of the ocean. A Shiny app further allows a more interactive exploration of the data.
+This package enables easy exploration of the world ocean atlas of the US agency National Oceanic and Atmospheric Administration (NOAA). It includes functions to extract NetCDF data from the repository and code to visualise several physical and chemical parameters of the ocean. A Shiny app further allows interactive exploration of the data.
 }
 \seealso{
 Useful links:

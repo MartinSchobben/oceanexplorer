@@ -9,10 +9,11 @@ Authors@R:
      role = c("aut", "cre"),
      comment = c(ORCID = "0000-0001-8560-0037")
     )
-Description: This package enables easy exploration of the NOAA WORLD OCEAN ATLAS. 
-  It includes functions to extract NetCDF data from the repository and codes to 
-  visualise several physical and chemical parameters of the ocean. A Shiny app
-  further allows a more interactive exploration of the data.
+Description: This package enables easy exploration of the world ocean atlas of 
+  the US agency National Oceanic and Atmospheric Administration (NOAA). It 
+  includes functions to extract NetCDF data from the repository and code to 
+  visualise several physical and chemical parameters of the ocean. A Shiny app 
+  further allows interactive exploration of the data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -27,6 +28,7 @@ Suggests:
     rmarkdown,
     roxygen2,
     shinytest (>= 1.5.1),
+    spelling,
     testthat (>= 3.1.2),
     vdiffr (>= 1.0.2),
     withr
@@ -52,6 +54,9 @@ Imports:
     shinyWidgets (>= 0.6.4)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Depends: 
+    R (>= 4.1.0)
 URL: 
   https://utrechtuniversity.github.io/oceanexplorer/
   https://utrecht-university.shinyapps.io/oceanexplorer/
+Language: en-US

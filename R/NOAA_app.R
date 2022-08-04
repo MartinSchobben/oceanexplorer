@@ -24,8 +24,8 @@ NOAA_app <- function(server = NOAA_server()) {
       sidebarPanel(
         tabsetPanel(
           id = "tabset",
-          tabPanel("parameters", input_ui("NOAA")),
-          tabPanel("locations", filter_ui("depth"))
+          tabPanel("Parameters", input_ui("NOAA")),
+          tabPanel("Locations", filter_ui("depth"))
           ),
         tags$br(),
         HTML(
@@ -81,7 +81,8 @@ NOAA_app <- function(server = NOAA_server()) {
         paste0(
           "This project was funded by ERC Starting grant number 802835, ",
           "OceaNice, awarded to Peter Bijl.    ",
-          tags$img(src = "img/oceanice-logo.jpg", width = "150px")
+          tags$img(src = "img/oceanice-logo.jpg", width = "150px"),
+          tags$img(src = "img/erc-logo.jpg", width = "69px")
         )
       ),
       style ="text-align: right;"

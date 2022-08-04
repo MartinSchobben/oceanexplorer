@@ -16,3 +16,4 @@
 ^app\.R$
 ^CITATION\.cff$
 ^rsconnect$
+^cran-comments\.md$
