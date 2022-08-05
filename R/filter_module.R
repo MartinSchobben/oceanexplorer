@@ -1,5 +1,8 @@
 #' NOAA filter module
 #'
+#' This shiny module (`filter_ui()` + `filter_server()`) allows filtering of
+#' the currently loaded NOAA data via shiny `textInput()` interfaces.
+#'
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param external Reactive values for latitude, longitude and depth from plot
@@ -11,6 +14,38 @@
 #'
 #' @return Shiny module.
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # run filter module stand-alone
+#'
+#' library(oceanexplorer)
+#' library(shiny)
+#'
+#' # data
+#' NOAA <- get_NOAA("oxygen", 1, "annual")
+#'
+#' # gui
+#' ui <- fluidPage(filter_ui("filter"), plot_ui("worldmap"))
+#'
+#' # server
+#' server <-function(input, output, session) {
+#'  # table
+#'  filter <- filter_server(
+#'   "filter",
+#'   reactive(NOAA),
+#'   external = reactiveValues(lon = 190, lat = 33, depth = 20),
+#'   variable = reactiveValues(variable = "temperature")
+#'  )
+#'
+#'  # plot data
+#'  output_plot <- plot_server("worldmap", reactive(NOAA), filter$coord)
+#'  }
+#'
+#'  # run app
+#'  shinyApp(ui, server)
+#'  }
 filter_ui <- function(id, extended = TRUE) {
 
   coords <- tagList(
@@ -91,7 +126,7 @@ filter_ui <- function(id, extended = TRUE) {
 #' @rdname filter_ui
 #'
 #' @export
-filter_server <- function(id, NOAA, external, ivars = c("depth","lon" , "lat"),
+filter_server <- function(id, NOAA, external, ivars = c("depth", "lon", "lat"),
                           variable, extended = TRUE) {
 
   stopifnot(is.reactive(NOAA))

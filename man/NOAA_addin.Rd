@@ -16,5 +16,12 @@ or the limited version for usage as a RStudio gadget.}
 Rstudio gadget
 }
 \description{
-Ocean explorer addin
+Wrapper function that launches the NOAA RStudio addin
+}
+\examples{
+
+\dontrun{
+# run RStudio addin (can also be launched from `Addins` dropdown menu)
+NOAA_addin()
+}
 }

@@ -8,37 +8,36 @@ plot_NOAA(NOAA, depth = 0, points = NULL, epsg = NULL, rng = NULL)
 }
 \arguments{
 \item{NOAA}{Dataset of the NOAA World Ocean Atlas
-(\code{\link[stars:read_stars]{stars}}).}
+(with \code{\link[=get_NOAA]{get_NOAA()}}).}
 
 \item{depth}{Depth in meters.}
 
-\item{points}{Add locations of extracted point geometry
-(\code{\link[sf:st_sf]{sf}} object).}
+\item{points}{Add locations of extracted point geometry (\code{\link[sf:sf]{sf}}
+object).}
 
-\item{epsg}{The epsg used to project the data (currently supported 4326, 3031
-and 3995).}
+\item{epsg}{The epsg used to project the data (currently supported \code{4326},
+\code{3031}and \code{3995}).}
 
 \item{rng}{A vector of two numeric values for the range of the oceanographic
 variable.}
 }
 \value{
-\code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
+\code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 }
 \description{
 Plots the NOAA World Ocean Atlas on worldmap including optional
 filtered locations.
 }
 \details{
-A worldmap is plotted as an \code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
-object which by default will plot the surface layer of the selected
-oceanographic variable. One can plot different depth slices by selecting
-the appropriate depth in meters (e.g., \code{code = 100}). It is, furthermore
-, possible to visualize the locations of data extractions with
-\code{\link[oceanexplorer:filter_NOAA]{filter_NOAA()}}. See the examples
-below for a more detailed overview of this workflow. Different projections
-of the worldmap can be selected by supplying an \code{epsg}. Currently only
-three projections are allowed: 4326, 3031, and 3995, besides the original.
-It is possible to fix the range of the color scale (for the oceanographic
+A worldmap is plotted as an \code{\link[ggplot2:ggplot]{ggplot}} object which by
+default will plot the surface layer of the selected  oceanographic variable.
+One can plot different depth slices by selecting the appropriate depth in
+meters (e.g., \code{depth = 100}). It is, furthermore possible to visualize the
+locations of data extractions with \code{\link[=filter_NOAA]{filter_NOAA()}}. See the examples below
+for a more detailed overview of this workflow. Different projections of the
+worldmap can be selected by supplying an \code{epsg}. Currently only three
+projections are allowed: 4326, 3031, and 3995, besides the original. It is
+possible to fix the range of the color scale (for the oceanographic
 variable) to a custom range. For example, one can fix the color scale
 to the total range of the ocean (instead of the current depth slice).
 }

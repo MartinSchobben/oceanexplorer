@@ -1,12 +1,30 @@
 #' Parsing expressions for plot labels
 #'
+#' Conveniently converts NOAA world ocean atlas parameter names into full
+#' oceanographic variable names including units for parsing in plot labels.
+#'
 #' @param var Environmental parameter.
 #' @param prefix Prefix.
 #' @param postfix Postfix.
 #'
 #' @return Expression
 #' @export
-env_parm_labeller <- function(var, prefix = character(1), postfix = character(1)) {
+#'
+#' @examples
+#'
+#' # expression
+#' env_parm_labeller("t_an")
+#'
+#' # plot with temperature axis label
+#' library(ggplot2)
+#'
+#' ggplot() +
+#'  geom_blank() +
+#'  ylab(env_parm_labeller("t_an"))
+#'
+#'
+env_parm_labeller <- function(var, prefix = character(1),
+                              postfix = character(1)) {
   # get species / parameter names
   parm <- sub("_.*$", "", var)
   if (parm %in% c("i", "p", "o", "n")) {

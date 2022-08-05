@@ -22,7 +22,8 @@ table_server(id, NOAA, variable)
 Shiny module.
 }
 \description{
-NOAA table module
+This shiny module (\code{table_ui()} + \code{table_server()}) visualizes the loaded
+and filtered data as a table.
 }
 \examples{
 

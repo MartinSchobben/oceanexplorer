@@ -4,19 +4,25 @@
 \name{oceanexplorer-package}
 \alias{oceanexplorer}
 \alias{oceanexplorer-package}
-\title{oceanexplorer: Explore our Planet's Oceans with NOAA}
+\title{oceanexplorer}
 \description{
-This package enables easy exploration of the world ocean atlas of the US agency National Oceanic and Atmospheric Administration (NOAA). It includes functions to extract NetCDF data from the repository and code to visualise several physical and chemical parameters of the ocean. A Shiny app further allows interactive exploration of the data.
+This package allows easy exploration of the world ocean atlas of
+the US agency National Oceanic and Atmospheric Administration (NOAA).
+It includes functions to extract NetCDF data from the repository and code to
+visualize several physical and chemical parameters of the ocean. A Shiny app
+further allows interactive exploration of the data.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://utrechtuniversity.github.io/oceanexplorer/ https://utrecht-university.shinyapps.io/oceanexplorer/}
+  \item \url{https://utrechtuniversity.github.io/oceanexplorer/}
+  \item \url{https://utrecht-university.shinyapps.io/oceanexplorer/}
+  \item \url{https://www.ncei.noaa.gov/products/world-ocean-atlas}
 }
 
 }
 \author{
-\strong{Maintainer}: Martin Schobben \email{schobbenmartin@gmail.com} (\href{https://orcid.org/0000-0001-8560-0037}{ORCID})
+\strong{Maintainer}: Martin Schobben \email{schobbenmartin@gmail.com} (\href{https://orcid.org/0000-0001-8560-0037}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

@@ -1,11 +1,20 @@
 #' Ocean explorer app
 #'
+#' Wrapper function that launches the NOAA app.
+#'
 #' @param server Server function.
 #' @param extended Boolean whether to launch the extended app (default = `TRUE`)
 #'  or the limited version for usage as a RStudio gadget.
 #'
 #' @return Shiny app
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # run app
+#' NOAA_app()
+#' }
 NOAA_app <- function(server = NOAA_server()) {
 
   # add resources
@@ -110,7 +119,7 @@ NOAA_server <- function(extended = TRUE) {
       updateTabsetPanel(
         session,
         "tabset",
-        selected = if (isTRUE(extended)) "locations" else "Map"
+        selected = if (isTRUE(extended)) "Locations" else "Map"
       )
     })
 

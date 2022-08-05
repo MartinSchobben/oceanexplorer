@@ -3,30 +3,30 @@
 #' Plots the NOAA World Ocean Atlas on worldmap including optional
 #' filtered locations.
 #'
-#' A worldmap is plotted as an \code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
-#' object which by default will plot the surface layer of the selected
-#' oceanographic variable. One can plot different depth slices by selecting
-#' the appropriate depth in meters (e.g., \code{code = 100}). It is, furthermore
-#' , possible to visualize the locations of data extractions with
-#' \code{\link[oceanexplorer:filter_NOAA]{filter_NOAA()}}. See the examples
-#' below for a more detailed overview of this workflow. Different projections
-#' of the worldmap can be selected by supplying an \code{epsg}. Currently only
-#' three projections are allowed: 4326, 3031, and 3995, besides the original.
-#' It is possible to fix the range of the color scale (for the oceanographic
+#' A worldmap is plotted as an [`ggplot`][ggplot2::ggplot()] object which by
+#' default will plot the surface layer of the selected  oceanographic variable.
+#' One can plot different depth slices by selecting the appropriate depth in
+#' meters (e.g., `depth = 100`). It is, furthermore possible to visualize the
+#' locations of data extractions with [filter_NOAA()]. See the examples below
+#' for a more detailed overview of this workflow. Different projections of the
+#' worldmap can be selected by supplying an `epsg`. Currently only three
+#' projections are allowed: 4326, 3031, and 3995, besides the original. It is
+#' possible to fix the range of the color scale (for the oceanographic
 #' variable) to a custom range. For example, one can fix the color scale
 #' to the total range of the ocean (instead of the current depth slice).
 #'
 #' @param NOAA Dataset of the NOAA World Ocean Atlas
-#'  (\code{\link[stars:read_stars]{stars}}).
+#'  (with [get_NOAA()]).
 #' @param depth Depth in meters.
-#' @param points Add locations of extracted point geometry
-#'  (\code{\link[sf:st_sf]{sf}} object).
-#' @param epsg The epsg used to project the data (currently supported 4326, 3031
-#'  and 3995).
+#' @param points Add locations of extracted point geometry ([`sf`][sf::st_sf()]
+#'  object).
+#' @param epsg The epsg used to project the data (currently supported `4326`,
+#'  `3031`and `3995`).
 #' @param rng A vector of two numeric values for the range of the oceanographic
 #'  variable.
 #'
-#' @return \code{ggplot2:\link[ggplot2:ggplot]{ggplot}}
+#' @return [ggplot2::ggplot()]
+#'
 #' @export
 #'
 #' @examples

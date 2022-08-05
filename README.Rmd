@@ -20,10 +20,18 @@ knitr::opts_chunk$set(
 
 ```{r pkgs, echo=FALSE, message=FALSE, eval=FALSE}
 # following code for loading and writing the bibtex references for the used pkgs
-pkgs <- c("dplyr", "tibble", "stringr", "ggplot2", "rlang", "purrr", "devtools", 
-          "roxygen2", "testthat", "knitr", "rmarkdown", "stars", "sf", 
-          "thematic", "bslib", "shiny", "ncmeta", "waiter", "shinyWidgets", 
-          "shinyjs")  
+pkgs <- c(
+  # data transformation and visualization
+  "dplyr", "tibble", "ggplot2", "rlang", "purrr", 
+  # package development
+  "devtools", "shinytest", "vdiffr", "roxygen2", "testthat", 
+  # documentation
+  "knitr", "rmarkdown", 
+  # spatial analysis
+  "stars", "sf", "ncmeta",
+  # shiny app
+  "thematic", "bslib", "shiny", "waiter", "shinyWidgets", "shinyjs"
+)  
 # Get the R reference
 rref <- citation()
 # Create ref key
@@ -80,9 +88,9 @@ This project was funded by ERC Starting grant number 802835, OceaNice, awarded t
 
 ## Credits
 
-The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
+The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *shinytest* [@shinytest], *vdiffr* [@vdiffr], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
 
-Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], *stringr* [@stringr], and *rlang* [@rlang].
+Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], and *rlang* [@rlang].
 
 In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf] and *stars* [@stars].
 
@@ -122,7 +130,7 @@ In addition, the sliced array can be plotted, like so:
 
 ```{r plot1}
 # plot the NOAA world ocean atlas for oxygen content
-plot_NOAA(oxy_omz)
+plot_NOAA(oxy_omz, depth = NULL)
 ```
 
 The same plot can be produced by taking the original data and supplying a value to the `depth` argument and specifying the range of oxygen content to `oxy_omz`.
@@ -151,5 +159,8 @@ Or, the RStudio addin can be launched within the RStudio viewer pain by executin
 NOAA_addin()
 ```
 
+## Code of Conduct
+
+Please note that the oceanexplorer project is released with a [Contributor Code of Conduct](https://utrechtuniversity.github.io/oceanexplorer/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 # References

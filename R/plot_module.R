@@ -1,11 +1,41 @@
 #' NOAA plot module
 #'
+#' This shiny module (`plot_ui()` + `plot_server()`) visualizes the loaded
+#' data according to the selected epsg projection (`"original"`, `"4326"`,
+#' `"3031"`, or `"3995"`). In addition it provides an interactive plot
+#' interface to select location for data extraction based on a single-click.
+#'
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value of NOAA dataset.
 #' @param points Add locations of extracted point geometry.
 #'
 #' @return Shiny module.
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # run plot module stand-alone
+#' library(oceanexplorer)
+#' library(shiny)
+#'
+#' # data
+#' NOAA <- get_NOAA("oxygen", 1, "annual")
+#'
+#' # coordinates
+#' points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11, 12)))
+#'
+#' # gui
+#' ui <- fluidPage(plot_ui("plot"))
+#'
+#' # server
+#' server <-function(input, output, session) {
+#'  plot_server("plot", reactive(NOAA), reactive(points))
+#' }
+#'
+#' # run app
+#' shinyApp(ui, server)
+#' }
 plot_ui <- function(id) {
   tagList(
     fluidRow(
@@ -13,8 +43,8 @@ plot_ui <- function(id) {
         width = 6,
         selectInput(
           NS(id, "epsg"),
-          h5("EPSG"),
-          c("original", "4326", "3031", "3995"),
+          h5("Projection"),
+          c("original", `Global (4326)` = "4326", `Antarctic (3031)` = "3031", `Arctic (3995)` = "3995"),
           selected = "original"
         ),
         actionLink(

@@ -1,5 +1,11 @@
 #' NOAA data module
 #'
+#' These shiny modules control loading of data from the NOAA world ocean atlas
+#' (`input_ui()` + `input_server()`). In addition, the `output_ui()` +
+#' `output_server()` can be used to export the filtered data in csv format. The
+#' `citation_ui()` provides the associated references of the dataset currently
+#' loaded.
+#'
 #' @param id Namespace id shiny module.
 #' @param NOAA Reactive value for the dataset containing the locations
 #'  coordinates.
@@ -10,6 +16,33 @@
 #'
 #' @return Shiny module.
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # run data module stand-alone
+#'
+#' library(oceanexplorer)
+#' library(shiny)
+#'
+#' # data
+#' NOAA <- get_NOAA("oxygen", 1, "annual")
+#'
+#' # gui
+#' ui <- fluidPage(input_ui("NOAA"), plot_ui("worldmap"))
+#'
+#' # server
+#'
+#' server <-function(input, output, session) {
+#'  # table
+#'  NOAA <- input_server("NOAA")
+#'  # plot data
+#'  output_plot <- plot_server("worldmap", NOAA$data, reactive(NULL))
+#' }
+#'
+#' # run app
+#' shinyApp(ui, server)
+#' }
 input_ui <- function(id, citation = NULL, extended = TRUE) {
 
   vars <- tagList(
@@ -71,9 +104,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
 #'
 #' @export
 citation_ui <- function(id) {
-
   tagList(tags$br(), tags$br(), uiOutput(NS(id,  "citation")))
-
 }
 #' @rdname input_ui
 #'

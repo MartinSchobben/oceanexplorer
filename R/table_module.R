@@ -1,5 +1,8 @@
 #' NOAA table module
 #'
+#' This shiny module (`table_ui()` + `table_server()`) visualizes the loaded
+#' and filtered data as a table.
+#'
 #' @param id Namespace id shiny module.
 #' @param download Add download button.
 #' @param NOAA Reactive value of NOAA dataset.

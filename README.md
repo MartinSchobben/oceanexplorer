@@ -12,7 +12,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--04-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--05-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
@@ -44,14 +44,15 @@ awarded to Peter Bijl.
 The construction of the R (R Core Team 2022) package *oceanexplorer* and
 associated documentation was aided by the packages; *devtools* (Wickham,
 Hester, et al. 2021), *roxygen2* (Wickham, Danenberg, et al. 2021),
-*testthat* (Wickham 2022), *knitr* (Xie 2014 ; Xie 2015), *rmarkdown*
-(Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020),
-and the superb guidance in the book: *R packages: organize, test,
-document, and share your code*, by Wickham (2015).
+*testthat* (Wickham 2022), *shinytest* (Chang, Csárdi, and Wickham
+2021), *vdiffr* (Henry et al. 2021), *knitr* (Xie 2014 ; Xie 2015),
+*rmarkdown* (Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and
+Riederer 2020), and the superb guidance in the book: *R packages:
+organize, test, document, and share your code*, by Wickham (2015).
 
 Data transformation, cleaning and visualization is performed with:
-*dplyr* (Wickham et al. 2022), *tibble* (Müller and Wickham 2021),
-*stringr* (Wickham 2019), and *rlang* (Henry and Wickham 2022).
+*dplyr* (Wickham et al. 2022), *tibble* (Müller and Wickham 2021), and
+*rlang* (Henry and Wickham 2022).
 
 In addition, this package relies on a set of packages for spatial data
 analysis: *sf* (Pebesma 2022) and *stars* (Pebesma 2021).
@@ -104,7 +105,7 @@ In addition, the sliced array can be plotted, like so:
 
 ``` r
 # plot the NOAA world ocean atlas for oxygen content
-plot_NOAA(oxy_omz)
+plot_NOAA(oxy_omz, depth = NULL)
 ```
 
 <img src="man/figures/README-plot1-1.png" width="100%" />
@@ -139,6 +140,13 @@ the taskbar.
 NOAA_addin()
 ```
 
+## Code of Conduct
+
+Please note that the oceanexplorer project is released with a
+[Contributor Code of
+Conduct](https://utrechtuniversity.github.io/oceanexplorer/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
 # References
 
 <div id="refs" class="references csl-bib-body hanging-indent">
@@ -159,10 +167,25 @@ Borges. 2021. *Shiny: Web Application Framework for r*.
 
 </div>
 
+<div id="ref-shinytest" class="csl-entry">
+
+Chang, Winston, Gábor Csárdi, and Hadley Wickham. 2021. *Shinytest: Test
+Shiny Apps*. <https://github.com/rstudio/shinytest>.
+
+</div>
+
 <div id="ref-waiter" class="csl-entry">
 
 Coene, John. 2022. *Waiter: Loading Screen for Shiny*.
 <https://CRAN.R-project.org/package=waiter>.
+
+</div>
+
+<div id="ref-vdiffr" class="csl-entry">
+
+Henry, Lionel, Thomas Lin Pedersen, T Jake Luciani, Matthieu Decorde,
+and Vaudor Lise. 2021. *Vdiffr: Visual Regression Testing and Graphical
+Diffing*. <https://CRAN.R-project.org/package=vdiffr>.
 
 </div>
 
@@ -231,13 +254,6 @@ Unified and Automatic Theming of Ggplot2, Lattice, and Base r Graphics*.
 
 Wickham, Hadley. 2015. *R Packages: Organize, Test, Document, and Share
 Your Code*. O’Reilly Media, Inc. <https://r-pkgs.org/>.
-
-</div>
-
-<div id="ref-stringr" class="csl-entry">
-
-———. 2019. *Stringr: Simple, Consistent Wrappers for Common String
-Operations*. <https://CRAN.R-project.org/package=stringr>.
 
 </div>
 

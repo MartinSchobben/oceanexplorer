@@ -19,5 +19,12 @@ or the limited version for usage as a RStudio gadget.}
 Shiny app
 }
 \description{
-Ocean explorer app
+Wrapper function that launches the NOAA app.
+}
+\examples{
+
+\dontrun{
+# run app
+NOAA_app()
+}
 }

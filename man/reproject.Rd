@@ -4,7 +4,7 @@
 \alias{reproject}
 \alias{reproject.sf}
 \alias{reproject.stars}
-\title{Reprojecting spatial objects to new epsg}
+\title{Re-projecting spatial objects to new epsg}
 \usage{
 reproject(obj, epsg, ...)
 
@@ -13,9 +13,9 @@ reproject(obj, epsg, ...)
 \method{reproject}{stars}(obj, epsg, ...)
 }
 \arguments{
-\item{obj}{The sf or stars object to be reprojected.}
+\item{obj}{The sf or stars object to be re-projected.}
 
-\item{epsg}{The projection.}
+\item{epsg}{The projection (currently only: \code{"3031"}, or \code{"3995"}).}
 
 \item{...}{Currently not supported.}
 }
@@ -23,5 +23,14 @@ reproject(obj, epsg, ...)
 sf or stars object
 }
 \description{
-Reprojecting spatial objects to new epsg
+Easy re-projecting of the epsg of \code{\link[sf:st_as_sf]{sf}} and
+\code{\link[stars:st_as_stars]{stars}} objects.
+}
+\examples{
+
+\dontrun{
+NOAA <- get_NOAA("temperature", 1, "annual")
+
+reproject(NOAA, 3031)
+}
 }

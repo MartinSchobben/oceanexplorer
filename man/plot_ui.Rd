@@ -20,5 +20,33 @@ plot_server(id, NOAA, points)
 Shiny module.
 }
 \description{
-NOAA plot module
+This shiny module (\code{plot_ui()} + \code{plot_server()}) visualizes the loaded
+data according to the selected epsg projection (\code{"original"}, \code{"4326"},
+\code{"3031"}, or \code{"3995"}). In addition it provides an interactive plot
+interface to select location for data extraction based on a single-click.
+}
+\examples{
+
+\dontrun{
+# run plot module stand-alone
+library(oceanexplorer)
+library(shiny)
+
+# data
+NOAA <- get_NOAA("oxygen", 1, "annual")
+
+# coordinates
+points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11, 12)))
+
+# gui
+ui <- fluidPage(plot_ui("plot"))
+
+# server
+server <-function(input, output, session) {
+ plot_server("plot", reactive(NOAA), reactive(points))
+}
+
+# run app
+shinyApp(ui, server)
+}
 }

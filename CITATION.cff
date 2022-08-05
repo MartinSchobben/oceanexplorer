@@ -4,7 +4,7 @@ authors:
 - family-names: "Schobben"
   given-names: "Martin"
   orcid: "https://orcid.org/0000-0001-8560-0037"
-title: "oceanexplorer: Explore our Planet's Oceans with NOAA"
+title: "oceanexplorer: Explore Our Planet's Oceans with NOAA"
 version: 0.0.0.9001
 date-released: 2022-05-03
 url: "https://utrechtuniversity.github.io/oceanexplorer/"

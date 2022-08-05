@@ -35,5 +35,36 @@ coordinates.}
 Shiny module.
 }
 \description{
-NOAA data module
+These shiny modules control loading of data from the NOAA world ocean atlas
+(\code{input_ui()} + \code{input_server()}). In addition, the \code{output_ui()} +
+\code{output_server()} can be used to export the filtered data in csv format. The
+\code{citation_ui()} provides the associated references of the dataset currently
+loaded.
+}
+\examples{
+
+\dontrun{
+# run data module stand-alone
+
+library(oceanexplorer)
+library(shiny)
+
+# data
+NOAA <- get_NOAA("oxygen", 1, "annual")
+
+# gui
+ui <- fluidPage(input_ui("NOAA"), plot_ui("worldmap"))
+
+# server
+
+server <-function(input, output, session) {
+ # table
+ NOAA <- input_server("NOAA")
+ # plot data
+ output_plot <- plot_server("worldmap", NOAA$data, reactive(NULL))
+}
+
+# run app
+shinyApp(ui, server)
+}
 }

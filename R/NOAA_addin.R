@@ -1,11 +1,20 @@
 #' Ocean explorer addin
 #'
+#' Wrapper function that launches the NOAA RStudio addin
+#'
 #' @param server Server function.
 #' @param extended Boolean whether to launch the extended app (default = `TRUE`)
 #'  or the limited version for usage as a RStudio gadget.
 #'
 #' @return Rstudio gadget
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' # run RStudio addin (can also be launched from `Addins` dropdown menu)
+#' NOAA_addin()
+#' }
 NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
 
   ui <- miniPage(

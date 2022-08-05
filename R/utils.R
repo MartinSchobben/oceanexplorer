@@ -1,11 +1,22 @@
-#' Reprojecting spatial objects to new epsg
+#' Re-projecting spatial objects to new epsg
 #'
-#' @param obj The sf or stars object to be reprojected.
-#' @param epsg The projection.
+#' Easy re-projecting of the epsg of \code{\link[sf:st_as_sf]{sf}} and
+#' \code{\link[stars:st_as_stars]{stars}} objects.
+#'
+#' @param obj The sf or stars object to be re-projected.
+#' @param epsg The projection (currently only: `"3031"`, or `"3995"`).
 #' @param ... Currently not supported.
 #'
 #' @return sf or stars object
 #' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' NOAA <- get_NOAA("temperature", 1, "annual")
+#'
+#' reproject(NOAA, 3031)
+#' }
 reproject <- function(obj, epsg, ...) {
 
   # check if epsg is different of original

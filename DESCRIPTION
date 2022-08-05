@@ -1,18 +1,18 @@
 Package: oceanexplorer
-Title: Explore our Planet's Oceans with NOAA
+Title: Explore Our Planet's Oceans with NOAA
 Version: 0.0.0.9002
 Authors@R: 
     person(
      "Martin",  
      "Schobben", 
      email = "schobbenmartin@gmail.com", 
-     role = c("aut", "cre"),
+     role = c("aut", "cre", "cph"),
      comment = c(ORCID = "0000-0001-8560-0037")
     )
-Description: This package enables easy exploration of the world ocean atlas of 
+Description: Provides tools for easy exploration of the world ocean atlas of 
   the US agency National Oceanic and Atmospheric Administration (NOAA). It 
   includes functions to extract NetCDF data from the repository and code to 
-  visualise several physical and chemical parameters of the ocean. A Shiny app 
+  visualize several physical and chemical parameters of the ocean. A Shiny app 
   further allows interactive exploration of the data.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -57,6 +57,7 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 4.1.0)
 URL: 
-  https://utrechtuniversity.github.io/oceanexplorer/
-  https://utrecht-university.shinyapps.io/oceanexplorer/
+    https://utrechtuniversity.github.io/oceanexplorer/,
+    https://utrecht-university.shinyapps.io/oceanexplorer/,
+    https://www.ncei.noaa.gov/products/world-ocean-atlas
 Language: en-US

@@ -5,15 +5,14 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^inst/extdata$
-^man/packages\.bib$
 ^\.github$
 ^codecov\.yml$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^Dockerfile$
-^build-oceanexplorer\.sh$
 ^app\.R$
 ^CITATION\.cff$
 ^rsconnect$
 ^cran-comments\.md$
+^CODE_OF_CONDUCT\.md$
+^.Rprofile$
