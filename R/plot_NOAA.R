@@ -32,16 +32,16 @@
 #' @examples
 #' \dontrun{
 #' # data
-#' base <- get_NOAA("oxygen", 1, "annual")
+#' NOAA <- get_NOAA("oxygen", 1, "annual")
 #'
 #' # plot
-#' plot_NOAA(base)
+#' plot_NOAA(NOAA)
 #'
 #' # coordinates
-#' points <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
+#' pts <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
 #'
 #' # plot
-#' plot_NOAA(base, points)
+#' plot_NOAA(NOAA, points = pts)
 #' }
 plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, rng = NULL) {
 

@@ -17,3 +17,8 @@ NULL
 #' @import miniUI
 ## usethis namespace: end
 NULL
+
+## usethis namespace: start
+#' @import ncmeta
+## usethis namespace: end
+NULL

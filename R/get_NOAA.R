@@ -5,7 +5,7 @@
 #' This function retrieves data from the [NOAA World Ocean Atlas](https://www.ncei.noaa.gov/products/world-ocean-atlas)
 #' as an 3D array (longitude, latitude, and depth) and stores them with
 #' [stars::read_stars()] as an stars object. The function can automatically
-#' cache the extracted files (default: `cacheNOAA = TRUE`).
+#' cache the extracted files (default: `cache = TRUE`).
 #'
 #' @seealso [Introduction to the stars package](https://r-spatial.github.io/stars/articles/stars1.html)
 #'
@@ -14,7 +14,7 @@
 #'  .
 #' @param av_period Temporal resolution, either `"annual"`, specific seasons
 #'  (e.g. `"winter"`), or month (e.g. `"August"`).
-#' @param cacheNOAA Caching the extracted files under `extdata`.
+#' @param cache Caching the extracted files under `extdata`.
 #'
 #' @return [`stars`][stars::st_as_stars()] object.
 #' @export
@@ -23,7 +23,7 @@
 #' \dontrun{
 #' get_NOAA("oxygen", 1, "annual")
 #' }
-get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
+get_NOAA <- function(var, spat_res, av_period, cache = TRUE) {
 
   # abbreviate variable
   if (var == "silicate") {
@@ -55,7 +55,7 @@ get_NOAA <- function(var, spat_res, av_period, cacheNOAA = TRUE) {
     # get netcdf ('make_units' = suppress warning for unrecognized units)
     NOAA <- stars::read_ncdf(NOAA_path[[1]], var = stat, make_units = FALSE)
 
-    if (isTRUE(cacheNOAA)) {
+    if (isTRUE(cache)) {
 
       # write stars object if extracted from NOAA server
       # create dir

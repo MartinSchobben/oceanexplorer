@@ -24,7 +24,6 @@ Suggests:
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
     knitr,
-    ncmeta,
     rmarkdown,
     roxygen2,
     shinytest (>= 1.5.1),
@@ -51,7 +50,8 @@ Imports:
     shinyjs (>= 2.1.0),
     rlang (>= 0.4.11),
     maps (>= 3.4.0),
-    shinyWidgets (>= 0.6.4)
+    shinyWidgets (>= 0.6.4),
+    ncmeta (>= 0.3.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 

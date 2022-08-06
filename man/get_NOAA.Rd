@@ -4,7 +4,7 @@
 \alias{get_NOAA}
 \title{Obtain NOAA World Ocean Atlas dataset}
 \usage{
-get_NOAA(var, spat_res, av_period, cacheNOAA = TRUE)
+get_NOAA(var, spat_res, av_period, cache = TRUE)
 }
 \arguments{
 \item{var}{The chemical or physical variable of interest.}
@@ -15,7 +15,7 @@ get_NOAA(var, spat_res, av_period, cacheNOAA = TRUE)
 \item{av_period}{Temporal resolution, either \code{"annual"}, specific seasons
 (e.g. \code{"winter"}), or month (e.g. \code{"August"}).}
 
-\item{cacheNOAA}{Caching the extracted files under \code{extdata}.}
+\item{cache}{Caching the extracted files under \code{extdata}.}
 }
 \value{
 \code{\link[stars:st_as_stars]{stars}} object.
@@ -27,7 +27,7 @@ The function retrieves data from the NOAA World Ocean Atlas.
 This function retrieves data from the \href{https://www.ncei.noaa.gov/products/world-ocean-atlas}{NOAA World Ocean Atlas}
 as an 3D array (longitude, latitude, and depth) and stores them with
 \code{\link[stars:read_stars]{stars::read_stars()}} as an stars object. The function can automatically
-cache the extracted files (default: \code{cacheNOAA = TRUE}).
+cache the extracted files (default: \code{cache = TRUE}).
 }
 \examples{
 \dontrun{
