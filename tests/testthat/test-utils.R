@@ -89,12 +89,12 @@ test_that("epsg check is consitent", {
 
   # different
   expect_equal(
-    epsg_check(NOAAatlas, sf::st_crs(wmap)),
-    sf::st_crs(wmap)
+    epsg_check(NOAAatlas, sf::st_crs(3031)),
+    sf::st_crs(3031)
   )
   expect_equal(
-    epsg_check(NOAAatlas, "4326"),
-    4326
+    epsg_check(NOAAatlas, "3031"),
+    3031
   )
   expect_equal(
     epsg_check(NOAAatlas, 3031),

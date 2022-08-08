@@ -17,7 +17,7 @@ Description: Provides tools for easy exploration of the world ocean atlas of
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests: 
     covr,
     devtools (>= 2.4.3),
@@ -35,7 +35,6 @@ Imports:
     stars (>= 0.5.5),
     shiny (>= 1.7.1),
     ggplot2 (>= 3.3.5),
-    dplyr (>= 1.0.7),
     sf (>= 1.0.5),
     waiter (>= 0.2.5),
     bslib (>= 0.3.1),
@@ -50,8 +49,9 @@ Imports:
     shinyjs (>= 2.1.0),
     rlang (>= 0.4.11),
     maps (>= 3.4.0),
-    shinyWidgets (>= 0.6.4),
-    ncmeta (>= 0.3.0)
+    ncmeta (>= 0.3.0),
+    RNetCDF (>= 2.6.1),
+    dplyr (>= 1.0.9)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Depends: 

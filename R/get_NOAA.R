@@ -52,8 +52,8 @@ get_NOAA <- function(var, spat_res, av_period, cache = TRUE) {
     # get data and make stars
     NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]])) |> stars::st_as_stars()
   } else {
-    # get netcdf ('make_units' = suppress warning for unrecognized units)
-    NOAA <- stars::read_ncdf(NOAA_path[[1]], var = stat, make_units = FALSE)
+    # get netcdf
+    NOAA <- read_NOAA(NOAA_path[[1]], stat)
 
     if (isTRUE(cache)) {
 
@@ -120,3 +120,32 @@ url_parser <- function(var, spat_res, av_period) {
     list(local = local_path)
   }
 }
+
+# read the NOAA netcdf
+read_NOAA <- function(conn, var) {
+
+  # make connection
+  nc <- RNetCDF::open.nc(conn)
+
+  # variable
+  lat <- RNetCDF::var.get.nc(nc, "lat")
+  lon <- RNetCDF::var.get.nc(nc, "lon")
+  depth <- RNetCDF::var.get.nc(nc, "depth")
+  lat_bnds <- RNetCDF::var.get.nc(nc, "lat_bnds")
+  lon_bnds <- RNetCDF::var.get.nc(nc, "lon_bnds")
+  depth_bnds <- RNetCDF::var.get.nc(nc, "depth_bnds")
+  attr <- RNetCDF::var.get.nc(nc, var)
+
+  # close connection
+  RNetCDF::close.nc(nc)
+
+  st <- stars::st_as_stars(attr) |>
+    stars::st_set_dimensions(which = 1, offset = min(lon_bnds), delta = unique(diff(lon)), refsys = sf::st_crs(4326), names = "lon") |>
+    stars::st_set_dimensions(which = 2, offset = min(lat_bnds), delta = unique(diff(lat)), refsys = sf::st_crs(4326), names = "lat") |>
+    stars::st_set_dimensions(which = 3, values = depth_bnds[1,], names = "depth")
+
+  # variable name
+  names(st) <- var
+  st
+}
+

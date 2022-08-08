@@ -4,7 +4,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-^inst/extdata$
+^inst/extdata
 ^\.github$
 ^codecov\.yml$
 ^_pkgdown\.yml$

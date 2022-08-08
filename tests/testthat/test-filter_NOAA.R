@@ -1,17 +1,20 @@
 test_that("check output type", {
 
   # get data
-  NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+  NOAA <- get_NOAA("oxygen", 1, "annual")
 
   # check classes
   expect_s3_class(
-    filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11, 12))),
+    filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11, 12))),
     "sf"
   )
   expect_s3_class(
-    filter_NOAA(NOAAatlas, c(1,30), list(lon = c(-160, -120), lat =  c(11,12))),
+    filter_NOAA(NOAA, c(1,30), list(lon = c(-160, -120), lat =  c(11,12))),
     "sf"
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("that different coord classes generate the same results", {
@@ -33,7 +36,9 @@ test_that("that different coord classes generate the same results", {
 })
 
 test_that("entries other then vectors of 1 or the same length cause an error", {
+  # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
   expect_error(
     coord_check(
       depth = c(0, 0, 0),
@@ -44,10 +49,15 @@ test_that("entries other then vectors of 1 or the same length cause an error", {
       ),
     "Depth and coordinates must be a vector of length 1 or have consistent lengths."
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("entries for class coords besides matrix, list and sfc throws error", {
+  # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
   expect_error(
     filter_NOAA(
       NOAA,
@@ -59,6 +69,9 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
     ),
     "Class supplied to `coord` unsupported."
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("wrong names for matrices or list of coordinates causes an error", {
@@ -75,6 +88,9 @@ test_that("wrong names for matrices or list of coordinates causes an error", {
     filter_NOAA(NOAA, depth = 0, coord = cbind(lat = c(-116), lon = c(-31))),
     NULL
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("check that epsg of depth plane and coordinates is similar", {
@@ -136,10 +152,16 @@ test_that("check that epsg of depth plane and coordinates is similar", {
   expect_true(
     sf::st_crs(plane_4326) == sf::st_crs(point_4326)
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("epsg conversion works with character vector", {
+
+  # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
   expect_snapshot(
     filter_NOAA(
       NOAA,
@@ -151,10 +173,16 @@ test_that("epsg conversion works with character vector", {
       epsg = "4326"
     )
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("epsg conversion works with 'original' keyword", {
+
+  # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
   expect_snapshot(
     filter_NOAA(
       NOAA,
@@ -166,6 +194,9 @@ test_that("epsg conversion works with 'original' keyword", {
       epsg = "original"
     )
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("extraction of coords can use fuzzy search", {
@@ -173,10 +204,16 @@ test_that("extraction of coords can use fuzzy search", {
   skip_on_cran()
   skip_on_ci()
 
+  # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # filter data
   plane <- filter_NOAA(NOAA, 0)
+
+  # coordinates
   coords1 <- cbind(lon = c(-116.30), lat =c(-31.98))
   coords2 <- cbind(lon = c(-52.79878), lat =c(47.72121))
+
   # should be just a point geom with value
   expect_snapshot(
     extract_coords(plane, coords1, 0, sf::st_crs(NOAA), 0)
@@ -193,4 +230,7 @@ test_that("extraction of coords can use fuzzy search", {
   expect_snapshot(
     extract_coords(plane, rbind(coords1, coords2), 0, sf::st_crs(NOAA), 100)
   )
+
+  # clean cache
+  clean_cache()
 })

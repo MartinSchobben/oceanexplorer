@@ -44,26 +44,25 @@ plot_ui <- function(id) {
         selectInput(
           NS(id, "epsg"),
           h5("Projection"),
-          c("original", `Global (4326)` = "4326", `Antarctic (3031)` = "3031", `Arctic (3995)` = "3995"),
+          c(`Global (4326)` = "4326", `Antarctic (3031)` = "3031", `Arctic (3995)` = "3995"),
           selected = "original"
         ),
         actionLink(
           NS(id, "epsghelper"),
           "",
-          icon = icon('question-circle')
+          icon = icon('question-circle', verify_fa = FALSE),
         )
       ),
       column(
         width = 6,
-
-        shinyWidgets::materialSwitch(
+        checkboxInput(
           NS(id, "fixed"),
           h5("Fixate variable scale")
         ),
         actionLink(
           NS(id, "fixedhelper"),
           "",
-          icon = icon('question-circle')
+          icon = icon('question-circle', verify_fa = FALSE)
         )
       )
     ),

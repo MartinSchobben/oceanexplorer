@@ -49,7 +49,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
     actionLink(
       NS(id, "varhelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     selectInput(
       NS(id, "var"),
@@ -60,7 +60,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
     actionLink(
       NS(id, "spathelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     selectInput(
       NS(id, "spat"),
@@ -70,7 +70,7 @@ input_ui <- function(id, citation = NULL, extended = TRUE) {
     actionLink(
       NS(id, "temphelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     selectInput(
       NS(id, "temp"),
@@ -297,10 +297,11 @@ vc_cite <- c(
 citations <- function(x) {
 
   HTML(
-    paste(vc_cite[x],
-    a(
-      href = "https://www.ncei.noaa.gov/products/world-ocean-atlas",
-      "(Click here for the original papers)"
+    paste(
+      vc_cite[x],
+      a(
+        href = "https://www.ncei.noaa.gov/products/world-ocean-atlas",
+        "(Click here for the original papers)"
       )
     )
   )
@@ -310,4 +311,3 @@ technical <- a(
   href =  "https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf",
   "NOAA World Ocean Atlas 2018 Product Documentation"
 )
-

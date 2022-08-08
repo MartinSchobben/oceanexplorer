@@ -165,3 +165,15 @@ convert_stereo <- function(lon, lat, epsg) {
   coord
 
 }
+
+# developmetn function clean cache except phosphate 1 winter
+clean_cache <- function() {
+
+  # direcotry
+  cache_pkg <- fs::path_package(package = "oceanexplorer", "extdata")
+
+  # list files and delete them
+  list.files(cache_pkg, full.names = TRUE) |>
+        fs::file_delete()
+
+}

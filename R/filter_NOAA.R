@@ -74,7 +74,7 @@ filter_NOAA <- function(NOAA, depth = 0, coord = NULL, epsg = NULL,
     purrr::map2_dfr(
       plane,
       unique(depth),
-      ~extract_coords(.x, coord, .y, epsg = epsg, fuzzy = fuzzy)
+      ~extract_coords(.x, coord, .y, epsg = epsg, fuzzy = fuzzy, bilinear = is.matrix(coord))
     )
 
   } else {
@@ -160,9 +160,9 @@ cast_coords <- function(coord, epsg) {
 }
 
 # extract coordinates from a plane (fuzzy is in units km)
-extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0) {
+extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0, bilinear = is.matrix(coords)) {
 
-  tb <- stars::st_extract(plane, na.rm = TRUE, at = coords)
+  tb <- stars::st_extract(plane, na.rm = TRUE, at = coords, bilinear = bilinear)
 
   # add row numbers
   tb$id <- 1:nrow(tb)
@@ -192,10 +192,11 @@ extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0) {
       extract_coords(
         plane,
         sf::st_buffer(x = sf::st_geometry(ft), dist = fuzzy * 1e3),
-        depth,
-        epsg
-        )
+        depth = depth,
+        epsg = epsg,
+        bilinear = FALSE
       )
+    )
     tb_ft$id <- ft$id
 
     # replace NAs

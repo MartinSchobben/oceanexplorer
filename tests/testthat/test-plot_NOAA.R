@@ -4,34 +4,37 @@ test_that("plot of NOAA atlas works", {
   skip_on_cran()
   skip_on_covr()
 
-  NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+  NOAA <- get_NOAA("oxygen", 1, "annual")
   # points
   crds <- list(lon = c(-160, -120), lat =  c(11,12))
-  points <- filter_NOAA(NOAAatlas, 1, crds)
+  points <- filter_NOAA(NOAA, 1, crds)
 
   # original epsg
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = NULL",
-    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = NULL)
+    plot_NOAA(NOAA, depth = 0, points = points, epsg = NULL)
   )
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = 'original'",
-    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "original")
+    plot_NOAA(NOAA, depth = 0, points = points, epsg = "original")
   )
 
   # new projections
   vdiffr::expect_doppelganger(
     "NOAA word map epsg = '4326'",
-    plot_NOAA(NOAAatlas, depth = 0, points = points, epsg = "4326")
+    plot_NOAA(NOAA, depth = 0, points = points, epsg = "4326")
   )
   vdiffr::expect_doppelganger(
     "NOAA arctic map epsg = 3995",
-    plot_NOAA(NOAAatlas, depth = 0, epsg = 3995)
+    plot_NOAA(NOAA, depth = 0, epsg = 3995)
   )
   vdiffr::expect_doppelganger(
     "NOAA antarctic map epsg = 3031",
-    plot_NOAA(NOAAatlas, depth = 0, epsg = 3031)
+    plot_NOAA(NOAA, depth = 0, epsg = 3031)
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("box clipping works for stars",{
@@ -40,13 +43,16 @@ test_that("box clipping works for stars",{
   skip_on_cran()
   skip_on_covr()
 
-  NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+  NOAA <- get_NOAA("oxygen", 1, "annual")
   # just depth
-  NOAAatlas <- filter_NOAA(NOAAatlas)
+  NOAA <- filter_NOAA(NOAA)
 
   expect_snapshot(
-    clip_lat(NOAAatlas, 3031)
+    clip_lat(NOAA, 3031)
   )
+
+  # clean cache
+  clean_cache()
 })
 
 test_that("box clipping works for sf",{
@@ -64,4 +70,7 @@ test_that("box clipping works for sf",{
   expect_snapshot(
     clip_lat(wmap, 3031)
   )
+
+  # clean cache
+  clean_cache()
 })

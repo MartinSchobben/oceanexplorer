@@ -52,7 +52,7 @@ filter_ui <- function(id, extended = TRUE) {
     actionLink(
       NS(id, "depthhelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     textInput(
       NS(id, "depth"),
@@ -63,7 +63,7 @@ filter_ui <- function(id, extended = TRUE) {
     actionLink(
       NS(id, "lonhelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     textInput(
       NS(id, "lon"),
@@ -74,7 +74,7 @@ filter_ui <- function(id, extended = TRUE) {
     actionLink(
       NS(id, "lathelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     textInput(
       NS(id, "lat"),
@@ -85,7 +85,7 @@ filter_ui <- function(id, extended = TRUE) {
     actionLink(
       NS(id, "searchhelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     ),
     selectInput(
       NS(id, "search"),
@@ -104,7 +104,7 @@ filter_ui <- function(id, extended = TRUE) {
     actionLink(
       NS(id, "selecthelper"),
       "",
-      icon = icon('question-circle')
+      icon = icon('question-circle', verify_fa = FALSE)
     )
   )
 
