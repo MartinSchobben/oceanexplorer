@@ -18,11 +18,17 @@ Useful links:
   \item \url{https://utrechtuniversity.github.io/oceanexplorer/}
   \item \url{https://utrecht-university.shinyapps.io/oceanexplorer/}
   \item \url{https://www.ncei.noaa.gov/products/world-ocean-atlas}
+  \item Report bugs at \url{https://github.com/UtrechtUniversity/oceanexplorer/issues}
 }
 
 }
 \author{
 \strong{Maintainer}: Martin Schobben \email{schobbenmartin@gmail.com} (\href{https://orcid.org/0000-0001-8560-0037}{ORCID}) [copyright holder]
+
+Other contributors:
+\itemize{
+  \item Peter Bijl (\href{https://orcid.org/0000-0002-1710-4012}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}

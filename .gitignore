@@ -11,8 +11,7 @@ tests/**/*.svg
 tests/**/*.json
 tests/**/*.png
 
-# shiny test
-inst/appdir/
+# pkgdown
 inst/doc
 docs
 

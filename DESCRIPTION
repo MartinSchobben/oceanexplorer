@@ -2,12 +2,20 @@ Package: oceanexplorer
 Title: Explore Our Planet's Oceans with NOAA
 Version: 0.0.0.9002
 Authors@R: 
-    person(
-     "Martin",  
-     "Schobben", 
-     email = "schobbenmartin@gmail.com", 
-     role = c("aut", "cre", "cph"),
-     comment = c(ORCID = "0000-0001-8560-0037")
+    c(
+      person(
+        "Martin",  
+        "Schobben", 
+        email = "schobbenmartin@gmail.com", 
+        role = c("aut", "cre", "cph"),
+        comment = c(ORCID = "0000-0001-8560-0037")
+      ),
+      person(
+        "Peter",  
+        "Bijl", 
+        role = "ctb",
+        comment = c(ORCID = "0000-0002-1710-4012")
+      )
     )
 Description: Provides tools for easy exploration of the world ocean atlas of 
   the US agency National Oceanic and Atmospheric Administration (NOAA). It 
@@ -60,4 +68,5 @@ URL:
     https://utrechtuniversity.github.io/oceanexplorer/,
     https://utrecht-university.shinyapps.io/oceanexplorer/,
     https://www.ncei.noaa.gov/products/world-ocean-atlas
+BugReports: https://github.com/UtrechtUniversity/oceanexplorer/issues
 Language: en-US

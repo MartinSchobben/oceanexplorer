@@ -13,6 +13,8 @@ The path to \code{extdata} (invisibly).
 Remove all cached NOAA data files from package's \code{extdata} directory.
 }
 \examples{
+
+\dontrun{
 library(fs)
 
 # get NOAA data with caching
@@ -30,4 +32,5 @@ clean_cache()
 
 # check again
 file_exists(abs_pt)
+}
 }
