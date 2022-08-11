@@ -2,7 +2,9 @@
 #'
 #' Wrapper function that launches the NOAA app.
 #'
-#' @param server Server function.
+#' @param cache Caching the extracted NOAA file in the package's `extdata`
+#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
+#'  [clean_cache()] to remove all cached data.
 #' @param extended Boolean whether to launch the extended app (default = `TRUE`)
 #'  or the limited version for usage as a RStudio gadget.
 #'
@@ -15,7 +17,7 @@
 #' # run app
 #' NOAA_app()
 #' }
-NOAA_app <- function(server = NOAA_server()) {
+NOAA_app <- function(cache = FALSE) {
 
   # add resources
   addResourcePath('img', system.file('www/img', package = 'oceanexplorer'))
@@ -98,12 +100,12 @@ NOAA_app <- function(server = NOAA_server()) {
     )
   )
   # run app
-  shinyApp(ui, server)
+  shinyApp(ui, NOAA_server(extended = TRUE, cache = cache))
 }
 #' @rdname NOAA_app
 #'
 #' @export
-NOAA_server <- function(extended = TRUE) {
+NOAA_server <- function(extended = TRUE, cache) {
   function(input, output, session) {
 
     # plot colors to match shiny ui
@@ -111,7 +113,7 @@ NOAA_server <- function(extended = TRUE) {
 
     # original data
     withProgress(message = "Retrieving dataset from NOAA server", {
-      NOAA <- input_server("NOAA")
+      NOAA <- input_server("NOAA", cache = cache)
     })
 
     # show locations selection controls when data loaded

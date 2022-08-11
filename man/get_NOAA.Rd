@@ -2,9 +2,12 @@
 % Please edit documentation in R/get_NOAA.R
 \name{get_NOAA}
 \alias{get_NOAA}
+\alias{url_parser}
 \title{Obtain NOAA World Ocean Atlas dataset}
 \usage{
-get_NOAA(var, spat_res, av_period, cache = TRUE)
+get_NOAA(var, spat_res, av_period, cache = FALSE)
+
+url_parser(var, spat_res, av_period, cache = FALSE)
 }
 \arguments{
 \item{var}{The chemical or physical variable of interest.}
@@ -15,22 +18,31 @@ get_NOAA(var, spat_res, av_period, cache = TRUE)
 \item{av_period}{Temporal resolution, either \code{"annual"}, specific seasons
 (e.g. \code{"winter"}), or month (e.g. \code{"August"}).}
 
-\item{cache}{Caching the extracted files under \code{extdata}.}
+\item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
+directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
+\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
 }
 \value{
-\code{\link[stars:st_as_stars]{stars}} object.
+\code{\link[stars:st_as_stars]{stars}} object or path.
 }
 \description{
-The function retrieves data from the NOAA World Ocean Atlas.
+Retrieves data from the NOAA World Ocean Atlas.
 }
 \details{
-This function retrieves data from the \href{https://www.ncei.noaa.gov/products/world-ocean-atlas}{NOAA World Ocean Atlas}
-as an 3D array (longitude, latitude, and depth) and stores them with
-\code{\link[stars:read_stars]{stars::read_stars()}} as an stars object. The function can automatically
-cache the extracted files (default: \code{cache = TRUE}).
+Functions to retrieve data from the
+\href{https://www.ncei.noaa.gov/products/world-ocean-atlas}{NOAA World Ocean Atlas}
+. Data is an 3D array (longitude, latitude, and depth) and is loaded as an
+\code{\link[stars:st_as_stars]{stars}} object. The function can automatically
+cache the extracted files (default: \code{cache = FALSE}). The cached file will
+then reside in the package's \code{extdata} directory.
 }
 \examples{
+
+# path to NOAA server or local data source
+url_parser("oxygen", 1, "annual")
+
 \dontrun{
+# retrieve NOAA data
 get_NOAA("oxygen", 1, "annual")
 }
 }

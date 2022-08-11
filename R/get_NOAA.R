@@ -1,11 +1,13 @@
 #' Obtain NOAA World Ocean Atlas dataset
 #'
-#' The function retrieves data from the NOAA World Ocean Atlas.
+#' Retrieves data from the NOAA World Ocean Atlas.
 #'
-#' This function retrieves data from the [NOAA World Ocean Atlas](https://www.ncei.noaa.gov/products/world-ocean-atlas)
-#' as an 3D array (longitude, latitude, and depth) and stores them with
-#' [stars::read_stars()] as an stars object. The function can automatically
-#' cache the extracted files (default: `cache = TRUE`).
+#' Functions to retrieve data from the
+#' [NOAA World Ocean Atlas](https://www.ncei.noaa.gov/products/world-ocean-atlas)
+#' . Data is an 3D array (longitude, latitude, and depth) and is loaded as an
+#' [`stars`][stars::st_as_stars()] object. The function can automatically
+#' cache the extracted files (default: `cache = FALSE`). The cached file will
+#' then reside in the package's `extdata` directory.
 #'
 #' @seealso [Introduction to the stars package](https://r-spatial.github.io/stars/articles/stars1.html)
 #'
@@ -14,16 +16,23 @@
 #'  .
 #' @param av_period Temporal resolution, either `"annual"`, specific seasons
 #'  (e.g. `"winter"`), or month (e.g. `"August"`).
-#' @param cache Caching the extracted files under `extdata`.
+#' @param cache Caching the extracted NOAA file in the package's `extdata`
+#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
+#'  [clean_cache()] to remove all cached data.
 #'
-#' @return [`stars`][stars::st_as_stars()] object.
+#' @return [`stars`][stars::st_as_stars()] object or path.
 #' @export
 #'
 #' @examples
+#'
+#' # path to NOAA server or local data source
+#' url_parser("oxygen", 1, "annual")
+#'
 #' \dontrun{
+#' # retrieve NOAA data
 #' get_NOAA("oxygen", 1, "annual")
 #' }
-get_NOAA <- function(var, spat_res, av_period, cache = TRUE) {
+get_NOAA <- function(var, spat_res, av_period, cache = FALSE) {
 
   # abbreviate variable
   if (var == "silicate") {
@@ -46,30 +55,32 @@ get_NOAA <- function(var, spat_res, av_period, cache = TRUE) {
   pkg_path <- fs::path_package("oceanexplorer")
 
   # path
-  NOAA_path <- url_parser(var, spat_res, av_period)
+  NOAA_path <- url_parser(var, spat_res, av_period, cache = cache)
 
-  if (length(NOAA_path) == 1) {
+  if (!"external" %in% names(NOAA_path)) {
     # get data and make stars
-    NOAA <- readRDS(fs::path(pkg_path, NOAA_path[[1]])) |> stars::st_as_stars()
+    NOAA <- readRDS(fs::path(pkg_path, NOAA_path$local)) |> stars::st_as_stars()
   } else {
     # get netcdf
-    NOAA <- read_NOAA(NOAA_path[[1]], stat)
+    NOAA <- read_NOAA(NOAA_path$external, stat)
 
     if (isTRUE(cache)) {
 
       # write stars object if extracted from NOAA server
       # create dir
-      fs::dir_create(pkg_path, fs::path_dir(NOAA_path[[2]]))
+      fs::dir_create(pkg_path, fs::path_dir(NOAA_path$local))
       # create file
-      saveRDS(NOAA, fs::path(pkg_path, NOAA_path[[2]]))
+      saveRDS(NOAA, fs::path(pkg_path, NOAA_path$local))
     }
   }
 
   # return object
   NOAA
 }
-
-url_parser <- function(var, spat_res, av_period) {
+#' @rdname get_NOAA
+#'
+#' @export
+url_parser <- function(var, spat_res, av_period, cache = FALSE) {
 
   # temporal resolution
   averaging_periods <- c("annual", month.name, "winter", "spring", "summer",
@@ -109,17 +120,73 @@ url_parser <- function(var, spat_res, av_period) {
   file_path <- paste(var, deca, if(spat_res > 1) "5deg" else "1.00", file,
                      sep = "/")
 
-  # check whether exist locally
+  if (isTRUE(cache)) {
+    # where is package
+    pkg_path <- fs::path_package("oceanexplorer")
+    # create extdata if not already existing
+    if (!fs::dir_exists(fs::path(pkg_path, "extdata"))) {
+      fs::dir_create(fs::path(pkg_path, "extdata"))
+    }
+  }
+
+  # check whether exist locally (respesting conventions for paths of the OS)
   local_path <- fs::path("extdata", fs::path_ext_remove(file_path), ext = "rds")
   # if not exist make external path to server
   noaa_path <- try(fs::path_package("oceanexplorer", local_path), silent = TRUE)
   if (!inherits(noaa_path, "fs_path")) {
     external_path <- paste(base_path, file_path, sep = "/")
-    list(external = external_path, local = local_path)
+    pt <- list(external = external_path)
+    # caching also add local_path
+    if (isTRUE(cache)) {
+      pt <- append(pt, list(local = local_path))
+    }
+    pt
   } else {
     list(local = local_path)
   }
 }
+
+#' Clean cache of NOAA data
+#'
+#' Remove all cached NOAA data files from package's `extdata` directory.
+#'
+#' @return The path to `extdata` (invisibly).
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' library(fs)
+#'
+#' # get NOAA data with caching
+#' get_NOAA("temperature", 1, "January", TRUE)
+#'
+#' # path
+#' rel_pt <- url_parser("temperature", 1, "January", TRUE)$local # relative path
+#' abs_pt <- path_package("oceanexplorer", rel_pt) # absolute path
+#'
+#' # check
+#' file_exists(abs_pt)
+#'
+#' # clean cache
+#' clean_cache()
+#'
+#' # check again
+#' file_exists(abs_pt)
+#' }
+clean_cache <- function() {
+
+  # direcotry
+  cache_pkg <- fs::path_package(package = "oceanexplorer", "extdata")
+
+  # list files and delete them
+  list.files(cache_pkg, full.names = TRUE) |>
+    fs::file_delete()
+
+  # return
+  invisible(cache_pkg)
+}
+
 
 # read the NOAA netcdf
 read_NOAA <- function(conn, var) {
@@ -140,9 +207,25 @@ read_NOAA <- function(conn, var) {
   RNetCDF::close.nc(nc)
 
   st <- stars::st_as_stars(attr) |>
-    stars::st_set_dimensions(which = 1, offset = min(lon_bnds), delta = unique(diff(lon)), refsys = sf::st_crs(4326), names = "lon") |>
-    stars::st_set_dimensions(which = 2, offset = min(lat_bnds), delta = unique(diff(lat)), refsys = sf::st_crs(4326), names = "lat") |>
-    stars::st_set_dimensions(which = 3, values = depth_bnds[1,], names = "depth")
+    stars::st_set_dimensions(
+      which = 1,
+      offset = min(lon_bnds),
+      delta = unique(diff(lon)),
+      refsys = sf::st_crs(4326),
+      names = "lon"
+    ) |>
+    stars::st_set_dimensions(
+      which = 2,
+      offset = min(lat_bnds),
+      delta = unique(diff(lat)),
+      refsys = sf::st_crs(4326),
+      names = "lat"
+    ) |>
+    stars::st_set_dimensions(
+      which = 3,
+      values = depth_bnds[1, ],
+      names = "depth"
+    )
 
   # variable name
   names(st) <- var

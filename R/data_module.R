@@ -13,6 +13,9 @@
 #' @param variable Reactivevalues for selected variable information.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).
+#' @param cache Caching the extracted NOAA file in the package's `extdata`
+#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
+#'  [clean_cache()] to remove all cached data.
 #'
 #' @return Shiny module.
 #' @export
@@ -115,7 +118,7 @@ output_ui <- function(id) {
 #' @rdname input_ui
 #'
 #' @export
-input_server <- function(id) {
+input_server <- function(id, cache = FALSE) {
 
   moduleServer(id, function(input, output, session) {
 
@@ -143,7 +146,10 @@ input_server <- function(id) {
                               "{input$spat}, {glue::double_quote(input$temp)})")
 
       # execute
-      exec_NOAA <- try(get_NOAA(input$var, input$spat, input$temp), silent = TRUE)
+      exec_NOAA <- try(
+        get_NOAA(input$var, input$spat, input$temp, cache = cache),
+        silent = TRUE
+      )
 
       # notification when data does exist
       exists <- inherits(exec_NOAA, "try-error")

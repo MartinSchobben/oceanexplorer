@@ -14,7 +14,7 @@ citation_ui(id)
 
 output_ui(id)
 
-input_server(id)
+input_server(id, cache = FALSE)
 
 output_server(id, NOAA, variable)
 }
@@ -25,6 +25,10 @@ output_server(id, NOAA, variable)
 
 \item{extended}{Boolean whether to build the extended module
 (default = \code{TRUE}).}
+
+\item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
+directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
+\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
 
 \item{NOAA}{Reactive value for the dataset containing the locations
 coordinates.}

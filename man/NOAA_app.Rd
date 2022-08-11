@@ -5,12 +5,14 @@
 \alias{NOAA_server}
 \title{Ocean explorer app}
 \usage{
-NOAA_app(server = NOAA_server())
+NOAA_app(cache = FALSE)
 
-NOAA_server(extended = TRUE)
+NOAA_server(extended = TRUE, cache)
 }
 \arguments{
-\item{server}{Server function.}
+\item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
+directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
+\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
 
 \item{extended}{Boolean whether to launch the extended app (default = \code{TRUE})
 or the limited version for usage as a RStudio gadget.}

@@ -12,9 +12,6 @@ test_that("check output type", {
     filter_NOAA(NOAA, c(1,30), list(lon = c(-160, -120), lat =  c(11,12))),
     "sf"
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("that different coord classes generate the same results", {
@@ -49,9 +46,6 @@ test_that("entries other then vectors of 1 or the same length cause an error", {
       ),
     "Depth and coordinates must be a vector of length 1 or have consistent lengths."
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("entries for class coords besides matrix, list and sfc throws error", {
@@ -69,9 +63,6 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
     ),
     "Class supplied to `coord` unsupported."
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("wrong names for matrices or list of coordinates causes an error", {
@@ -88,9 +79,6 @@ test_that("wrong names for matrices or list of coordinates causes an error", {
     filter_NOAA(NOAA, depth = 0, coord = cbind(lat = c(-116), lon = c(-31))),
     NULL
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("check that epsg of depth plane and coordinates is similar", {
@@ -152,9 +140,6 @@ test_that("check that epsg of depth plane and coordinates is similar", {
   expect_true(
     sf::st_crs(plane_4326) == sf::st_crs(point_4326)
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("epsg conversion works with character vector", {
@@ -173,9 +158,6 @@ test_that("epsg conversion works with character vector", {
       epsg = "4326"
     )
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("epsg conversion works with 'original' keyword", {
@@ -194,9 +176,6 @@ test_that("epsg conversion works with 'original' keyword", {
       epsg = "original"
     )
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("extraction of coords can use fuzzy search", {
@@ -230,7 +209,4 @@ test_that("extraction of coords can use fuzzy search", {
   expect_snapshot(
     extract_coords(plane, rbind(coords1, coords2), 0, sf::st_crs(NOAA), 100)
   )
-
-  # clean cache
-  clean_cache()
 })

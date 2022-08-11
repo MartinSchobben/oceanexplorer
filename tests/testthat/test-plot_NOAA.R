@@ -32,9 +32,6 @@ test_that("plot of NOAA atlas works", {
     "NOAA antarctic map epsg = 3031",
     plot_NOAA(NOAA, depth = 0, epsg = 3031)
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("box clipping works for stars",{
@@ -50,9 +47,6 @@ test_that("box clipping works for stars",{
   expect_snapshot(
     clip_lat(NOAA, 3031)
   )
-
-  # clean cache
-  clean_cache()
 })
 
 test_that("box clipping works for sf",{
@@ -70,7 +64,4 @@ test_that("box clipping works for sf",{
   expect_snapshot(
     clip_lat(wmap, 3031)
   )
-
-  # clean cache
-  clean_cache()
 })

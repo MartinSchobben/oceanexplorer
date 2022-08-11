@@ -2,9 +2,10 @@
 #'
 #' Wrapper function that launches the NOAA RStudio addin
 #'
-#' @param server Server function.
-#' @param extended Boolean whether to launch the extended app (default = `TRUE`)
-#'  or the limited version for usage as a RStudio gadget.
+#' @param cache Caching the extracted NOAA file in the package's `extdata`
+#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
+#'  [clean_cache()] to remove all cached data.
+#'
 #'
 #' @return Rstudio gadget
 #' @export
@@ -15,7 +16,7 @@
 #' # run RStudio addin (can also be launched from `Addins` dropdown menu)
 #' NOAA_addin()
 #' }
-NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
+NOAA_addin <- function(cache = FALSE) {
 
   ui <- miniPage(
     shinyjs::useShinyjs(), # use shinyjs
@@ -24,7 +25,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       id = "tabset",
       miniTabPanel(
         "Parameters",
-        icon = icon("sliders-h"),
+        icon = icon("sliders-h", verify_fa = FALSE),
         miniContentPanel(
           waiter::use_waiter(),
           input_ui("NOAA", citation = citation_ui("NOAA"), extended = FALSE),
@@ -32,7 +33,7 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       ),
       miniTabPanel(
         "Map",
-        icon = icon("map-marked-alt"),
+        icon = icon("map-marked-alt", verify_fa = FALSE),
         miniContentPanel(
           padding = 0,
           plot_ui("worldmap")
@@ -41,11 +42,14 @@ NOAA_addin <- function(server = NOAA_server(extended = FALSE)) {
       ),
       miniTabPanel(
         "Table",
-        icon = icon("table"),
+        icon = icon("table", verify_fa = FALSE),
         miniContentPanel(table_ui("table"))
       )
     )
   )
 
-  runGadget(shinyApp(ui, server), viewer = paneViewer())
-  }
+  runGadget(
+    shinyApp(ui, NOAA_server(extended = FALSE, cache = cache)),
+    viewer = paneViewer()
+  )
+}

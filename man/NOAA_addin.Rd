@@ -4,13 +4,12 @@
 \alias{NOAA_addin}
 \title{Ocean explorer addin}
 \usage{
-NOAA_addin(server = NOAA_server(extended = FALSE))
+NOAA_addin(cache = FALSE)
 }
 \arguments{
-\item{server}{Server function.}
-
-\item{extended}{Boolean whether to launch the extended app (default = \code{TRUE})
-or the limited version for usage as a RStudio gadget.}
+\item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
+directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
+\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
 }
 \value{
 Rstudio gadget
