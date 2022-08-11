@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <a href="https://erc.europa.eu/"><img src="man/figures/erc-logo.jpg" align="right" height="56" /></a>
-<a href="https://cordis.europa.eu/project/id/802835"><img src="man/figures/oceanice-logo.jpg" align="right" height="56" /></a>
+<a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.jpg" align="right" height="56" /></a>
 
 # The oceanexplorer
 
@@ -12,7 +12,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--05-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--11-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
@@ -96,9 +96,9 @@ Slice a specific interval from the array with `filter_NOAA()`, like so:
 #>            Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
 #> o_an  0.9701567 164.1833 218.6721 206.2584 266.9612 359.0279 26041
 #> dimension(s):
-#>     from  to offset delta                       refsys point values x/y
-#> lon    1 360   -180     1 +proj=longlat +a=6378137 ...    NA   NULL [x]
-#> lat    1 180    -90     1 +proj=longlat +a=6378137 ...    NA   NULL [y]
+#>     from  to offset delta refsys point values x/y
+#> lon    1 360   -180     1 WGS 84    NA   NULL [x]
+#> lat    1 180    -90     1 WGS 84    NA   NULL [y]
 ```
 
 In addition, the sliced array can be plotted, like so:

@@ -6,7 +6,7 @@ bibliography: "vignettes/packages.bib"
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <a href="https://erc.europa.eu/"><img src="man/figures/erc-logo.jpg" align="right" height="56" /></a>
-<a href="https://cordis.europa.eu/project/id/802835"><img src="man/figures/oceanice-logo.jpg" align="right" height="56" /></a>
+<a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.jpg" align="right" height="56" /></a>
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
