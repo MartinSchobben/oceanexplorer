@@ -45,18 +45,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">NOAA_addin</span><span class="op">(</span>server <span class="op">=</span> <span class="fu"><a href="NOAA_app.html">NOAA_server</a></span><span class="op">(</span>extended <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">NOAA_addin</span><span class="op">(</span>cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>server</dt>
-<dd><p>Server function.</p></dd>
-
-
-<dt>extended</dt>
-<dd><p>Boolean whether to launch the extended app (default = <code>TRUE</code>)
-or the limited version for usage as a RStudio gadget.</p></dd>
+    <dl><dt>cache</dt>
+<dd><p>Caching the extracted NOAA file in the package's <code>extdata</code>
+directory (default = <code>FALSE</code>). Size of individual files is around 12 Mb. Use
+<code><a href="clean_cache.html">clean_cache()</a></code> to remove all cached data.</p></dd>
 
 </dl></div>
     <div class="section level2">

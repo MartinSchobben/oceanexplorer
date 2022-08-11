@@ -63,7 +63,7 @@ loaded.</p>
 <span></span>
 <span><span class="fu">output_ui</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">input_server</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span><span class="fu">input_server</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">output_server</span><span class="op">(</span><span class="va">id</span>, <span class="va">NOAA</span>, <span class="va">variable</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -81,6 +81,12 @@ loaded.</p>
 <dt>extended</dt>
 <dd><p>Boolean whether to build the extended module
 (default = <code>TRUE</code>).</p></dd>
+
+
+<dt>cache</dt>
+<dd><p>Caching the extracted NOAA file in the package's <code>extdata</code>
+directory (default = <code>FALSE</code>). Size of individual files is around 12 Mb. Use
+<code><a href="clean_cache.html">clean_cache()</a></code> to remove all cached data.</p></dd>
 
 
 <dt>NOAA</dt>
