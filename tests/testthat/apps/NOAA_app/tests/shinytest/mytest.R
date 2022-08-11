@@ -9,7 +9,5 @@ app$snapshot()
 # Input '`worldmap-plot_click`' was set, but doesn't have an input binding.
 # Input '`worldmap-plot_click`' was set, but doesn't have an input binding.
 # Input '`worldmap-plot_click`' was set, but doesn't have an input binding.
-# Input '`table-table_rows_current`' was set, but doesn't have an input binding.
-# Input '`table-table_rows_all`' was set, but doesn't have an input binding.
-# Input '`table-table_state`' was set, but doesn't have an input binding.
+# Input '`worldmap-plot_click`' was set, but doesn't have an input binding.
 app$snapshot()
