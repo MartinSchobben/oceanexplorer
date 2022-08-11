@@ -27,7 +27,13 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/UtrechtUniversity/oceanexplorer/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -35,7 +41,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Clean cache of NOAA data</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/UtrechtUniversity/oceanexplorer/blob/HEAD/R/get_NOAA.R" class="external-link"><code>R/get_NOAA.R</code></a></small>
       <div class="d-none name"><code>clean_cache.Rd</code></div>
     </div>
 
@@ -57,19 +63,12 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get NOAA data with caching</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_NOAA.html">get_NOAA</a></span><span class="op">(</span><span class="st">"temperature"</span>, <span class="fl">1</span>, <span class="st">"January"</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> stars object with 3 dimensions and 1 attribute</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attribute(s), summary of first 1e+05 cells:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Min.  1st Qu.  Median     Mean  3rd Qu.     Max.  NA's</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> t_an  -1.85511 2.739422 16.8325 14.66035 25.52657 30.18881 34528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dimension(s):</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       from  to offset delta refsys point                  values x/y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lon      1 360   -180     1 WGS 84    NA                    NULL [x]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lat      1 180    -90     1 WGS 84    NA                    NULL [y]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> depth    1  57     NA    NA     NA FALSE [0,2.5),...,[1475,1525)    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># path</span></span></span>
 <span class="r-in"><span><span class="va">rel_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_NOAA.html">url_parser</a></span><span class="op">(</span><span class="st">"temperature"</span>, <span class="fl">1</span>, <span class="st">"January"</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">local</span> <span class="co"># relative path</span></span></span>
@@ -77,16 +76,13 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://fs.r-lib.org/reference/file_access.html" class="external-link">file_exists</a></span><span class="op">(</span><span class="va">abs_pt</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> /home/runner/.cache/R/renv/library/oceanexplorer-411d7950/R-4.2/x86_64-pc-linux-gnu/oceanexplorer/extdata/temperature/decav/1.00/woa18_decav_t01_01.rds </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                    TRUE </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># clean cache</span></span></span>
 <span class="r-in"><span><span class="fu">clean_cache</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check again</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://fs.r-lib.org/reference/file_access.html" class="external-link">file_exists</a></span><span class="op">(</span><span class="va">abs_pt</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> /home/runner/.cache/R/renv/library/oceanexplorer-411d7950/R-4.2/x86_64-pc-linux-gnu/oceanexplorer/extdata/temperature/decav/1.00/woa18_decav_t01_01.rds </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                   FALSE </span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
