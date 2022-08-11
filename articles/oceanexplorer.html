@@ -75,18 +75,16 @@
 <li>Users with minimal programming experience as a hybrid graphical-programming interface that can be easily integrated in an R workflow (RStudio addin).</li>
 <li>Users with an R programming background.</li>
 </ul>
-<p>I will now in reversed order explain some of the basic use cases of all three application types.</p>
-<p>But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by <em>sf</em> <span class="citation">(Pebesma 2022)</span> for vectors and <em>stars</em> <span class="citation">(Pebesma 2021)</span> for raster data (e.g. the NOAA data). I highly recommend reading the accompanying documentation of these packages:</p>
+<p>In this document I will explain the basic use cases of all three application types. But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by <em>sf</em> <span class="citation">(Pebesma 2022)</span> for vectors and <em>stars</em> <span class="citation">(Pebesma 2021)</span> for raster data (e.g. the NOAA data). I highly recommend reading the accompanying documentation of these packages if you intend to work with the NOAA datasets:</p>
 <ul>
 <li>stars (<a href="https://r-spatial.github.io/stars/" class="external-link uri">https://r-spatial.github.io/stars/</a>)</li>
 <li>sf (<a href="https://r-spatial.github.io/sf/" class="external-link uri">https://r-spatial.github.io/sf/</a>)</li>
 </ul>
-<p>Reading this material will help dealing with these data formats in the R environment.</p>
 </div>
 <div class="section level3">
 <h3 id="shiny-app">Shiny app<a class="anchor" aria-label="anchor" href="#shiny-app"></a>
 </h3>
-<p>The shiny app is hosted by Utrecht University and can be found here: <a href="https://utrecht-university.shinyapps.io/oceanexplorer/" class="external-link uri">https://utrecht-university.shinyapps.io/oceanexplorer/</a>. The app allows exploration of the NOAA database and selected data points can be extracted as a csv file.</p>
+<p>The shiny app is hosted by Utrecht University and can be found here: <a href="https://utrecht-university.shinyapps.io/oceanexplorer/" class="external-link uri">https://utrecht-university.shinyapps.io/oceanexplorer/</a>. The app allows exploration of the NOAA database and selected data can be extracted as a csv file.</p>
 <div class="section level4">
 <h4 id="load-noaa-data">Load NOAA data<a class="anchor" aria-label="anchor" href="#load-noaa-data"></a>
 </h4>
@@ -97,8 +95,8 @@
 <li>The drop down menu “averaging” selects the time period over which the mean is calculated. The period can be annual, North Hemisphere seasonal (e.g. Spring, three-month periods) and monthly.</li>
 <li>The drop down menu “resolution” selects the grid resolution for mean fields on a 1- or 5-degree longitude/latitude grid.</li>
 </ul>
-<p>The following document lists the technical details of the variable collection and presentation: <a href="https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf" class="external-link">NOAA World Ocean Atlas 2018 Product Documentation</a>. The papers on this page give in-depth information on the variable of interest: <a href="">https://www.ncei.noaa.gov/products/world-ocean-atlas</a>.</p>
-<p>Clicking the “Load data” button extract the data from the NOAA WOA database. This operation can take some time.</p>
+<p>The following document lists the technical details of the variable collection and presentation: <a href="https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf" class="external-link">NOAA World Ocean Atlas 2018 Product Documentation</a>. The papers on this page give in-depth information on the variable of interest: <a href="https://www.ncei.noaa.gov/products/world-ocean-atlas" class="external-link uri">https://www.ncei.noaa.gov/products/world-ocean-atlas</a>.</p>
+<p>Clicking the “load data” button extract the data from the NOAA WOA database. This operation can take some time.</p>
 </div>
 <div class="section level4">
 <h4 id="filter-noaa-data">Filter NOAA data<a class="anchor" aria-label="anchor" href="#filter-noaa-data"></a>
@@ -108,14 +106,14 @@
 <p><strong>Locations tab (Left)</strong></p>
 <p>This field allows filtering of the dataset.</p>
 <ul>
-<li>The text fields: “depth”, “longitude”, and “latitude” specify the location to extract oceanographic variables. Alternatively, one can click on the plot (“map” tab) to obtain the values. It is possible to extract multiple locations at once by providing a comma separated list (e.g., 120, 130, 140) to the text field on the left (“locations” tab). Note, that depth and coordinate vectors should be of the same length, or one of the two should have length one. The data is extracted only when all three text fields have been filled, and by subsequently clicking the button “Extract”.</li>
-<li>Data extraction can be achieved in two modes; “point” and “fuzzy”, where the former results in a very precise search, the latter option searches in an area with a circumference of 50<span class="math inline">\(\,\)</span>km around the selected coordinate point. The returned value of a fuzzy search is therefore an average of the search area. Currently, fuzzy search is not yet implemented."</li>
-<li>The button “Extract” uses the information supplied in the text fields: “depth”, “longitude”, and “latitude” to extract the oceanographic variable. Hence the button is only active when those fields have been filled, and otherwise remains greyed-out. The buttons: “Reset” and “Back” revert all, or the last extraction, respectively. These two operations can be used for data extracted by clicking on the interactive plot and/or obtained by using the text field search.</li>
+<li>The text fields: “depth”, “longitude”, and “latitude” specify the location to extract oceanographic variables. Alternatively, one can click on the plot (“map” tab) to obtain the values. It is possible to extract multiple locations at once by providing a comma separated list (e.g., 120, 130, 140) to the text field on the left (“locations” tab). Note, that depth and coordinate vectors should be of the same length, or one of the two should have length one. The data is extracted only when all three text fields have been filled, and by subsequently clicking the button “extract”.</li>
+<li>Data extraction can be achieved in two modes; “point” and “fuzzy”, where the former results in a very precise search, the latter option searches in an area with a circumference of 50<span class="math inline">\(\,\)</span>km around the selected coordinate point. The returned value of a fuzzy search is therefore an average of the search area. Currently, fuzzy search is not yet implemented.</li>
+<li>The button “extract” uses the information supplied in the text fields: “depth”, “longitude”, and “latitude” to extract the oceanographic variable. Hence the button is only active when those fields have been filled, and otherwise remains greyed-out. The buttons: “reset” and “back” revert all, or the last extraction, respectively. These two operations can be used for data extracted by clicking on the interactive plot and/or obtained by using the text field search.</li>
 </ul>
 <p><strong>Map tab (right)</strong></p>
 <p>This field allows changing visual aspects of the NOAA data. In addition the plot is interactive and can be clicked (single click). It is therefore possible to only use the right-hand side of the screen to select your data without touching any of the buttons and menus on the left-side.</p>
 <ul>
-<li>The “EPSG” drop-down menu enables selection some of commonly used projections, such as “4326”. And, two stereographic projections “3031” and “3995” of the Antarctic and Arctic regions, respectively. The option “original” refers to the original projection of the NOAA WOA data."</li>
+<li>The “projections” drop-down menu enables selection some of commonly used projections, such as “4326”. And, two stereographic projections “3031” and “3995” of the Antarctic and Arctic regions, respectively.</li>
 <li>The toggle switch “Fix variable scale” determines whether the variable scale is fixed for the current depth slice or the whole dataset. Loosening the variable scale can help highlight nuanced differences in certain variables (e.g. phosphate).</li>
 <li>The “depth” slider allows filter for depth slices.</li>
 </ul>
@@ -123,10 +121,10 @@
 <div class="section level4">
 <h4 id="extract-noaa-data">Extract NOAA data<a class="anchor" aria-label="anchor" href="#extract-noaa-data"></a>
 </h4>
-<p>Now that you have filtered the data you required you can view the results in a table by clicking on the “Table” tab on the right side of the screen.</p>
+<p>Now that you have filtered the data you required you can view the results in a table by clicking on the “table” tab on the right side of the screen.</p>
 <p><img src="get-started-screenshot3.png" width="90%"></p>
 <ul>
-<li>The button “Download” enables downloading of the current table in csv format.</li>
+<li>The button “download” enables downloading of the current table in csv format.</li>
 </ul>
 </div>
 </div>
@@ -135,7 +133,7 @@
 </h3>
 <p>The RStudio addin has more-or-less the same functionality as the Shiny app except that it has fewer options. This tool is, however, great for integration in R scripts, as the addin emits the code used for your data selection and filtering operation. The emitted code is actually the code used to generate the graphical output and is the backbone of the Shiny app and RStudio addin.</p>
 <p><img src="get-started-screenshot4.png" width="90%"></p>
-<p>Clicking on the “Done” button terminates the application and emits the code at the point where the cursor currently resides.</p>
+<p>Clicking on the “done” button terminates the application and emits the code at the point where the cursor currently resides.</p>
 </div>
 <div class="section level3">
 <h3 id="using-the-oceanexplorer-r-code">Using the oceanexplorer R code<a class="anchor" aria-label="anchor" href="#using-the-oceanexplorer-r-code"></a>
@@ -144,7 +142,7 @@
 <div class="section level4">
 <h4 id="loading-the-package-and-data">Loading the package and data<a class="anchor" aria-label="anchor" href="#loading-the-package-and-data"></a>
 </h4>
-<p>In this case we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below seablevel.</p>
+<p>In this case we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below sealevel.</p>
 <p>First, we extract the data by proving the variable, grid resolution, and the averaging period.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://utrechtuniversity.github.io/oceanexplorer/">oceanexplorer</a></span><span class="op">)</span></span>
