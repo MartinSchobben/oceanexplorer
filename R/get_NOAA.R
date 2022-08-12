@@ -4,14 +4,17 @@
 #'
 #' Functions to retrieve data from the
 #' [NOAA World Ocean Atlas](https://www.ncei.noaa.gov/products/world-ocean-atlas)
-#' . Data is an 3D array (longitude, latitude, and depth) and is loaded as an
-#' [`stars`][stars::st_as_stars()] object. The function can automatically
+#' . Data is an 3D array (longitude, latitude, and depth) and is loaded as a
+#' [`stars`][stars::st_as_stars()] object. Check [`NOAA_data`] for available
+#' variables and there respective units. The function can automatically
 #' cache the extracted files (default: `cache = FALSE`). The cached file will
 #' then reside in the package's `extdata` directory.
 #'
 #' @seealso [Introduction to the stars package](https://r-spatial.github.io/stars/articles/stars1.html)
 #'
-#' @param var The chemical or physical variable of interest.
+#' @param var The chemical or physical variable of interest (possible choices:
+#'  `"temperature"`, `"phosphate"`, `"nitrate"`, `"silicate"`, `"oxygen"`,
+#'  `"salinity"`, `"density"`).
 #' @param spat_res Spatial resolution, either 1 or 5 degree grid-cells (numeric)
 #'  .
 #' @param av_period Temporal resolution, either `"annual"`, specific seasons
@@ -156,23 +159,22 @@ url_parser <- function(var, spat_res, av_period, cache = FALSE) {
 #' @examples
 #'
 #' \dontrun{
-#' library(fs)
 #'
 #' # get NOAA data with caching
 #' get_NOAA("temperature", 1, "January", TRUE)
 #'
 #' # path
 #' rel_pt <- url_parser("temperature", 1, "January", TRUE)$local # relative path
-#' abs_pt <- path_package("oceanexplorer", rel_pt) # absolute path
+#' abs_pt <- system.file(rel_pt, package = "oceanexplorer") # absolute path
 #'
 #' # check
-#' file_exists(abs_pt)
+#' file.exists(abs_pt)
 #'
 #' # clean cache
 #' clean_cache()
 #'
 #' # check again
-#' file_exists(abs_pt)
+#' file.exists(abs_pt)
 #' }
 clean_cache <- function() {
 

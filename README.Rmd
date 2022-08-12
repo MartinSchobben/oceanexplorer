@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 # following code for loading and writing the bibtex references for the used pkgs
 pkgs <- c(
   # data transformation and visualization
-  "dplyr", "tibble", "ggplot2", "rlang", "purrr", 
+  "dplyr", "ggplot2", "rlang", "purrr", 
   # package development
   "devtools", "shinytest", "vdiffr", "roxygen2", "testthat", 
   # documentation
@@ -30,7 +30,7 @@ pkgs <- c(
   # spatial analysis
   "stars", "sf", "ncmeta",
   # shiny app
-  "thematic", "bslib", "shiny", "waiter", "shinyWidgets", "shinyjs"
+  "thematic", "bslib", "shiny", "waiter", "shinyjs"
 )  
 # Get the R reference
 rref <- citation()
@@ -76,7 +76,7 @@ bibtex::write.bib(
 The goal of oceanexplorer is to enable easy access and exploration of the [WORLD OCEAN ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 
-![Demo of the ocean explorer](man/figures/oceanexplorer-demo.gif){width=95%}
+![Demo of the ocean explorer app](man/figures/oceanexplorer-demo.gif){width=95%}
 
 ## Check the app
 
@@ -90,11 +90,11 @@ This project was funded by ERC Starting grant number 802835, OceaNice, awarded t
 
 The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *shinytest* [@shinytest], *vdiffr* [@vdiffr], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
 
-Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *tibble* [@tibble], and *rlang* [@rlang].
+Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *ggplot2* [@ggplot2], and *rlang* [@rlang].
 
 In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf] and *stars* [@stars].
 
-The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020] was a great help in learning how to develop such applications. Furthermore, the packages *shinyjs* [@shinyjs], *shinyWidgets* [@shinyWidgets],  *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user friendliness and visually pleasing graphics.
+The app is build with *shiny* [@shiny] and the guidance in the book: *Mastering Shiny: Build Interactive Apps, Reports & Dashboards* [@Wickham2020] was a great help in learning how to develop such applications. Furthermore, the packages *shinyjs* [@shinyjs], *waiter* [@waiter], *bslib* [@bslib] and *thematic* [@thematic] ensure user-friendliness of the interface and visually pleasing graphics.
 
 
 ## Installation

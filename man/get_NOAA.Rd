@@ -10,7 +10,9 @@ get_NOAA(var, spat_res, av_period, cache = FALSE)
 url_parser(var, spat_res, av_period, cache = FALSE)
 }
 \arguments{
-\item{var}{The chemical or physical variable of interest.}
+\item{var}{The chemical or physical variable of interest (possible choices:
+\code{"temperature"}, \code{"phosphate"}, \code{"nitrate"}, \code{"silicate"}, \code{"oxygen"},
+\code{"salinity"}, \code{"density"}).}
 
 \item{spat_res}{Spatial resolution, either 1 or 5 degree grid-cells (numeric)
 .}
@@ -31,8 +33,9 @@ Retrieves data from the NOAA World Ocean Atlas.
 \details{
 Functions to retrieve data from the
 \href{https://www.ncei.noaa.gov/products/world-ocean-atlas}{NOAA World Ocean Atlas}
-. Data is an 3D array (longitude, latitude, and depth) and is loaded as an
-\code{\link[stars:st_as_stars]{stars}} object. The function can automatically
+. Data is an 3D array (longitude, latitude, and depth) and is loaded as a
+\code{\link[stars:st_as_stars]{stars}} object. Check \code{\link{NOAA_data}} for available
+variables and there respective units. The function can automatically
 cache the extracted files (default: \code{cache = FALSE}). The cached file will
 then reside in the package's \code{extdata} directory.
 }

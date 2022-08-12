@@ -71,3 +71,4 @@ URL:
     https://www.ncei.noaa.gov/products/world-ocean-atlas
 BugReports: https://github.com/UtrechtUniversity/oceanexplorer/issues
 Language: en-US
+LazyData: true

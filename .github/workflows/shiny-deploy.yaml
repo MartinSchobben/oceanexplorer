@@ -20,7 +20,7 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
 
       - name: Install rsconnect
         run: install.packages("rsconnect")
@@ -29,5 +29,5 @@ jobs:
       - name: Authorize and deploy app
         run: |
           rsconnect::setAccountInfo("${{ secrets.SHINYAPPS_ACCOUNT }}", "${{ secrets.SHINYAPPS_TOKEN }}", "${{ secrets.SHINYAPPS_SECRET }}")
-          rsconnect::deployApp("~/inst/appdir")
+          rsconnect::deployApp("../inst/appdir")
         shell: Rscript {0}

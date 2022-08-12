@@ -15,22 +15,21 @@ Remove all cached NOAA data files from package's \code{extdata} directory.
 \examples{
 
 \dontrun{
-library(fs)
 
 # get NOAA data with caching
 get_NOAA("temperature", 1, "January", TRUE)
 
 # path
 rel_pt <- url_parser("temperature", 1, "January", TRUE)$local # relative path
-abs_pt <- path_package("oceanexplorer", rel_pt) # absolute path
+abs_pt <- system.file(rel_pt, package = "oceanexplorer") # absolute path
 
 # check
-file_exists(abs_pt)
+file.exists(abs_pt)
 
 # clean cache
 clean_cache()
 
 # check again
-file_exists(abs_pt)
+file.exists(abs_pt)
 }
 }

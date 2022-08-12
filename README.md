@@ -12,7 +12,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--11-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2022--08--12-yellowgreen.svg)](/commits/master)
 [![R-CMD-check](https://github.com/UtrechtUniversity/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/UtrechtUniversity/oceanexplorer/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UtrechtUniversity/Oceanexplorer?branch=master)
@@ -25,8 +25,9 @@ the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 <figure>
 <img src="man/figures/oceanexplorer-demo.gif" style="width:95.0%"
-alt="Demo of the ocean explorer" />
-<figcaption aria-hidden="true">Demo of the ocean explorer</figcaption>
+alt="Demo of the ocean explorer app" />
+<figcaption aria-hidden="true">Demo of the ocean explorer
+app</figcaption>
 </figure>
 
 ## Check the app
@@ -42,29 +43,28 @@ awarded to Peter Bijl.
 ## Credits
 
 The construction of the R (R Core Team 2022) package *oceanexplorer* and
-associated documentation was aided by the packages; *devtools* (Wickham,
-Hester, et al. 2021), *roxygen2* (Wickham, Danenberg, et al. 2021),
-*testthat* (Wickham 2022), *shinytest* (Chang, Csárdi, and Wickham
-2021), *vdiffr* (Henry et al. 2021), *knitr* (Xie 2014 ; Xie 2015),
-*rmarkdown* (Xie, Allaire, and Grolemund 2018; Xie, Dervieux, and
-Riederer 2020), and the superb guidance in the book: *R packages:
-organize, test, document, and share your code*, by Wickham (2015).
+associated documentation was aided by the packages; *devtools* (Wickham
+et al. 2021), *roxygen2* (Wickham, Danenberg, et al. 2022), *testthat*
+(Wickham 2022), *shinytest* (Chang, Csárdi, and Wickham 2021), *vdiffr*
+(Henry et al. 2022), *knitr* (Xie 2014 ; Xie 2015), *rmarkdown* (Xie,
+Allaire, and Grolemund 2018; Xie, Dervieux, and Riederer 2020), and the
+superb guidance in the book: *R packages: organize, test, document, and
+share your code*, by Wickham (2015).
 
 Data transformation, cleaning and visualization is performed with:
-*dplyr* (Wickham et al. 2022), *tibble* (Müller and Wickham 2021), and
-*rlang* (Henry and Wickham 2022).
+*dplyr* (Wickham, François, et al. 2022), *ggplot2* (Wickham, Chang, et
+al. 2022), and *rlang* (Henry and Wickham 2022).
 
 In addition, this package relies on a set of packages for spatial data
-analysis: *sf* (Pebesma 2022) and *stars* (Pebesma 2021).
+analysis: *sf* (Pebesma 2022a) and *stars* (Pebesma 2022b).
 
-The app is build with *shiny* (Chang et al. 2021) and the guidance in
+The app is build with *shiny* (Chang et al. 2022) and the guidance in
 the book: *Mastering Shiny: Build Interactive Apps, Reports &
 Dashboards* (Wickham 2020) was a great help in learning how to develop
 such applications. Furthermore, the packages *shinyjs* (Attali 2021),
-*shinyWidgets* (Perrier, Meyer, and Granjon 2022), *waiter* (Coene
-2022), *bslib* (Sievert and Cheng 2021) and *thematic* (Sievert,
-Schloerke, and Cheng 2021) ensure user friendliness and visually
-pleasing graphics.
+*waiter* (Coene 2022), *bslib* (Sievert and Cheng 2022) and *thematic*
+(Sievert, Schloerke, and Cheng 2021) ensure user-friendliness of the
+interface and visually pleasing graphics.
 
 ## Installation
 
@@ -162,7 +162,7 @@ Shiny Apps in Seconds*. <https://deanattali.com/shinyjs/>.
 
 Chang, Winston, Joe Cheng, JJ Allaire, Carson Sievert, Barret Schloerke,
 Yihui Xie, Jeff Allen, Jonathan McPherson, Alan Dipert, and Barbara
-Borges. 2021. *Shiny: Web Application Framework for r*.
+Borges. 2022. *Shiny: Web Application Framework for r*.
 <https://shiny.rstudio.com/>.
 
 </div>
@@ -184,7 +184,7 @@ Coene, John. 2022. *Waiter: Loading Screen for Shiny*.
 <div id="ref-vdiffr" class="csl-entry">
 
 Henry, Lionel, Thomas Lin Pedersen, T Jake Luciani, Matthieu Decorde,
-and Vaudor Lise. 2021. *Vdiffr: Visual Regression Testing and Graphical
+and Vaudor Lise. 2022. *Vdiffr: Visual Regression Testing and Graphical
 Diffing*. <https://CRAN.R-project.org/package=vdiffr>.
 
 </div>
@@ -197,32 +197,17 @@ Types and Core r and Tidyverse Features*.
 
 </div>
 
-<div id="ref-tibble" class="csl-entry">
+<div id="ref-sf" class="csl-entry">
 
-Müller, Kirill, and Hadley Wickham. 2021. *Tibble: Simple Data Frames*.
-<https://CRAN.R-project.org/package=tibble>.
+Pebesma, Edzer. 2022a. *Sf: Simple Features for r*.
+<https://CRAN.R-project.org/package=sf>.
 
 </div>
 
 <div id="ref-stars" class="csl-entry">
 
-Pebesma, Edzer. 2021. *Stars: Spatiotemporal Arrays, Raster and Vector
-Data Cubes*. <https://CRAN.R-project.org/package=stars>.
-
-</div>
-
-<div id="ref-sf" class="csl-entry">
-
-———. 2022. *Sf: Simple Features for r*.
-<https://CRAN.R-project.org/package=sf>.
-
-</div>
-
-<div id="ref-shinyWidgets" class="csl-entry">
-
-Perrier, Victor, Fanny Meyer, and David Granjon. 2022. *shinyWidgets:
-Custom Inputs Widgets for Shiny*.
-<https://CRAN.R-project.org/package=shinyWidgets>.
+———. 2022b. *Stars: Spatiotemporal Arrays, Raster and Vector Data
+Cubes*. <https://CRAN.R-project.org/package=stars>.
 
 </div>
 
@@ -236,7 +221,7 @@ Computing*. Vienna, Austria: R Foundation for Statistical Computing.
 
 <div id="ref-bslib" class="csl-entry">
 
-Sievert, Carson, and Joe Cheng. 2021. *Bslib: Custom Bootstrap ’Sass’
+Sievert, Carson, and Joe Cheng. 2022. *Bslib: Custom Bootstrap ’Sass’
 Themes for Shiny and Rmarkdown*.
 <https://CRAN.R-project.org/package=bslib>.
 
@@ -271,10 +256,19 @@ Dashboards.* O’Reilly Media, Inc. <https://mastering-shiny.org/>.
 
 </div>
 
+<div id="ref-ggplot2" class="csl-entry">
+
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen,
+Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey
+Dunnington. 2022. *Ggplot2: Create Elegant Data Visualisations Using the
+Grammar of Graphics*. <https://CRAN.R-project.org/package=ggplot2>.
+
+</div>
+
 <div id="ref-roxygen2" class="csl-entry">
 
 Wickham, Hadley, Peter Danenberg, Gábor Csárdi, and Manuel Eugster.
-2021. *Roxygen2: In-Line Documentation for r*.
+2022. *Roxygen2: In-Line Documentation for r*.
 <https://CRAN.R-project.org/package=roxygen2>.
 
 </div>
