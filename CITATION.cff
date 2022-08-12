@@ -46,11 +46,22 @@ preferred-citation:
     email: schobbenmartin@gmail.com
     orcid: https://orcid.org/0000-0001-8560-0037
   keywords:
+  - earth
+  - earth-observation
+  - earth-science
+  - noaa
+  - noaa-data
+  - ocean
+  - ocean-sciences
+  - oceanography
   - open-data
   - r
   - r-package
   - rstats
   - shiny
+  - spatial
+  - spatial-analysis
+  - spatial-data
   license: MIT
   year: '2022'
 repository-code: https://github.com/UtrechtUniversity/oceanexplorer
@@ -61,12 +72,34 @@ contact:
   email: schobbenmartin@gmail.com
   orcid: https://orcid.org/0000-0001-8560-0037
 keywords:
+- earth
+- earth-observation
+- earth-science
+- noaa
+- noaa-data
+- ocean
+- ocean-sciences
+- oceanography
 - open-data
 - r
 - r-package
 - rstats
 - shiny
+- spatial
+- spatial-analysis
+- spatial-data
 references:
+- type: software
+  title: cffr
+  abstract: 'cffr: Generate Citation File Format (''cff'') Metadata for R Packages'
+  notes: Suggests
+  authors:
+  - family-names: Hernangómez
+    given-names: Diego
+    email: diego.hernangomezherrero@gmail.com
+    orcid: https://orcid.org/0000-0001-8457-4658
+  year: '2022'
+  url: https://CRAN.R-project.org/package=cffr
 - type: software
   title: covr
   abstract: 'covr: Test Coverage for Packages'
