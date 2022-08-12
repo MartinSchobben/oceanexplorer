@@ -29,5 +29,5 @@ jobs:
       - name: Authorize and deploy app
         run: |
           rsconnect::setAccountInfo("${{ secrets.SHINYAPPS_ACCOUNT }}", "${{ secrets.SHINYAPPS_TOKEN }}", "${{ secrets.SHINYAPPS_SECRET }}")
-          rsconnect::deployApp(fs::path_package("oceanexplorer", "appdir"))
+          rsconnect::deployApp("../appdir")
         shell: Rscript {0}
