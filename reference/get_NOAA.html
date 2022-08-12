@@ -59,7 +59,9 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>var</dt>
-<dd><p>The chemical or physical variable of interest.</p></dd>
+<dd><p>The chemical or physical variable of interest (possible choices:
+<code>"temperature"</code>, <code>"phosphate"</code>, <code>"nitrate"</code>, <code>"silicate"</code>, <code>"oxygen"</code>,
+<code>"salinity"</code>, <code>"density"</code>).</p></dd>
 
 
 <dt>spat_res</dt>
@@ -88,8 +90,9 @@ directory (default = <code>FALSE</code>). Size of individual files is around 12 
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Functions to retrieve data from the
 <a href="https://www.ncei.noaa.gov/products/world-ocean-atlas" class="external-link">NOAA World Ocean Atlas</a>
-. Data is an 3D array (longitude, latitude, and depth) and is loaded as an
-<code><a href="https://r-spatial.github.io/stars/reference/st_as_stars.html" class="external-link">stars</a></code> object. The function can automatically
+. Data is an 3D array (longitude, latitude, and depth) and is loaded as a
+<code><a href="https://r-spatial.github.io/stars/reference/st_as_stars.html" class="external-link">stars</a></code> object. Check <code><a href="NOAA_data.html">NOAA_data</a></code> for available
+variables and there respective units. The function can automatically
 cache the extracted files (default: <code>cache = FALSE</code>). The cached file will
 then reside in the package's <code>extdata</code> directory.</p>
     </div>

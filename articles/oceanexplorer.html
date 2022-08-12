@@ -76,13 +76,13 @@
 <div class="section level3">
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h3>
-<p>The <a href="https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html" class="external-link">World Ocean Atlas</a> of the US agency <a href="https://www.ncei.noaa.gov/" class="external-link">NOAA</a> contains high-resolution oceanographic variables, such as temperature, salinity and nutrient concentrations, with high standard quality checks. This package facilitates easy access and exploration of this data and targets three different audiences:</p>
+<p>The <a href="https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html" class="external-link">World Ocean Atlas</a> (WOA) of the US agency <a href="https://www.ncei.noaa.gov/" class="external-link">NOAA</a> contains high-resolution and high-quality data for oceanographic variables, such as temperature, salinity and nutrients. This package facilitates easy access and exploration of this data, and targets three different audiences:</p>
 <ul>
 <li>Users with no programming experience by means of graphical user interface (Shiny app).</li>
 <li>Users with minimal programming experience as a hybrid graphical-programming interface that can be easily integrated in an R workflow (RStudio addin).</li>
 <li>Users with an R programming background.</li>
 </ul>
-<p>In this document I will explain the basic use cases of all three application types. But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by <em>sf</em> <span class="citation">(Pebesma 2022)</span> for vectors and <em>stars</em> <span class="citation">(Pebesma 2021)</span> for raster data (e.g. the NOAA data). I highly recommend reading the accompanying documentation of these packages if you intend to work with the NOAA datasets:</p>
+<p>In this document I will explain the basic use cases of all three application types. But first a word on the back-end of this R package. This package heavily relies on geospatial data analysis facilitated by <em>sf</em> <span class="citation">(Pebesma 2022a)</span> for vectors and <em>stars</em> <span class="citation">(Pebesma 2022b)</span> for raster data (i.e., the native NOAA data format). I highly recommend reading the accompanying documentation of these packages if you intend to work with the NOAA datasets:</p>
 <ul>
 <li>stars (<a href="https://r-spatial.github.io/stars/" class="external-link uri">https://r-spatial.github.io/stars/</a>)</li>
 <li>sf (<a href="https://r-spatial.github.io/sf/" class="external-link uri">https://r-spatial.github.io/sf/</a>)</li>
@@ -99,11 +99,11 @@
 <p><img src="get-started-screenshot1.png" width="90%"></p>
 <ul>
 <li>The drop down menu “variable” selects the oceanographic variable of interest.</li>
-<li>The drop down menu “averaging” selects the time period over which the mean is calculated. The period can be annual, North Hemisphere seasonal (e.g. Spring, three-month periods) and monthly.</li>
+<li>The drop down menu “averaging” selects the time period over which the mean is calculated. The period can be “annual”, North Hemisphere seasonal (e.g., “Spring”, three-month periods) and monthly (e.g., “January”).</li>
 <li>The drop down menu “resolution” selects the grid resolution for mean fields on a 1- or 5-degree longitude/latitude grid.</li>
 </ul>
 <p>The following document lists the technical details of the variable collection and presentation: <a href="https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf" class="external-link">NOAA World Ocean Atlas 2018 Product Documentation</a>. The papers on this page give in-depth information on the variable of interest: <a href="https://www.ncei.noaa.gov/products/world-ocean-atlas" class="external-link uri">https://www.ncei.noaa.gov/products/world-ocean-atlas</a>.</p>
-<p>Clicking the “load data” button extract the data from the NOAA WOA database. This operation can take some time.</p>
+<p>Clicking the “load data” button extracts the data from the NOAA WOA database. This operation can take some time.</p>
 </div>
 <div class="section level4">
 <h4 id="filter-noaa-data">Filter NOAA data<a class="anchor" aria-label="anchor" href="#filter-noaa-data"></a>
@@ -115,13 +115,13 @@
 <ul>
 <li>The text fields: “depth”, “longitude”, and “latitude” specify the location to extract oceanographic variables. Alternatively, one can click on the plot (“map” tab) to obtain the values. It is possible to extract multiple locations at once by providing a comma separated list (e.g., 120, 130, 140) to the text field on the left (“locations” tab). Note, that depth and coordinate vectors should be of the same length, or one of the two should have length one. The data is extracted only when all three text fields have been filled, and by subsequently clicking the button “extract”.</li>
 <li>Data extraction can be achieved in two modes; “point” and “fuzzy”, where the former results in a very precise search, the latter option searches in an area with a circumference of 50<span class="math inline">\(\,\)</span>km around the selected coordinate point. The returned value of a fuzzy search is therefore an average of the search area. Currently, fuzzy search is not yet implemented.</li>
-<li>The button “extract” uses the information supplied in the text fields: “depth”, “longitude”, and “latitude” to extract the oceanographic variable. Hence the button is only active when those fields have been filled, and otherwise remains greyed-out. The buttons: “reset” and “back” revert all, or the last extraction, respectively. These two operations can be used for data extracted by clicking on the interactive plot and/or obtained by using the text field search.</li>
+<li>The button “extract” uses the information supplied in the text fields: “depth”, “longitude”, and “latitude” to extract the oceanographic variable. Hence, the button is only active when those fields have been filled, and otherwise remains greyed-out. The buttons: “reset” and “back” revert all, or the last extraction, respectively. These two operations can be used for both data extracted by clicking on the interactive plot and/or obtained by using the text field search.</li>
 </ul>
 <p><strong>Map tab (right)</strong></p>
 <p>This field allows changing visual aspects of the NOAA data. In addition the plot is interactive and can be clicked (single click). It is therefore possible to only use the right-hand side of the screen to select your data without touching any of the buttons and menus on the left-side.</p>
 <ul>
 <li>The “projections” drop-down menu enables selection some of commonly used projections, such as “4326”. And, two stereographic projections “3031” and “3995” of the Antarctic and Arctic regions, respectively.</li>
-<li>The toggle switch “Fix variable scale” determines whether the variable scale is fixed for the current depth slice or the whole dataset. Loosening the variable scale can help highlight nuanced differences in certain variables (e.g. phosphate).</li>
+<li>The checkbox “fix variable scale” determines whether the variable scale is fixed for the current depth slice or the whole dataset. Loosening the variable scale can help highlight nuanced differences in certain variables (e.g., phosphate).</li>
 <li>The “depth” slider allows filter for depth slices.</li>
 </ul>
 </div>
@@ -138,7 +138,7 @@
 <div class="section level3">
 <h3 id="rstudio-addin">RStudio addin<a class="anchor" aria-label="anchor" href="#rstudio-addin"></a>
 </h3>
-<p>The RStudio addin has more-or-less the same functionality as the Shiny app except that it has fewer options. This tool is, however, great for integration in R scripts, as the addin emits the code used for your data selection and filtering operation. The emitted code is actually the code used to generate the graphical output and is the backbone of the Shiny app and RStudio addin.</p>
+<p>The RStudio addin has more-or-less the same functionality as the Shiny app except that it has fewer options. This tool is, however, great for integration in R scripts, as the addin emits the code used for your data selection and filtering operations. The emitted code is the “behind-the-scene” code used to generate the graphical output and is thus the backbone of the Shiny app and RStudio addin.</p>
 <p><img src="get-started-screenshot4.png" width="90%"></p>
 <p>Clicking on the “done” button terminates the application and emits the code at the point where the cursor currently resides.</p>
 </div>
@@ -149,7 +149,7 @@
 <div class="section level4">
 <h4 id="loading-the-package-and-data">Loading the package and data<a class="anchor" aria-label="anchor" href="#loading-the-package-and-data"></a>
 </h4>
-<p>In this case we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below sealevel.</p>
+<p>Imagine we are interested in phosphate concentrations in the month December from the Agulhas Basin at a depth 0f 1000 meter below sealevel.</p>
 <p>First, we extract the data by proving the variable, grid resolution, and the averaging period.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://utrechtuniversity.github.io/oceanexplorer/">oceanexplorer</a></span><span class="op">)</span></span>
@@ -163,13 +163,13 @@
 <span><span class="co">#&gt; lon      1 360   -180     1 WGS 84    NA                  NULL [x]</span></span>
 <span><span class="co">#&gt; lat      1 180    -90     1 WGS 84    NA                  NULL [y]</span></span>
 <span><span class="co">#&gt; depth    1  43     NA    NA     NA FALSE [0,2.5),...,[775,825)</span></span></code></pre></div>
-<p>The first time you perform this call this operation can take a while. As a default this function caches the data which ensures that the next time you call upon this data it will load faster.</p>
+<p>This operation can take a while, but it can be sped-up during future calls by caching the data. This can be done by setting the <code>cache</code> argument to <code>TRUE</code>. As a default <code>get_NOAA</code> does not cache the data.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="plot">Plot<a class="anchor" aria-label="anchor" href="#plot"></a>
 </h3>
-<p>Then we can plot the data from a depth of 1000 meter below sea level.</p>
+<p>Then we can plot the phosphate data from a depth of 1000 meter below sea level.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
 <p><img src="oceanexplorer_files/figure-html/plot1-1.png" width="672"></p>
@@ -177,7 +177,7 @@
 <div class="section level3">
 <h3 id="filter-agulhas-basin-data-point">Filter Agulhas Basin data point<a class="anchor" aria-label="anchor" href="#filter-agulhas-basin-data-point"></a>
 </h3>
-<p>Finally, we can filter a data point at the same depth from the Agulhas Basin.</p>
+<p>Finally, we can filter a data point from, for example, the Agulhas Basin.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fl">20</span>, lat <span class="op">=</span> <span class="op">-</span><span class="fl">46</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Simple feature collection with 1 feature and 2 fields</span></span>
@@ -187,7 +187,7 @@
 <span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
 <span><span class="co">#&gt;       p_an depth       geometry</span></span>
 <span><span class="co">#&gt; 1 2.146302  1000 POINT (20 -46)</span></span></code></pre></div>
-<p>We can then also plot these extraction points on the world map.</p>
+<p>We can then also project these extraction points on the world map for future reference.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, points <span class="op">=</span> <span class="va">pts</span><span class="op">)</span></span></code></pre></div>
 <p><img src="oceanexplorer_files/figure-html/plot2-1.png" width="672"></p>
@@ -196,11 +196,11 @@
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references">
-<div id="ref-stars">
-<p>Pebesma, Edzer. 2021. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars" class="external-link">https://CRAN.R-project.org/package=stars</a>.</p>
-</div>
 <div id="ref-sf">
-<p>———. 2022. <em>Sf: Simple Features for R</em>. <a href="https://CRAN.R-project.org/package=sf" class="external-link">https://CRAN.R-project.org/package=sf</a>.</p>
+<p>Pebesma, Edzer. 2022a. <em>Sf: Simple Features for R</em>. <a href="https://CRAN.R-project.org/package=sf" class="external-link">https://CRAN.R-project.org/package=sf</a>.</p>
+</div>
+<div id="ref-stars">
+<p>———. 2022b. <em>Stars: Spatiotemporal Arrays, Raster and Vector Data Cubes</em>. <a href="https://CRAN.R-project.org/package=stars" class="external-link">https://CRAN.R-project.org/package=stars</a>.</p>
 </div>
 </div>
 </div>
