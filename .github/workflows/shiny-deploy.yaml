@@ -21,8 +21,6 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: local::.
 
       - name: Install rsconnect
         run: install.packages("rsconnect")
@@ -31,5 +29,5 @@ jobs:
       - name: Authorize and deploy app
         run: |
           rsconnect::setAccountInfo("${{ secrets.SHINYAPPS_ACCOUNT }}", "${{ secrets.SHINYAPPS_TOKEN }}", "${{ secrets.SHINYAPPS_SECRET }}")
-          rsconnect::deployApp(system.file("appdir", package="oceanexplorer"))
+          rsconnect::deployApp(appDir = "inst/appdir", appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd')))
         shell: Rscript {0}
