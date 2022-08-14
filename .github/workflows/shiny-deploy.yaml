@@ -29,5 +29,6 @@ jobs:
       - name: Authorize and deploy app
         run: |
           rsconnect::setAccountInfo("${{ secrets.SHINYAPPS_ACCOUNT }}", "${{ secrets.SHINYAPPS_TOKEN }}", "${{ secrets.SHINYAPPS_SECRET }}")
-          rsconnect::deployApp(appDir = "inst/appdir", appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd')))
+          file.copy("inst/appdir/app.R", ".")
+          rsconnect::deployApp(appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd')))
         shell: Rscript {0}
