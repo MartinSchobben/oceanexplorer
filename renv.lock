@@ -91,6 +91,18 @@
       "Hash": "e9c08b94391e9f3f97355841229124f2",
       "Requirements": []
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "4.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2f56b7e2f0d534f3c4022e48c33835ce",
+      "Requirements": [
+        "Rcpp",
+        "curl",
+        "jsonlite"
+      ]
+    },
     "abind": {
       "Package": "abind",
       "Version": "1.4-5",
@@ -177,6 +189,20 @@
       "Requirements": [
         "R6",
         "processx"
+      ]
+    },
+    "cffr": {
+      "Package": "cffr",
+      "Version": "0.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f5df64e83bac397c564f12917fdff30f",
+      "Requirements": [
+        "crayon",
+        "desc",
+        "jsonlite",
+        "jsonvalidate",
+        "yaml"
       ]
     },
     "class": {
@@ -698,6 +724,16 @@
       "Hash": "d07e729b27b372429d42d24d503613a0",
       "Requirements": []
     },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "cdc2843ef7f44f157198bb99aea7552d",
+      "Requirements": [
+        "V8"
+      ]
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.39",
@@ -853,10 +889,10 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-157",
+      "Version": "3.1-159",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dbca60742be0c9eddc5205e5c7ca1f44",
+      "Hash": "4a0b3a68f846cb999ff0e8e519524fbb",
       "Requirements": [
         "lattice"
       ]
