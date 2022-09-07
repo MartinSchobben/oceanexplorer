@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">oceanexplorer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
     <dl><dt>cache</dt>
 <dd><p>Caching the extracted NOAA file in the package's <code>extdata</code>
 directory (default = <code>FALSE</code>). Size of individual files is around 12 Mb. Use
-<code><a href="clean_cache.html">clean_cache()</a></code> to remove all cached data.</p></dd>
+<code><a href="list_NOAA.html">list_NOAA()</a></code> to list cached data resources.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -72,9 +72,11 @@ directory (default = <code>FALSE</code>). Size of individual files is around 12 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">curl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/curl/man/nslookup.html" class="external-link">has_internet</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># run RStudio addin (can also be launched from `Addins` dropdown menu)</span></span></span>
 <span class="r-in"><span><span class="fu">NOAA_addin</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
