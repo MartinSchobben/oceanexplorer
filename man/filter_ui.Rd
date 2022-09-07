@@ -22,7 +22,8 @@ filter_server(
 \item{extended}{Boolean whether to build the extended module
 (default = \code{TRUE}).}
 
-\item{NOAA}{Reactive value of NOAA dataset.}
+\item{NOAA}{Reactive value for the dataset containing the locations
+coordinates.}
 
 \item{external}{Reactive values for latitude, longitude and depth from plot
 module.}
@@ -40,8 +41,8 @@ the currently loaded NOAA data via shiny \code{textInput()} interfaces.
 }
 \examples{
 
-\dontrun{
 # run filter module stand-alone
+if (curl::has_internet() && interactive()) {
 
 library(oceanexplorer)
 library(shiny)

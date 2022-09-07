@@ -1,8 +1,6 @@
-library(shinytest)
-
-
 test_that("consistent performance of NOAA_app", {
 
+  # for CRAN and CI
   skip_on_cran()
   skip_on_ci()
   skip_if_offline()
@@ -10,6 +8,6 @@ test_that("consistent performance of NOAA_app", {
   skip("Use for manual checks")
 
   appdir <- test_path("apps", "NOAA_app")
-  expect_pass(testApp(appdir, compareImages = FALSE))
+  shinytest::expect_pass(shinytest::testApp(appdir, compareImages = FALSE))
 })
 

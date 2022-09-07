@@ -1,19 +1,17 @@
 #' NOAA table module
 #'
 #' This shiny module (`table_ui()` + `table_server()`) visualizes the loaded
-#' and filtered data as a table.
+#' and filtered data in a table format.
 #'
-#' @param id Namespace id shiny module.
+#' @inheritParams input_ui
 #' @param download Add download button.
-#' @param NOAA Reactive value of NOAA dataset.
-#' @param variable Reactivevalues for selected variable information.
 #'
 #' @return Shiny module.
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
 #' # run table module stand-alone
 #'
 #' library(oceanexplorer)
@@ -40,6 +38,7 @@
 #'
 #' # run app
 #' shinyApp(ui, server)
+#'
 #' }
 #'
 table_ui <- function(id, download = NULL) {

@@ -1,10 +1,17 @@
 test_that("plot of NOAA atlas works", {
 
+  # for CRAN and CI
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
+  skip_if_offline()
 
+  # get data
   NOAA <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
+
   # points
   crds <- list(lon = c(-160, -120), lat =  c(11,12))
   points <- filter_NOAA(NOAA, 1, crds)
@@ -36,11 +43,18 @@ test_that("plot of NOAA atlas works", {
 
 test_that("box clipping works for stars",{
 
+  # for CRAN and CI
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
+  skip_if_offline()
 
+  # get data
   NOAA <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
+
   # just depth
   NOAA <- filter_NOAA(NOAA)
 
@@ -51,11 +65,18 @@ test_that("box clipping works for stars",{
 
 test_that("box clipping works for sf",{
 
+  # for CRAN and CI
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
+  skip_if_offline()
 
+  # get data
   NOAA <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
+
   # sf world map
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
     sf::st_as_sf() |>

@@ -9,6 +9,12 @@
 \alias{as_name}
 \alias{as_label}
 \title{Tidy eval helpers}
+\value{
+enquo() returns a quosure and enquos() returns a list of quosures.
+.data returns a data mask. The binary operator := injects a name on the
+left-hand side. as_name() and as_label() return character vectors of length
+1.
+}
 \description{
 This page lists the tidy eval tools reexported in this package from
 rlang. To learn about using tidy eval in scripts and packages at a

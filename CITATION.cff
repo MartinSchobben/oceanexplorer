@@ -8,12 +8,13 @@ message: 'To cite package "oceanexplorer" in publications use:'
 type: software
 license: MIT
 title: 'oceanexplorer: Explore Our Planet''s Oceans with NOAA'
-version: 0.0.0.9002
-abstract: Provides tools for easy exploration of the world ocean atlas of the US agency
-  National Oceanic and Atmospheric Administration (NOAA). It includes functions to
-  extract NetCDF data from the repository and code to visualize several physical and
-  chemical parameters of the ocean. A Shiny app further allows interactive exploration
-  of the data.
+version: 0.0.1
+abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
+  agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
+  to extract NetCDF data from the repository and code to visualize several physical
+  and chemical parameters of the ocean. A Shiny app further allows interactive exploration
+  of the data. The methods for data collecting and quality checks are described in
+  several papers, which can be found here: https://www.ncei.noaa.gov/products/world-ocean-atlas.'
 authors:
 - family-names: Schobben
   given-names: Martin
@@ -27,12 +28,13 @@ preferred-citation:
     given-names: Martin
     email: schobbenmartin@gmail.com
     orcid: https://orcid.org/0000-0001-8560-0037
-  version: 0.0.0.9002
-  abstract: Provides tools for easy exploration of the world ocean atlas of the US
+  version: 0.0.1
+  abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
     agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
     to extract NetCDF data from the repository and code to visualize several physical
     and chemical parameters of the ocean. A Shiny app further allows interactive exploration
-    of the data.
+    of the data. The methods for data collecting and quality checks are described
+    in several papers, which can be found here: https://www.ncei.noaa.gov/products/world-ocean-atlas.'
   repository-code: https://github.com/UtrechtUniversity/oceanexplorer
   url: https://utrechtuniversity.github.io/oceanexplorer/
   identifiers:
@@ -110,6 +112,17 @@ references:
     email: james.f.hester@gmail.com
   year: '2022'
   url: https://CRAN.R-project.org/package=covr
+- type: software
+  title: curl
+  abstract: 'curl: A Modern and Flexible Web Client for R'
+  notes: Suggests
+  authors:
+  - family-names: Ooms
+    given-names: Jeroen
+    email: jeroen@berkeley.edu
+    orcid: https://orcid.org/0000-0002-4035-0289
+  year: '2022'
+  url: https://CRAN.R-project.org/package=curl
 - type: software
   title: devtools
   abstract: 'devtools: Tools to Make Developing R Packages Easier'
@@ -267,6 +280,19 @@ references:
   url: https://CRAN.R-project.org/package=testthat
   version: '>= 3.1.2'
 - type: software
+  title: tibble
+  abstract: 'tibble: Simple Data Frames'
+  notes: Suggests
+  authors:
+  - family-names: Müller
+    given-names: Kirill
+    email: krlmlr+r@mailbox.org
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  year: '2022'
+  url: https://CRAN.R-project.org/package=tibble
+- type: software
   title: vdiffr
   abstract: 'vdiffr: Visual Regression Testing and Graphical Diffing'
   notes: Suggests
@@ -290,29 +316,6 @@ references:
   year: '2022'
   url: https://CRAN.R-project.org/package=vdiffr
   version: '>= 1.0.2'
-- type: software
-  title: withr
-  abstract: 'withr: Run Code ''With'' Temporarily Modified Global State'
-  notes: Suggests
-  authors:
-  - family-names: Hester
-    given-names: Jim
-  - family-names: Henry
-    given-names: Lionel
-    email: lionel@rstudio.com
-  - family-names: Müller
-    given-names: Kirill
-    email: krlmlr+r@mailbox.org
-  - family-names: Ushey
-    given-names: Kevin
-    email: kevinushey@gmail.com
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  - family-names: Chang
-    given-names: Winston
-  year: '2022'
-  url: https://CRAN.R-project.org/package=withr
 - type: software
   title: stars
   abstract: 'stars: Spatiotemporal Arrays, Raster and Vector Data Cubes'

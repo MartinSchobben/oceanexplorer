@@ -3,22 +3,19 @@
 #' This shiny module (`filter_ui()` + `filter_server()`) allows filtering of
 #' the currently loaded NOAA data via shiny `textInput()` interfaces.
 #'
-#' @param id Namespace id shiny module.
-#' @param NOAA Reactive value of NOAA dataset.
+#' @inheritParams input_ui
 #' @param external Reactive values for latitude, longitude and depth from plot
 #'  module.
 #' @param variable Reactivevalues for selected variable information.
 #' @param ivars Character vector for the variables for filtering.
-#' @param extended Boolean whether to build the extended module
-#'  (default = `TRUE`).
 #'
 #' @return Shiny module.
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
 #' # run filter module stand-alone
+#' if (curl::has_internet() && interactive()) {
 #'
 #' library(oceanexplorer)
 #' library(shiny)

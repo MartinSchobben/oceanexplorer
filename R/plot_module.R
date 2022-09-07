@@ -5,8 +5,7 @@
 #' `"3031"`, or `"3995"`). In addition it provides an interactive plot
 #' interface to select location for data extraction based on a single-click.
 #'
-#' @param id Namespace id shiny module.
-#' @param NOAA Reactive value of NOAA dataset.
+#' @inheritParams input_ui
 #' @param points Add locations of extracted point geometry.
 #'
 #' @return Shiny module.
@@ -14,8 +13,9 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #' # run plot module stand-alone
+#' if (curl::has_internet() && interactive()) {
+#'
 #' library(oceanexplorer)
 #' library(shiny)
 #'
@@ -35,6 +35,7 @@
 #'
 #' # run app
 #' shinyApp(ui, server)
+#'
 #' }
 plot_ui <- function(id) {
   tagList(
@@ -44,7 +45,8 @@ plot_ui <- function(id) {
         selectInput(
           NS(id, "epsg"),
           h5("Projection"),
-          c(`Global (4326)` = "4326", `Antarctic (3031)` = "3031", `Arctic (3995)` = "3995"),
+          c(`Global (4326)` = "4326", `Antarctic (3031)` = "3031",
+            `Arctic (3995)` = "3995"),
           selected = "original"
         ),
         actionLink(

@@ -6,7 +6,7 @@
 #' [NOAA World Ocean Atlas](https://www.ncei.noaa.gov/products/world-ocean-atlas)
 #' . Data is an 3D array (longitude, latitude, and depth) and is loaded as a
 #' [`stars`][stars::st_as_stars()] object. Check [`NOAA_data`] for available
-#' variables and there respective units. The function can automatically
+#' variables, respective units and their citations. The function can automatically
 #' cache the extracted files (default: `cache = FALSE`). The cached file will
 #' then reside in the package's `extdata` directory.
 #'
@@ -21,7 +21,7 @@
 #'  (e.g. `"winter"`), or month (e.g. `"August"`).
 #' @param cache Caching the extracted NOAA file in the package's `extdata`
 #'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
-#'  [clean_cache()] to remove all cached data.
+#'  [list_NOAA()] to list cached data resources.
 #'
 #' @return [`stars`][stars::st_as_stars()] object or path.
 #' @export
@@ -31,9 +31,11 @@
 #' # path to NOAA server or local data source
 #' url_parser("oxygen", 1, "annual")
 #'
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
+#'
 #' # retrieve NOAA data
 #' get_NOAA("oxygen", 1, "annual")
+#'
 #' }
 get_NOAA <- function(var, spat_res, av_period, cache = FALSE) {
 
@@ -97,7 +99,9 @@ url_parser <- function(var, spat_res, av_period, cache = FALSE) {
   chem <- c("phosphate", "nitrate", "silicate", "oxygen")
   misc <- c("temperature", "salinity", "density")
 
-  # see https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf for metadata names
+  # see https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf
+  # for metadata names
+
   # recording range
   if (var %in% chem) {
     deca <- "all"
@@ -149,46 +153,42 @@ url_parser <- function(var, spat_res, av_period, cache = FALSE) {
   }
 }
 
-#' Clean cache of NOAA data
+#' List cached NOAA data files
 #'
-#' Remove all cached NOAA data files from package's `extdata` directory.
+#' List all cached NOAA data files from package's `extdata` directory.
 #'
-#' @return The path to `extdata` (invisibly).
+#' @return A character vector containing the names of the files in the specified
+#'  directories (empty if there were no files). If a path does not exist or is
+#'  not a directory or is unreadable it is skipped.
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
+#' # show cached NOAA files
+#' list_NOAA()
 #'
-#' # get NOAA data with caching
-#' get_NOAA("temperature", 1, "January", TRUE)
-#'
-#' # path
-#' rel_pt <- url_parser("temperature", 1, "January", TRUE)$local # relative path
-#' abs_pt <- system.file(rel_pt, package = "oceanexplorer") # absolute path
-#'
-#' # check
-#' file.exists(abs_pt)
-#'
-#' # clean cache
-#' clean_cache()
-#'
-#' # check again
-#' file.exists(abs_pt)
-#' }
-clean_cache <- function() {
+list_NOAA <- function() {
 
-  # direcotry
-  cache_pkg <- fs::path_package(package = "oceanexplorer", "extdata")
+  # directory
+  cache_pkg <- try(
+    fs::path_package(package = "oceanexplorer", "extdata"),
+    silent = TRUE
+  )
 
-  # list files and delete them
-  list.files(cache_pkg, full.names = TRUE) |>
-    fs::file_delete()
-
-  # return
-  invisible(cache_pkg)
+  if (inherits(cache_pkg, "try-error")) {
+   character(0)
+  } else {
+   # list files and delete them
+   list.files(cache_pkg, full.names = TRUE)
+  }
 }
 
+#-------------------------------------------------------------------------------
+# not exportet
+#-------------------------------------------------------------------------------
+clean_cache <- function(...) {
+ list_NOAA() |> fs::file_delete()
+}
 
 # read the NOAA netcdf
 read_NOAA <- function(conn, var) {

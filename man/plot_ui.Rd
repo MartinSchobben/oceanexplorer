@@ -12,7 +12,8 @@ plot_server(id, NOAA, points)
 \arguments{
 \item{id}{Namespace id shiny module.}
 
-\item{NOAA}{Reactive value of NOAA dataset.}
+\item{NOAA}{Reactive value for the dataset containing the locations
+coordinates.}
 
 \item{points}{Add locations of extracted point geometry.}
 }
@@ -27,8 +28,9 @@ interface to select location for data extraction based on a single-click.
 }
 \examples{
 
-\dontrun{
 # run plot module stand-alone
+if (curl::has_internet() && interactive()) {
+
 library(oceanexplorer)
 library(shiny)
 
@@ -48,5 +50,6 @@ server <-function(input, output, session) {
 
 # run app
 shinyApp(ui, server)
+
 }
 }

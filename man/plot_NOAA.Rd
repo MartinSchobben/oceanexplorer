@@ -42,7 +42,8 @@ variable) to a custom range. For example, one can fix the color scale
 to the total range of the ocean (instead of the current depth slice).
 }
 \examples{
-\dontrun{
+if (curl::has_internet() && interactive()) {
+
 # data
 NOAA <- get_NOAA("oxygen", 1, "annual")
 
@@ -54,5 +55,6 @@ pts <- filter_NOAA(NOAA, 1, list(lon = c(-160, -120), lat =  c(11,12)))
 
 # plot
 plot_NOAA(NOAA, points = pts)
+
 }
 }

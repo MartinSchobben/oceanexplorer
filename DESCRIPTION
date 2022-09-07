@@ -1,6 +1,6 @@
 Package: oceanexplorer
 Title: Explore Our Planet's Oceans with NOAA
-Version: 0.0.0.9002
+Version: 0.0.1
 Authors@R: 
     c(
       person(
@@ -21,7 +21,9 @@ Description: Provides tools for easy exploration of the world ocean atlas of
   the US agency National Oceanic and Atmospheric Administration (NOAA). It 
   includes functions to extract NetCDF data from the repository and code to 
   visualize several physical and chemical parameters of the ocean. A Shiny app 
-  further allows interactive exploration of the data.
+  further allows interactive exploration of the data. The methods for data 
+  collecting and quality checks are described in several papers, which can be
+  found here: <https://www.ncei.noaa.gov/products/world-ocean-atlas>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -29,6 +31,7 @@ RoxygenNote: 7.2.1
 Suggests: 
     cffr,
     covr,
+    curl,
     devtools (>= 2.4.3),
     diffviewer (>= 0.1.1),
     globals (>= 0.14.0),
@@ -38,6 +41,7 @@ Suggests:
     shinytest (>= 1.5.1),
     spelling,
     testthat (>= 3.1.2),
+    tibble,
     vdiffr (>= 1.0.2)
 Imports: 
     stars (>= 0.5.5),

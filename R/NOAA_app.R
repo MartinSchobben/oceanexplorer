@@ -2,20 +2,18 @@
 #'
 #' Wrapper function that launches the NOAA app.
 #'
-#' @param cache Caching the extracted NOAA file in the package's `extdata`
-#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
-#'  [clean_cache()] to remove all cached data.
-#' @param extended Boolean whether to launch the extended app (default = `TRUE`)
-#'  or the limited version for usage as a RStudio gadget.
+#' @inheritParams input_ui
 #'
 #' @return Shiny app
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
+#'
 #' # run app
 #' NOAA_app()
+#'
 #' }
 NOAA_app <- function(cache = FALSE) {
 
@@ -156,13 +154,15 @@ NOAA_server <- function(extended = TRUE, cache) {
 
       # code (only loading)
       observeEvent(NOAA$code(), {
+
         emit$code <- paste0(emit$code, "NOAA <- ", NOAA$code())
+
       })
 
       # code (loading and filter extraction)
       observeEvent(output_table(), {
 
-          emit$code <- paste0(emit$code, "\n", output_table())
+        emit$code <- paste0(emit$code, "\n", output_table())
 
       })
 

@@ -14,7 +14,8 @@ table_server(id, NOAA, variable)
 
 \item{download}{Add download button.}
 
-\item{NOAA}{Reactive value of NOAA dataset.}
+\item{NOAA}{Reactive value for the dataset containing the locations
+coordinates.}
 
 \item{variable}{Reactivevalues for selected variable information.}
 }
@@ -23,11 +24,11 @@ Shiny module.
 }
 \description{
 This shiny module (\code{table_ui()} + \code{table_server()}) visualizes the loaded
-and filtered data as a table.
+and filtered data in a table format.
 }
 \examples{
 
-\dontrun{
+if (curl::has_internet() && interactive()) {
 # run table module stand-alone
 
 library(oceanexplorer)
@@ -54,6 +55,7 @@ server <-function(input, output, session) {
 
 # run app
 shinyApp(ui, server)
+
 }
 
 }

@@ -104,4 +104,8 @@
 #' @importFrom rlang enquo enquos .data := as_name as_label
 #' @aliases enquo enquos .data := as_name as_label
 #' @export enquo enquos .data := as_name as_label
+#' @return enquo() returns a quosure and enquos() returns a list of quosures.
+#'  .data returns a data mask. The binary operator := injects a name on the
+#'  left-hand side. as_name() and as_label() return character vectors of length
+#'  1.
 NULL

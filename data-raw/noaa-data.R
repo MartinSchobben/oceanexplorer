@@ -1,6 +1,5 @@
 ## code to prepare `NOAA_data` dataset
 library(tibble)
-library(units)
 
 NOAA_data <- tibble(
   variable = c("temperature", "phosphate", "nitrate", "silicate", "oxygen",
@@ -10,6 +9,13 @@ NOAA_data <- tibble(
     rep(paste0(intToUtf8(956), "mol kg-1"), 4),
     "",
     "kg m-3"
+  ),
+  citation = c(
+    vc_cite["temperature"],
+    rep(vc_cite["nutrients"], 3),
+    vc_cite["oxygen"],
+    vc_cite["salinity"],
+    vc_cite["density"]
   )
 )
 

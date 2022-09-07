@@ -1,5 +1,9 @@
 test_that("parsing urls", {
 
+  # for CRAN
+  skip_if_offline()
+  skip_on_cran()
+
   expect_equal(
     url_parser("oxygen", 1, "annual")$external,
     "https://data.nodc.noaa.gov/thredds/dodsC/ncei/woa/oxygen/all/1.00/woa18_all_o00_01.nc"
@@ -19,6 +23,11 @@ test_that("parsing urls", {
 })
 
 test_that("files can be loaded from NOAA", {
+
+  # for CRAN
+  skip_if_offline()
+  skip_on_cran()
+
   expect_snapshot(
     get_NOAA("temperature", 1, "annual")
   )

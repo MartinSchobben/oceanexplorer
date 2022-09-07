@@ -1,6 +1,15 @@
 test_that("reprojection works", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
+  # get data
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAAatlas"))
+
   # points
   points <- filter_NOAA(NOAAatlas, 1, list(lon = c(-160, -120), lat =  c(11,12)))
 
@@ -57,7 +66,16 @@ test_that("reprojection works", {
 
 test_that("epsg check is consitent", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
+  # get data
   NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAAatlas"))
+
   # points
   crds <- list(lon = c(-160, -120), lat =  c(11,12))
   points <- filter_NOAA(NOAAatlas, 1, crds)
@@ -119,11 +137,21 @@ test_that("stereographic projections plot click values can be converted", {
 })
 
 test_that("point is clipped when re-projected to 3031", {
+
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
+
   # coords
   lon <- c(-116.3041, 117.12998)
   lat <- c(-31.98888, 17.39477)
+
   # filter
   points <- filter_NOAA(NOAA, depth = 0, coord = cbind(lon, lat))
   expect_snapshot(

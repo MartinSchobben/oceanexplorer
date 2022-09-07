@@ -22,7 +22,7 @@ url_parser(var, spat_res, av_period, cache = FALSE)
 
 \item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
 directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
-\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
+\code{\link[=list_NOAA]{list_NOAA()}} to list cached data resources.}
 }
 \value{
 \code{\link[stars:st_as_stars]{stars}} object or path.
@@ -35,7 +35,7 @@ Functions to retrieve data from the
 \href{https://www.ncei.noaa.gov/products/world-ocean-atlas}{NOAA World Ocean Atlas}
 . Data is an 3D array (longitude, latitude, and depth) and is loaded as a
 \code{\link[stars:st_as_stars]{stars}} object. Check \code{\link{NOAA_data}} for available
-variables and there respective units. The function can automatically
+variables, respective units and their citations. The function can automatically
 cache the extracted files (default: \code{cache = FALSE}). The cached file will
 then reside in the package's \code{extdata} directory.
 }
@@ -44,9 +44,11 @@ then reside in the package's \code{extdata} directory.
 # path to NOAA server or local data source
 url_parser("oxygen", 1, "annual")
 
-\dontrun{
+if (curl::has_internet() && interactive()) {
+
 # retrieve NOAA data
 get_NOAA("oxygen", 1, "annual")
+
 }
 }
 \seealso{

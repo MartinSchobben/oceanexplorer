@@ -80,12 +80,13 @@ addin
 al
 bookdown
 bslib
-changedate
 crcpress
 csv
 deanattali
 devtools
 dplyr
+enquo
+enquos
 epsg
 et
 eval
@@ -95,13 +96,16 @@ github
 greyed
 http
 https
-img
 io
 isbn
 knitr
+ncei
 nd
+noaa
 pkgs
 programmatically
+quosure
+quosures
 rlang
 rmarkdown
 roxygen
@@ -111,7 +115,6 @@ shinyapps
 shinyjs
 shinytest
 stereographic
-svg
 testthat
 tibble
 tunnelled
@@ -120,6 +123,5 @@ utrecht
 vdiffr
 worldmap
 www
-yellowgreen
 yihui
 ’Sass’

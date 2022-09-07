@@ -12,9 +12,11 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
+#' # get data
 #' NOAA <- get_NOAA("temperature", 1, "annual")
 #'
+#' # reproject data with new epsg
 #' reproject(NOAA, 3031)
 #' }
 reproject <- function(obj, epsg, ...) {
@@ -103,7 +105,6 @@ epsg_check <- function(obj, epsg) {
   }
 }
 
-
 # for 3031 and 3995 we require clipping of latitudes at 50 degrees
 clip_lat <- function(obj, epsg, limit = 0) {
 
@@ -165,4 +166,3 @@ convert_stereo <- function(lon, lat, epsg) {
   coord
 
 }
-

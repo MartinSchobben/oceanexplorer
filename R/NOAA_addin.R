@@ -2,19 +2,18 @@
 #'
 #' Wrapper function that launches the NOAA RStudio addin
 #'
-#' @param cache Caching the extracted NOAA file in the package's `extdata`
-#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
-#'  [clean_cache()] to remove all cached data.
-#'
+#' @inheritParams get_NOAA
 #'
 #' @return Rstudio gadget
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
+#'
 #' # run RStudio addin (can also be launched from `Addins` dropdown menu)
 #' NOAA_addin()
+#'
 #' }
 NOAA_addin <- function(cache = FALSE) {
 

@@ -31,12 +31,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if (curl::has_internet() && interactive()) {
+#'
 #' # get atlas
 #' NOAAatlas <- get_NOAA("oxygen", 1, "annual")
 #'
 #' # filter atlas for specific depth and coordinate location
 #' filter_NOAA(NOAAatlas, 30, list(lon = c(-160, -120), lat =  c(11, 12)))
+#'
 #' }
 filter_NOAA <- function(NOAA, depth = 0, coord = NULL, epsg = NULL,
                         fuzzy = 0) {

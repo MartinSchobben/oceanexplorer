@@ -28,7 +28,7 @@ output_server(id, NOAA, variable)
 
 \item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
 directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
-\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
+\code{\link[=list_NOAA]{list_NOAA()}} to list cached data resources.}
 
 \item{NOAA}{Reactive value for the dataset containing the locations
 coordinates.}
@@ -47,8 +47,8 @@ loaded.
 }
 \examples{
 
-\dontrun{
 # run data module stand-alone
+if (curl::has_internet() && interactive()) {
 
 library(oceanexplorer)
 library(shiny)

@@ -16,3 +16,8 @@
 ^CODE_OF_CONDUCT\.md$
 ^.Rprofile$
 ^data-raw$
+^CRAN-SUBMISSION$
+^man/figures/oceanexplorer-demo\.ogv$
+^man/figures/oceanexplorer-demo\.gif$
+^tests/testthat/_snaps$
+^tests/testthat/apps$

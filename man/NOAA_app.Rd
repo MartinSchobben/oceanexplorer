@@ -12,10 +12,10 @@ NOAA_server(extended = TRUE, cache)
 \arguments{
 \item{cache}{Caching the extracted NOAA file in the package's \code{extdata}
 directory (default = \code{FALSE}). Size of individual files is around 12 Mb. Use
-\code{\link[=clean_cache]{clean_cache()}} to remove all cached data.}
+\code{\link[=list_NOAA]{list_NOAA()}} to list cached data resources.}
 
-\item{extended}{Boolean whether to launch the extended app (default = \code{TRUE})
-or the limited version for usage as a RStudio gadget.}
+\item{extended}{Boolean whether to build the extended module
+(default = \code{TRUE}).}
 }
 \value{
 Shiny app
@@ -25,8 +25,10 @@ Wrapper function that launches the NOAA app.
 }
 \examples{
 
-\dontrun{
+if (curl::has_internet() && interactive()) {
+
 # run app
 NOAA_app()
+
 }
 }

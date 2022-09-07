@@ -5,10 +5,11 @@
 \alias{NOAA_data}
 \title{NOAA variable names and units.}
 \format{
-A tibble with 7 rows and 2 variables:
+A tibble with 7 rows and 3 variables:
 \describe{
 \item{variable}{oceanographic variable}
 \item{unit}{variable unit}
+\item{citation}{citation of the dataset}
 }
 }
 \source{

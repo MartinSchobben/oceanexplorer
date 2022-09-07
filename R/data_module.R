@@ -13,17 +13,15 @@
 #' @param variable Reactivevalues for selected variable information.
 #' @param extended Boolean whether to build the extended module
 #'  (default = `TRUE`).
-#' @param cache Caching the extracted NOAA file in the package's `extdata`
-#'  directory (default = `FALSE`). Size of individual files is around 12 Mb. Use
-#'  [clean_cache()] to remove all cached data.
+#' @inheritParams get_NOAA
 #'
 #' @return Shiny module.
 #' @export
 #'
 #' @examples
 #'
-#' \dontrun{
 #' # run data module stand-alone
+#' if (curl::has_internet() && interactive()) {
 #'
 #' library(oceanexplorer)
 #' library(shiny)

@@ -1,7 +1,14 @@
 test_that("check output type", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("oxygen", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   # check classes
   expect_s3_class(
@@ -33,8 +40,16 @@ test_that("that different coord classes generate the same results", {
 })
 
 test_that("entries other then vectors of 1 or the same length cause an error", {
+
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   expect_error(
     coord_check(
@@ -49,8 +64,16 @@ test_that("entries other then vectors of 1 or the same length cause an error", {
 })
 
 test_that("entries for class coords besides matrix, list and sfc throws error", {
+
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   expect_error(
     filter_NOAA(
@@ -67,8 +90,15 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
 
 test_that("wrong names for matrices or list of coordinates causes an error", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   # wrong names for coordinate matrices and lists
   expect_error(
@@ -83,8 +113,15 @@ test_that("wrong names for matrices or list of coordinates causes an error", {
 
 test_that("check that epsg of depth plane and coordinates is similar", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   # coords
   lon <- c(-116.3041, 117.12998)
@@ -144,8 +181,15 @@ test_that("check that epsg of depth plane and coordinates is similar", {
 
 test_that("epsg conversion works with character vector", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   expect_snapshot(
     filter_NOAA(
@@ -162,8 +206,15 @@ test_that("epsg conversion works with character vector", {
 
 test_that("epsg conversion works with 'original' keyword", {
 
+  # for CRAN
+  skip_on_cran()
+  skip_if_offline()
+
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   expect_snapshot(
     filter_NOAA(
@@ -180,11 +231,17 @@ test_that("epsg conversion works with 'original' keyword", {
 
 test_that("extraction of coords can use fuzzy search", {
 
+  # for CRAN and CI
   skip_on_cran()
   skip_on_ci()
+  skip_on_covr()
+  skip_if_offline()
 
   # get data
   NOAA <- get_NOAA("temperature", 1, "annual")
+
+  # skip if not obtained
+  skip_if_not(exists("NOAA"))
 
   # filter data
   plane <- filter_NOAA(NOAA, 0)

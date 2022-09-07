@@ -28,9 +28,11 @@ Easy re-projecting of the epsg of \code{\link[sf:st_as_sf]{sf}} and
 }
 \examples{
 
-\dontrun{
+if (curl::has_internet() && interactive()) {
+# get data
 NOAA <- get_NOAA("temperature", 1, "annual")
 
+# reproject data with new epsg
 reproject(NOAA, 3031)
 }
 }
