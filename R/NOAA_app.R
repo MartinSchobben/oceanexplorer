@@ -42,7 +42,7 @@ NOAA_app <- function(cache = FALSE) {
             "R package: ",
             a(
               href = "https://github.com/UtrechtUniversity/oceanexplorer",
-              "install_github('UtrechtUniversity/oceanexplorer')"
+              "install.packages('oceanexplorer')"
             )
           )
         ),
