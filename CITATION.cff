@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.2.2
+# CITATION file created with {cffr} R package, v0.2.3
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
@@ -14,7 +14,7 @@ abstract: 'Provides tools for easy exploration of the world ocean atlas of the U
   to extract NetCDF data from the repository and code to visualize several physical
   and chemical parameters of the ocean. A Shiny app further allows interactive exploration
   of the data. The methods for data collecting and quality checks are described in
-  several papers, which can be found here: https://www.ncei.noaa.gov/products/world-ocean-atlas.'
+  several papers, which can be found here: <https://www.ncei.noaa.gov/products/world-ocean-atlas>.'
 authors:
 - family-names: Schobben
   given-names: Martin
@@ -34,7 +34,8 @@ preferred-citation:
     to extract NetCDF data from the repository and code to visualize several physical
     and chemical parameters of the ocean. A Shiny app further allows interactive exploration
     of the data. The methods for data collecting and quality checks are described
-    in several papers, which can be found here: https://www.ncei.noaa.gov/products/world-ocean-atlas.'
+    in several papers, which can be found here: <https://www.ncei.noaa.gov/products/world-ocean-atlas>.'
+  repository: https://CRAN.R-project.org/package=oceanexplorer
   repository-code: https://github.com/UtrechtUniversity/oceanexplorer
   url: https://utrechtuniversity.github.io/oceanexplorer/
   identifiers:
@@ -66,6 +67,7 @@ preferred-citation:
   - spatial-data
   license: MIT
   year: '2022'
+repository: https://CRAN.R-project.org/package=oceanexplorer
 repository-code: https://github.com/UtrechtUniversity/oceanexplorer
 url: https://utrechtuniversity.github.io/oceanexplorer/
 contact:
