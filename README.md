@@ -1,11 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level">
-<img src="man/figures/oceanice-logo.png" align="right" height="56" />
-</a>
-
-# The oceanexplorer
+# The oceanexplorer <a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" align="right" height="56" /></a>
 
 <!-- badges: start -->
 
@@ -19,8 +15,8 @@ coverage](https://codecov.io/gh/UtrechtUniversity/Oceanexplorer/branch/master/gr
 <!-- badges: end -->
 
 The goal of oceanexplorer is to enable easy access and exploration of
-the [WORLD OCEAN
-ATLAS](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
+the [World Ocean
+Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
 the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 <figure>
