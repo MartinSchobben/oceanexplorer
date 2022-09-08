@@ -31,7 +31,7 @@ app</figcaption>
 
 ## Check the app
 
-Check the beta-version of the app here:
+Check the app here:
 <https://utrecht-university.shinyapps.io/oceanexplorer/>
 
 ## Funding

@@ -5,8 +5,8 @@ NOAA_data <- tibble(
   variable = c("temperature", "phosphate", "nitrate", "silicate", "oxygen",
   "salinity", "density"),
   unit = c(
-    paste0(intToUtf8(176), " C"),
-    rep(paste0(intToUtf8(956), "mol kg-1"), 4),
+    "\u00b0 C",
+    rep("\u03bc mol kg-1", 4),
     "",
     "kg m-3"
   ),

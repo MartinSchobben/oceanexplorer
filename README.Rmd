@@ -79,7 +79,7 @@ The goal of oceanexplorer is to enable easy access and exploration of the [WORLD
 
 ## Check the app
 
-Check the beta-version of the app here: https://utrecht-university.shinyapps.io/oceanexplorer/
+Check the app here: https://utrecht-university.shinyapps.io/oceanexplorer/
 
 ## Funding
 
