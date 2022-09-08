@@ -90,8 +90,7 @@ NOAA_app <- function(cache = FALSE) {
         paste0(
           "This project was funded by ERC Starting grant number 802835, ",
           "OceaNice, awarded to Peter Bijl.    ",
-          tags$img(src = "img/oceanice-logo.png", width = "150px"),
-          tags$img(src = "img/erc-logo.png", width = "70px")
+          tags$img(src = "img/oceanice-logo.png", width = "150px")
         )
       ),
       style ="text-align: right;"

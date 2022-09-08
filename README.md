@@ -1,8 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<a href="https://erc.europa.eu/"><img src="man/figures/erc-logo.png" align="right" height="56" /></a>
-<a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" align="right" height="56" /></a>
+<a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level">
+<img src="man/figures/oceanice-logo.png" align="right" height="56" />
+</a>
 
 # The oceanexplorer
 
