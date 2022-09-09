@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# The oceanexplorer <a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" align="right" height="56" /></a>
+# The oceanexplorer <a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" style="float:right; height:50px;"/></a>
 
 <!-- badges: start -->
 
@@ -74,7 +74,7 @@ install.packages("oceanexplorer")
 ## Example
 
 The package allows extraction of global databases of several physical
-and chemical parameters of the ocean from the NOAA WORLD OCEAN ATLAS.
+and chemical parameters of the ocean from the NOAA World Ocean Atlas.
 
 ``` r
 library(oceanexplorer)
@@ -127,9 +127,9 @@ of the datasets.
 NOAA_app()
 ```
 
-Or, the RStudio addin can be launched within the RStudio viewer pain by
+The RStudio addin can be launched within the RStudio viewer pain by
 executing the following code, or by using the `Addins` drop down menu in
-the taskbar.
+the task-bar.
 
 ``` r
 # launch an interactive shiny session
