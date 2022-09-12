@@ -99,9 +99,7 @@ https
 io
 isbn
 knitr
-ncei
 nd
-noaa
 pkgs
 programmatically
 quosure
@@ -119,6 +117,7 @@ testthat
 tibble
 tunnelled
 tunnelling
+unicode
 utrecht
 vdiffr
 worldmap

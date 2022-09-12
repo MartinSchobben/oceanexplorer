@@ -116,7 +116,7 @@ Imagine we are interested in phosphate concentrations in the month December from
 
 First, we extract the data by proving the variable, grid resolution, and the averaging period. Make sure to have an internet connection in order to connect to the NOAA server.
 
-```{r setup, eval = curl::has_internet() && interactive()}
+```{r setup, eval = curl::has_internet()}
 # load package
 library(oceanexplorer)
 # get data
@@ -129,15 +129,15 @@ This operation can take a while, but it can be sped-up during future calls by ca
 
 Then we can plot the phosphate data from a depth of 1000 meter below sea level.
 
-```{r plot1, fig.width=7, eval = curl::has_internet() && interactive()}
+```{r plot1, fig.width=7, eval = exists("WOA")}
 plot_NOAA(WOA, depth = 1000)
 ```
 
-```{r save1, echo=FALSE, eval = curl::has_internet() && interactive()}
+```{r save1, echo=FALSE, eval = FALSE}
 ggplot2::ggsave("vignettes/NOAA_plot1.png", plot_NOAA(WOA, depth = 1000), width = 9)
 ```
 
-```{r graph1, echo=FALSE, eval = !curl::has_internet() || !interactive(), out.width="100%"}
+```{r graph1, echo=FALSE, eval = !exists("WOA"), out.width="100%"}
 knitr::include_graphics("NOAA_plot1.png")
 ```
 
@@ -145,21 +145,21 @@ knitr::include_graphics("NOAA_plot1.png")
 
 Finally, we can filter a data point from, for example, the Agulhas Basin.
 
-```{r filter, eval = curl::has_internet() && interactive()}
+```{r filter, eval = exists("WOA")}
 (pts <- filter_NOAA(WOA, depth = 1000, coord = list(lon = 20, lat = -46)))
 ```
 
 We can then also project these extraction points on the world map for future reference.
 
-```{r plot2, fig.width=7, eval = curl::has_internet() && interactive()}
+```{r plot2, fig.width=7, eval = exists("WOA")}
 plot_NOAA(WOA, depth = 1000, points = pts)
 ```
 
-```{r save2, echo=FALSE, eval = curl::has_internet() && interactive()}
+```{r save2, echo=FALSE, eval = FALSE}
 ggplot2::ggsave("vignettes/NOAA_plot2.png", plot_NOAA(WOA, depth = 1000, points = pts), width = 9)
 ```
 
-```{r graph2, echo=FALSE, eval = !curl::has_internet() || !interactive(), out.width="100%"}
+```{r graph2, echo=FALSE, eval = !exists("WOA"), out.width="100%"}
 knitr::include_graphics("NOAA_plot2.png")
 ```
 
