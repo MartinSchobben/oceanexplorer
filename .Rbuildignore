@@ -21,3 +21,5 @@
 ^man/figures/oceanexplorer-demo\.gif$
 ^tests/testthat/_snaps$
 ^tests/testthat/apps$
+^Dockerfile$
+^test_debian.sh$

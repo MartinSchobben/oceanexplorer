@@ -116,7 +116,7 @@ Imagine we are interested in phosphate concentrations in the month December from
 
 First, we extract the data by proving the variable, grid resolution, and the averaging period. Make sure to have an internet connection in order to connect to the NOAA server.
 
-```{r setup, eval = curl::has_internet()}
+```{r setup, eval = curl::has_internet(), error=TRUE}
 # load package
 library(oceanexplorer)
 # get data
