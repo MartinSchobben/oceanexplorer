@@ -8,7 +8,7 @@ message: 'To cite package "oceanexplorer" in publications use:'
 type: software
 license: MIT
 title: 'oceanexplorer: Explore Our Planet''s Oceans with NOAA'
-version: 0.0.1.9000
+version: 0.0.2
 abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
   agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
   to extract NetCDF data from the repository and code to visualize several physical
@@ -28,7 +28,7 @@ preferred-citation:
     given-names: Martin
     email: schobbenmartin@gmail.com
     orcid: https://orcid.org/0000-0001-8560-0037
-  version: 0.0.1.9000
+  version: 0.0.2
   abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
     agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
     to extract NetCDF data from the repository and code to visualize several physical
