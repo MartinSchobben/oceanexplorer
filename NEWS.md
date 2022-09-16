@@ -1,3 +1,5 @@
+# oceanexplorer (development version)
+
 # oceanexplorer 0.0.2
 
 * Removed unicode characters (5 times in data directory).
