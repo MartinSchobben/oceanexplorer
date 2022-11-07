@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.2.3
+# CITATION file created with {cffr} R package, v0.3.0
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
@@ -8,7 +8,7 @@ message: 'To cite package "oceanexplorer" in publications use:'
 type: software
 license: MIT
 title: 'oceanexplorer: Explore Our Planet''s Oceans with NOAA'
-version: 0.0.2
+version: 0.0.2.9000
 abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
   agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
   to extract NetCDF data from the repository and code to visualize several physical
@@ -20,53 +20,6 @@ authors:
   given-names: Martin
   email: schobbenmartin@gmail.com
   orcid: https://orcid.org/0000-0001-8560-0037
-preferred-citation:
-  type: manual
-  title: 'oceanexplorer: Explore Our Planet''s Oceans with NOAA'
-  authors:
-  - family-names: Schobben
-    given-names: Martin
-    email: schobbenmartin@gmail.com
-    orcid: https://orcid.org/0000-0001-8560-0037
-  version: 0.0.2
-  abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
-    agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
-    to extract NetCDF data from the repository and code to visualize several physical
-    and chemical parameters of the ocean. A Shiny app further allows interactive exploration
-    of the data. The methods for data collecting and quality checks are described
-    in several papers, which can be found here: <https://www.ncei.noaa.gov/products/world-ocean-atlas>.'
-  repository: https://CRAN.R-project.org/package=oceanexplorer
-  repository-code: https://github.com/UtrechtUniversity/oceanexplorer
-  url: https://utrechtuniversity.github.io/oceanexplorer/
-  identifiers:
-  - type: url
-    value: https://utrecht-university.shinyapps.io/oceanexplorer/
-  - type: url
-    value: https://www.ncei.noaa.gov/products/world-ocean-atlas
-  contact:
-  - family-names: Schobben
-    given-names: Martin
-    email: schobbenmartin@gmail.com
-    orcid: https://orcid.org/0000-0001-8560-0037
-  keywords:
-  - earth
-  - earth-observation
-  - earth-science
-  - noaa
-  - noaa-data
-  - ocean
-  - ocean-sciences
-  - oceanography
-  - open-data
-  - r
-  - r-package
-  - rstats
-  - shiny
-  - spatial
-  - spatial-analysis
-  - spatial-data
-  license: MIT
-  year: '2022'
 repository: https://CRAN.R-project.org/package=oceanexplorer
 repository-code: https://github.com/UtrechtUniversity/oceanexplorer
 url: https://utrechtuniversity.github.io/oceanexplorer/
