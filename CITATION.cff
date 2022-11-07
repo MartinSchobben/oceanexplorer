@@ -21,8 +21,8 @@ authors:
   email: schobbenmartin@gmail.com
   orcid: https://orcid.org/0000-0001-8560-0037
 repository: https://CRAN.R-project.org/package=oceanexplorer
-repository-code: https://github.com/UtrechtUniversity/oceanexplorer
-url: https://utrechtuniversity.github.io/oceanexplorer/
+repository-code: https://github.com/MartinSchobben/oceanexplorer
+url: https://martinschobben.github.io/oceanexplorer/
 contact:
 - family-names: Schobben
   given-names: Martin
