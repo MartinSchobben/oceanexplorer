@@ -110,15 +110,12 @@
       extract_coords(plane, coords2, 0, sf::st_crs(NOAA), 100)
     Output
       Simple feature collection with 1 feature and 2 fields
-      Active geometry column: geometry
-      Geometry type: POINT
+      Geometry type: POLYGON
       Dimension:     XY
-      Bounding box:  xmin: -52.79878 ymin: 47.72121 xmax: -52.79878 ymax: 47.72121
+      Bounding box:  xmin: -54.15675 ymin: 46.81397 xmax: -51.44278 ymax: 48.62896
       Geodetic CRS:  WGS 84
-      # A tibble: 1 x 4
-         t_an depth             geometry                               geometry_search
-        <dbl> <dbl>          <POINT [°]>                                 <POLYGON [°]>
-      1  3.45     0 (-52.79878 47.72121) ((-53.16325 48.59155, -53.17687 48.59661, -5~
+          t_an depth                       geometry
+      2 3.4511     0 POLYGON ((-53.16325 48.5915...
 
 ---
 
@@ -126,14 +123,11 @@
       extract_coords(plane, rbind(coords1, coords2), 0, sf::st_crs(NOAA), 100)
     Output
       Simple feature collection with 2 features and 2 fields
-      Active geometry column: geometry
-      Geometry type: POINT
+      Geometry type: GEOMETRY
       Dimension:     XY
-      Bounding box:  xmin: -116.3 ymin: -31.98 xmax: -52.79878 ymax: 47.72121
+      Bounding box:  xmin: -116.3 ymin: -31.98 xmax: -51.44278 ymax: 48.62896
       Geodetic CRS:  WGS 84
-      # A tibble: 2 x 4
-         t_an depth             geometry                               geometry_search
-        <dbl> <dbl>          <POINT [°]>                                <GEOMETRY [°]>
-      1 20.0      0      (-116.3 -31.98)                         POINT (-116.3 -31.98)
-      2  3.45     0 (-52.79878 47.72121) POLYGON ((-53.16325 48.59155, -53.17687 48.5~
+           t_an depth                       geometry
+      1 20.0279     0          POINT (-116.3 -31.98)
+      3  3.4511     0 POLYGON ((-53.16325 48.5915...
 

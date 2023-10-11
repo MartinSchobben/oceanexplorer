@@ -247,8 +247,8 @@ test_that("extraction of coords can use fuzzy search", {
   plane <- filter_NOAA(NOAA, 0)
 
   # coordinates
-  coords1 <- cbind(lon = c(-116.30), lat =c(-31.98))
-  coords2 <- cbind(lon = c(-52.79878), lat =c(47.72121))
+  coords1 <- cbind(lon = c(-116.30), lat = c(-31.98))
+  coords2 <- cbind(lon = c(-52.79878), lat = c(47.72121))
 
   # should be just a point geom with value
   expect_snapshot(

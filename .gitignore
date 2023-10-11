@@ -16,3 +16,5 @@ docs
 rsconnect
 test_debian.sh
 Dockerfile
+# development
+dev

@@ -174,14 +174,10 @@ extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0, bilinear = is.
 
   # add coordinates in case of matrix
   if (inherits(coords , "matrix")) {
-
     tb <- sf::st_as_sf(cbind(tb, coords), coords = c("lon", "lat"), crs = epsg)
-
   # change coordinate system of sfc class if needed
   } else if (inherits(coords, c("sf", "sfc")) & sf::st_crs(tb) != epsg) {
-
     tb <- sf::st_transform(tb, epsg)
-
   }
 
   if (any(is.na(tb[[1]])) & fuzzy > 0) {
@@ -199,18 +195,19 @@ extract_coords <- function(plane, coords, depth, epsg, fuzzy = 0, bilinear = is.
         bilinear = FALSE
       )
     )
+
     tb_ft$id <- ft$id
 
     # replace NAs
-    tb <- rbind(tb, sf::st_as_sf(tb_ft)) |>
-      dplyr::group_by(.data$id) |>
-      dplyr::summarise(
-        dplyr::across(-.data$geometry, .fns = ~mean(.x, na.rm = TRUE)),
-        .groups = "drop"
-      ) |>
-      dplyr::mutate(geometry_search = .data$geometry, geometry = tb$geometry)
-
+    tb <- rbind(tb,  sf::st_as_sf(tb_ft))
+    tb <- tb[!is.na(tb[[1]]),]
   }
-  dplyr::select(tb, -.data$id)
+
+  if (inherits(tb, "stars")) {
+    tb <- tb[names(tb) != "id"]
+  } else {
+    tb <- tb[, colnames(tb) != "id"]
+  }
+  tb
 }
 

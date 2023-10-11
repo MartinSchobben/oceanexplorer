@@ -195,11 +195,19 @@ filter_server <- function(id, NOAA, external, ivars = c("depth", "lon", "lat"),
         ) {
 
         req(NOAA)
+
+        # fuzzy search value
+        if (input$search == "point") {
+          fz = 0
+        } else if (input$search == "fuzzy") {
+          fz = 50
+        }
         # execute
         filter_NOAA(
           NOAA(),
           input2$depth,
-          list(lon = input2$lon, lat = input2$lat)
+          list(lon = input2$lon, lat = input2$lat),
+          fuzzy = fz
         )
       }
     })
@@ -296,9 +304,10 @@ filter_server <- function(id, NOAA, external, ivars = c("depth", "lon", "lat"),
                    "and \"fuzzy\", where the former results in a very precise ",
                    "search, the latter option searches in an area with a ",
                    "circumference of 50 km around the selected coordinate ",
-                   "point. The returned value of a fuzzy search is therefore ",
-                   "an average of the search area. Currently, fuzzy search is ",
-                   "not yet implemented."),
+                   "point. Fuzzy search is only applied for points that don't ",
+                   "return a value for the normal point search. The returned ",
+                   "value of a fuzzy search is therefore an average of the ",
+                   "search area."),
           )
         )
       )

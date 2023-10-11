@@ -82,9 +82,9 @@ plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, rng = NULL) {
     stars::geom_stars(data = NOAA) +
     ggplot2::geom_sf(data = wmap, fill = "grey")
 
-  if (!is.null(points)) {
+  if (!is.null(points) && nrow(points) != 0) {
     base <- base +
-      ggplot2::geom_sf(data = points)
+      ggplot2::geom_sf(data = points, fill = "black", linewidth = 2)
   }
 
   if (epsg == 3031 | epsg == 3995 | epsg == sf::st_crs(3031) |
@@ -109,7 +109,7 @@ plot_NOAA <- function(NOAA, depth = 0, points = NULL, epsg = NULL, rng = NULL) {
       panel.grid.major = ggplot2::element_line(
         color = grDevices::gray(.25),
         linetype = 'dashed',
-        size = 0.5
+        linewidth = 0.5
       ),
       panel.ontop = TRUE,
       axis.line = ggplot2::element_blank(),
