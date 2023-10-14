@@ -14,7 +14,6 @@ inst/doc
 docs
 # shiny deploy
 rsconnect
-test_debian.sh
-Dockerfile
+app.R
 # development
 dev

@@ -18,10 +18,11 @@ test_that("table is formatted correctly", {
 
   # launch text server
   testServer(table_server, args = vars, {
-    # reactivaluess
+
+    # reactivalues
     NOAA(fl_NOAA)
     variable$parm <- "oxygen"
-    variable$spat<- 1
+    variable$spat <- 1
     variable$temp <- "annual"
 
     # update reactive graph to enable the externals

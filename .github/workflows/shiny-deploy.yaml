@@ -39,5 +39,6 @@ jobs:
           SERVER: shinyapps.io # server to deploy
         run: |
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
+          file.copy("inst/appdir/app.R", ".")
           rsconnect::deployApp(appName = "oceanexplorer", account = "martinschobben", server = "shinyapps.io", appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd', 'renv.lock')), forceUpdate = TRUE)
         shell: Rscript {0}

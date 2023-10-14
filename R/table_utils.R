@@ -13,7 +13,7 @@ format_table <- function(NOAA, parm, spat, temp) {
   tb[["spatial"]] <- spat
   tb[["temporal"]] <- temp
 
-  print(tb, row.names = FALSE)
+  tb
 }
 
 format_coord <- function(NOAA, coord) {
