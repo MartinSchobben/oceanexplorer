@@ -31,6 +31,7 @@ RoxygenNote: 7.2.3
 Suggests: 
     curl,
     globals (>= 0.14.0),
+    knitr,
     shinytest (>= 1.5.1),
     spelling,
     testthat (>= 3.1.2),
@@ -58,7 +59,8 @@ Imports:
     RNetCDF (>= 2.6.1),
     dplyr
 Config/testthat/edition: 3
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr
 Depends: 
     R (>= 4.1.0)
 URL: 
