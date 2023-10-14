@@ -81,7 +81,8 @@ test_that("epsg check is consitent", {
   points <- filter_NOAA(NOAAatlas, 1, crds)
 
   wmap <- maps::map("world", wrap = c(-180, 180), plot = FALSE, fill = TRUE) |>
-    sf::st_as_sf(crs = 4326)
+    sf::st_as_sf() |>
+    sf::st_transform(crs = 4326)
 
   # original
   expect_equal(
@@ -96,6 +97,7 @@ test_that("epsg check is consitent", {
     epsg_check(NOAAatlas, NULL),
     "original"
   )
+
   expect_equal(
     epsg_check(wmap, 4326),
     "original"
