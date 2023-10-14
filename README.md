@@ -9,9 +9,9 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![R-CMD-check](https://github.com/MartinSchobben/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/MartinSchobben/oceanexplorer/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/MartinSchobben/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/MartinSchobben/Oceanexplorer?branch=master)
+[![R-CMD-check](https://github.com/MartinSchobben/oceanexplorer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MartinSchobben/oceanexplorer/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of oceanexplorer is to enable easy access and exploration of
@@ -28,8 +28,7 @@ app</figcaption>
 
 ## Check the app
 
-Check the app here:
-<https://utrecht-university.shinyapps.io/oceanexplorer/>
+Check the app here: <https://martinschobben.shinyapps.io/oceanexplorer/>
 
 ## Funding
 
@@ -92,9 +91,9 @@ Slice a specific interval from the array with `filter_NOAA()`, like so:
 #>            Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
 #> o_an  0.9701567 164.1833 218.6721 206.2584 266.9612 359.0279 26041
 #> dimension(s):
-#>     from  to offset delta refsys point values x/y
-#> lon    1 360   -180     1 WGS 84    NA   NULL [x]
-#> lat    1 180    -90     1 WGS 84    NA   NULL [y]
+#>     from  to offset delta refsys x/y
+#> lon    1 360   -180     1 WGS 84 [x]
+#> lat    1 180    -90     1 WGS 84 [y]
 ```
 
 In addition, the sliced array can be plotted, like so:

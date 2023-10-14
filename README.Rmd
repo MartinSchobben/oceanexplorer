@@ -67,8 +67,8 @@ bibtex::write.bib(
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://choosealicense.com/licenses/mit/)
-[![R-CMD-check](https://github.com/MartinSchobben/oceanexplorer/workflows/R-CMD-check/badge.svg)](https://github.com/MartinSchobben/oceanexplorer/actions)
 [![Codecov test coverage](https://codecov.io/gh/MartinSchobben/Oceanexplorer/branch/master/graph/badge.svg)](https://app.codecov.io/gh/MartinSchobben/Oceanexplorer?branch=master)
+[![R-CMD-check](https://github.com/MartinSchobben/oceanexplorer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MartinSchobben/oceanexplorer/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 
@@ -78,7 +78,7 @@ The goal of oceanexplorer is to enable easy access and exploration of the [World
 
 ## Check the app
 
-Check the app here: https://utrecht-university.shinyapps.io/oceanexplorer/
+Check the app here: https://martinschobben.shinyapps.io/oceanexplorer/
 
 ## Funding
 

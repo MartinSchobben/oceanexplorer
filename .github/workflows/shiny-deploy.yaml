@@ -12,7 +12,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -20,15 +20,19 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-renv@v2
 
       - name: Install rsconnect
         run: install.packages("rsconnect")
         shell: Rscript {0}
 
       - name: Authorize and deploy app
+        env:
+          # Provide your app name, account name, and server to be deployed below
+          APPNAME: oceanexplorer
+          ACCOUNT: martinschobben
+          SERVER: shinyapps.io # server to deploy
         run: |
-          rsconnect::setAccountInfo("${{ secrets.SHINYAPPS_ACCOUNT }}", "${{ secrets.SHINYAPPS_TOKEN }}", "${{ secrets.SHINYAPPS_SECRET }}")
-          file.copy("inst/appdir/app.R", ".")
-          rsconnect::deployApp(appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd')))
+          rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
+          rsconnect::deployApp(appName = "${{ env.APPNAME }}", account = "${{ env.ACCOUNT }}", server = "${{ env.SERVER }}")
         shell: Rscript {0}
