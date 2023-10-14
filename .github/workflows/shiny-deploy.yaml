@@ -28,7 +28,7 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
 
       - name: Install rsconnect
-        run: install.packages("rsconnect")
+        run: install.packages(c("rsconnect", "pkgload"))
         shell: Rscript {0}
 
       - name: Authorize and deploy app
@@ -39,5 +39,5 @@ jobs:
           SERVER: shinyapps.io # server to deploy
         run: |
           rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
-          rsconnect::deployApp(appName = "${{ env.APPNAME }}", account = "${{ env.ACCOUNT }}", server = "${{ env.SERVER }}")
+          rsconnect::deployApp("inst/appdir/app.R", appName = "${{ env.APPNAME }}", account = "${{ env.ACCOUNT }}", server = "${{ env.SERVER }}")
         shell: Rscript {0}
