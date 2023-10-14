@@ -1126,16 +1126,6 @@
       ],
       "Hash": "79540e5fcd9e0435af547d885f184fd5"
     },
-    "tinytex": {
-      "Package": "tinytex",
-      "Version": "0.48",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "xfun"
-      ],
-      "Hash": "8f96d229b7311beb32b94cf413b13f84"
-    },
     "units": {
       "Package": "units",
       "Version": "0.8-4",
