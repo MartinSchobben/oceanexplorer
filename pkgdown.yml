@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   oceanexplorer: oceanexplorer.html
-last_built: 2023-10-14T16:11Z
+last_built: 2023-10-14T16:28Z
 urls:
   reference: https://martinschobben.github.io/oceanexplorer/reference
   article: https://martinschobben.github.io/oceanexplorer/articles
