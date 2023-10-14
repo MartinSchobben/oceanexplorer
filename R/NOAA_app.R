@@ -41,7 +41,7 @@ NOAA_app <- function(cache = FALSE) {
           paste0(
             "R package: ",
             a(
-              href = "https://github.com/UtrechtUniversity/oceanexplorer",
+              href = "https://github.com/martinschobben/oceanexplorer",
               "install.packages('oceanexplorer')"
             )
           )
@@ -51,8 +51,8 @@ NOAA_app <- function(cache = FALSE) {
           paste0(
             "See the website for more help: ",
             a(
-              href = "https://utrechtuniversity.github.io/oceanexplorer/",
-              "utrechtuniversity.github.io/oceanexplorer"
+              href = "https://martinschobben.github.io/oceanexplorer/",
+              "martinschobben.github.io/oceanexplorer"
             )
           )
         ),
