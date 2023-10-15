@@ -64,10 +64,7 @@ VignetteBuilder:
     knitr
 Depends: 
     R (>= 4.1.0)
-URL: 
-    https://martinschobben.github.io/oceanexplorer/,
-    https://martinschobben.shinyapps.io/oceanexplorer/,
-    https://www.ncei.noaa.gov/products/world-ocean-atlas
+URL: https://martinschobben.github.io/oceanexplorer/, https://martinschobben.shinyapps.io/oceanexplorer/, https://www.ncei.noaa.gov/products/world-ocean-atlas, https://github.com/MartinSchobben/oceanexplorer
 BugReports: https://github.com/MartinSchobben/oceanexplorer/issues
 Language: en-US
 LazyData: true
