@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">oceanexplorer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,8 +116,7 @@ to work with the NOAA datasets:</p>
 <div class="section level3">
 <h3 id="shiny-app">Shiny app<a class="anchor" aria-label="anchor" href="#shiny-app"></a>
 </h3>
-<p>The shiny app is hosted by Utrecht University and can be found here:
-<a href="https://martinschobben.shinyapps.io/oceanexplorer/" class="external-link uri">https://martinschobben.shinyapps.io/oceanexplorer/</a>. The
+<p>The shiny app can be found here: <a href="https://martinschobben.shinyapps.io/oceanexplorer/" class="external-link uri">https://martinschobben.shinyapps.io/oceanexplorer/</a>. The
 app allows exploration of the NOAA database and selected data can be
 extracted as a csv file.</p>
 <div class="section level4">
@@ -239,16 +238,7 @@ order to connect to the NOAA server.</p>
 <code class="sourceCode R"><span><span class="co"># load package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://martinschobben.github.io/oceanexplorer/">oceanexplorer</a></span><span class="op">)</span></span>
 <span><span class="co"># get data</span></span>
-<span><span class="op">(</span><span class="va">WOA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_NOAA.html">get_NOAA</a></span><span class="op">(</span><span class="st">"phosphate"</span>, <span class="fl">1</span>, <span class="st">"December"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; stars object with 3 dimensions and 1 attribute</span></span>
-<span><span class="co">#&gt; attribute(s), summary of first 1e+05 cells:</span></span>
-<span><span class="co">#&gt;       Min.   1st Qu.    Median      Mean  3rd Qu.     Max.  NA's</span></span>
-<span><span class="co">#&gt; p_an     0 0.1869067 0.4515139 0.7004678 1.197695 2.959586 34528</span></span>
-<span><span class="co">#&gt; dimension(s):</span></span>
-<span><span class="co">#&gt;       from  to offset delta refsys point                values x/y</span></span>
-<span><span class="co">#&gt; lon      1 360   -180     1 WGS 84    NA                  NULL [x]</span></span>
-<span><span class="co">#&gt; lat      1 180    -90     1 WGS 84    NA                  NULL [y]</span></span>
-<span><span class="co">#&gt; depth    1  43     NA    NA     NA FALSE [0,2.5),...,[775,825)</span></span></code></pre></div>
+<span><span class="op">(</span><span class="va">WOA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_NOAA.html">get_NOAA</a></span><span class="op">(</span><span class="st">"phosphate"</span>, <span class="fl">1</span>, <span class="st">"December"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This operation can take a while, but it can be sped-up during future
 calls by caching the data. This can be done by setting the
 <code>cache</code> argument to <code>TRUE</code>. As a default
@@ -262,6 +252,7 @@ calls by caching the data. This can be done by setting the
 sea level.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<p><img src="NOAA_plot1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="filter-agulhas-basin-data-point">Filter Agulhas Basin data point<a class="anchor" aria-label="anchor" href="#filter-agulhas-basin-data-point"></a>
@@ -269,18 +260,12 @@ sea level.</p>
 <p>Finally, we can filter a data point from, for example, the Agulhas
 Basin.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fl">20</span>, lat <span class="op">=</span> <span class="op">-</span><span class="fl">46</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 1 feature and 2 fields</span></span>
-<span><span class="co">#&gt; Geometry type: POINT</span></span>
-<span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: 20 ymin: -46 xmax: 20 ymax: -46</span></span>
-<span><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
-<span><span class="co">#&gt;       p_an depth       geometry</span></span>
-<span><span class="co">#&gt; 1 2.146302  1000 POINT (20 -46)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_NOAA.html">filter_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, coord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="fl">20</span>, lat <span class="op">=</span> <span class="op">-</span><span class="fl">46</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can then also project these extraction points on the world map for
 future reference.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_NOAA.html">plot_NOAA</a></span><span class="op">(</span><span class="va">WOA</span>, depth <span class="op">=</span> <span class="fl">1000</span>, points <span class="op">=</span> <span class="va">pts</span><span class="op">)</span></span></code></pre></div>
+<p><img src="NOAA_plot2.png" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
