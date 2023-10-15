@@ -44,7 +44,7 @@ In this document I will explain the basic use cases of all three application typ
 
 ## Shiny app
 
-The shiny app is hosted by Utrecht University and can be found here: https://utrecht-university.shinyapps.io/oceanexplorer/. The app allows exploration of the NOAA database and selected data can be extracted as a csv file.
+The shiny app is hosted by Utrecht University and can be found here: https://martinschobben.shinyapps.io/oceanexplorer/. The app allows exploration of the NOAA database and selected data can be extracted as a csv file.
 
 ### Load NOAA data
 
@@ -133,8 +133,8 @@ Then we can plot the phosphate data from a depth of 1000 meter below sea level.
 plot_NOAA(WOA, depth = 1000)
 ```
 
-```{r save1, echo=FALSE, eval = FALSE}
-ggplot2::ggsave("vignettes/NOAA_plot1.png", plot_NOAA(WOA, depth = 1000), width = 9)
+```{r save1, echo=FALSE, eval = exists("WOA"), message=FALSE}
+ggplot2::ggsave("NOAA_plot1.png", plot_NOAA(WOA, depth = 1000), width = 9)
 ```
 
 ```{r graph1, echo=FALSE, eval = !exists("WOA"), out.width="100%"}
@@ -155,8 +155,8 @@ We can then also project these extraction points on the world map for future ref
 plot_NOAA(WOA, depth = 1000, points = pts)
 ```
 
-```{r save2, echo=FALSE, eval = FALSE}
-ggplot2::ggsave("vignettes/NOAA_plot2.png", plot_NOAA(WOA, depth = 1000, points = pts), width = 9)
+```{r save2, echo=FALSE, eval = exists("WOA"), message=FALSE}
+ggplot2::ggsave("NOAA_plot2.png", plot_NOAA(WOA, depth = 1000, points = pts), width = 9)
 ```
 
 ```{r graph2, echo=FALSE, eval = !exists("WOA"), out.width="100%"}

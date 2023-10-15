@@ -6,7 +6,7 @@ bibliography: "vignettes/packages.bib"
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-# The oceanexplorer <a href="https://dplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>  
+# The oceanexplorer <a href="https://github.com/MartinSchobben/oceanexplorer"><img src="man/figures/logo.png" align="right" height="138" /></a>  
 
 
 ```{r, include = FALSE}
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 # following code for loading and writing the bibtex references for the used pkgs
 pkgs <- c(
   # data transformation and visualization
-  "dplyr", "ggplot2", "rlang", "purrr", 
+  "dplyr", "ggplot2", "purrr", 
   # package development
   "devtools", "shinytest", "vdiffr", "roxygen2", "testthat", 
   # documentation
@@ -88,7 +88,7 @@ This project was funded by ERC Starting grant number 802835, OceaNice, awarded t
 
 The construction of the R [@rversion] package *oceanexplorer* and associated documentation was aided by the packages; *devtools* [@devtools], *roxygen2* [@roxygen2], *testthat* [@testthat], *shinytest* [@shinytest], *vdiffr* [@vdiffr], *knitr* [@knitr2014 ; @knitr2015], *rmarkdown* [@rmarkdown2018; @rmarkdown2020], and the superb guidance in the book: *R packages: organize, test, document, and share your code*, by @Wickham2015. 
 
-Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], *ggplot2* [@ggplot2], and *rlang* [@rlang].
+Data transformation, cleaning and visualization is performed with: *dplyr* [@dplyr], and *ggplot2* [@ggplot2].
 
 In addition, this package relies on a set of packages for spatial data analysis: *sf* [@sf] and *stars* [@stars].
 
@@ -118,7 +118,7 @@ oxy_global <- get_NOAA("oxygen", 1, "annual")
 
 Slice a specific interval from the array with `filter_NOAA()`, like so:
 
-```{r slice}
+```{r slice, eval=exists("oxy_global")}
 # filter a depth of 200 meters to show OMZs
 (oxy_omz <- filter_NOAA(oxy_global, depth = 200))
 ```
@@ -126,7 +126,7 @@ Slice a specific interval from the array with `filter_NOAA()`, like so:
 
 In addition, the sliced array can be plotted, like so:
 
-```{r plot1}
+```{r plot1, eval=exists("oxy_omz")}
 # plot the NOAA world ocean atlas for oxygen content
 plot_NOAA(oxy_omz, depth = NULL)
 ```
@@ -134,7 +134,7 @@ plot_NOAA(oxy_omz, depth = NULL)
 The same plot can be produced by taking the original data and supplying a value to the `depth` argument and specifying the range of oxygen content to `oxy_omz`.
 
 
-```{r plot2}
+```{r plot2, eval=exists("oxy_global")}
 # plot the NOAA world ocean atlas for oxygen content
 plot_NOAA(oxy_global, depth = 200, rng = range(oxy_omz[[1]]))
 ```
@@ -159,6 +159,6 @@ NOAA_addin()
 
 ## Code of Conduct
 
-Please note that the oceanexplorer project is released with a [Contributor Code of Conduct](https://utrechtuniversity.github.io/oceanexplorer/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the oceanexplorer project is released with a [Contributor Code of Conduct](https://martinschobben.github.io/oceanexplorer/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 # References

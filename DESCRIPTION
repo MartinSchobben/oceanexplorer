@@ -32,6 +32,7 @@ Suggests:
     curl,
     globals (>= 0.14.0),
     knitr,
+    rmarkdown,
     shinytest (>= 1.5.1),
     spelling,
     testthat (>= 3.1.2),

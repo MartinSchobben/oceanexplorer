@@ -21,3 +21,4 @@ dev/*
 NEWS.md
 CRAN-SUBMISSION
 cran-comments.md
+revdep/

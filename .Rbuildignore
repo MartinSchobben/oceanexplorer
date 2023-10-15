@@ -24,3 +24,6 @@
 ^Dockerfile$
 ^test_debian.sh$
 ^dev$
+^app\.R$
+^\.covrignore$
+^revdep$

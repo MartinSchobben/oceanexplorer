@@ -16,7 +16,7 @@ further allows interactive exploration of the data.
 Useful links:
 \itemize{
   \item \url{https://martinschobben.github.io/oceanexplorer/}
-  \item \url{https://utrecht-university.shinyapps.io/oceanexplorer/}
+  \item \url{https://martinschobben.shinyapps.io/oceanexplorer/}
   \item \url{https://www.ncei.noaa.gov/products/world-ocean-atlas}
   \item Report bugs at \url{https://github.com/MartinSchobben/oceanexplorer/issues}
 }
