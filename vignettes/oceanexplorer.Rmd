@@ -44,7 +44,7 @@ In this document I will explain the basic use cases of all three application typ
 
 ## Shiny app
 
-The shiny app is hosted by Utrecht University and can be found here: https://martinschobben.shinyapps.io/oceanexplorer/. The app allows exploration of the NOAA database and selected data can be extracted as a csv file.
+The shiny app can be found here: https://martinschobben.shinyapps.io/oceanexplorer/. The app allows exploration of the NOAA database and selected data can be extracted as a csv file.
 
 ### Load NOAA data
 
@@ -116,7 +116,7 @@ Imagine we are interested in phosphate concentrations in the month December from
 
 First, we extract the data by proving the variable, grid resolution, and the averaging period. Make sure to have an internet connection in order to connect to the NOAA server.
 
-```{r setup, cache=TRUE, error=TRUE}
+```{r setup, eval=interactive(), error=TRUE}
 # load package
 library(oceanexplorer)
 # get data
@@ -145,7 +145,7 @@ knitr::include_graphics("NOAA_plot1.png")
 
 Finally, we can filter a data point from, for example, the Agulhas Basin.
 
-```{r filter, cache=TRUE}
+```{r filter, eval=interactive()}
 (pts <- filter_NOAA(WOA, depth = 1000, coord = list(lon = 20, lat = -46)))
 ```
 
