@@ -9,7 +9,7 @@
 #'
 #' @examples
 #'
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #'
 #' # run app
 #' NOAA_app()

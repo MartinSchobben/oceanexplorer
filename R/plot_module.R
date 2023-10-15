@@ -9,12 +9,11 @@
 #' @param points Add locations of extracted point geometry.
 #'
 #' @return Shiny module.
-#' @export
 #'
 #' @examples
 #'
 #' # run plot module stand-alone
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #'
 #' library(oceanexplorer)
 #' library(shiny)

@@ -30,7 +30,7 @@
 #' @export
 #'
 #' @examples
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #'
 #' # data
 #' NOAA <- get_NOAA("oxygen", 1, "annual")

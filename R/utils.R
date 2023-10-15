@@ -12,7 +12,7 @@
 #'
 #' @examples
 #'
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #' # get data
 #' NOAA <- get_NOAA("temperature", 1, "annual")
 #'

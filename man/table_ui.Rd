@@ -28,7 +28,7 @@ and filtered data in a table format.
 }
 \examples{
 
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 # run table module stand-alone
 
 library(oceanexplorer)

@@ -7,11 +7,10 @@
 #' @param download Add download button.
 #'
 #' @return Shiny module.
-#' @export
 #'
 #' @examples
 #'
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #' # run table module stand-alone
 #'
 #' library(oceanexplorer)

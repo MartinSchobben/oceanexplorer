@@ -9,7 +9,7 @@
 #'
 #' @examples
 #'
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #'
 #' # run RStudio addin (can also be launched from `Addins` dropdown menu)
 #' NOAA_addin()

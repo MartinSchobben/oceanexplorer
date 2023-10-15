@@ -18,6 +18,7 @@ Useful links:
   \item \url{https://martinschobben.github.io/oceanexplorer/}
   \item \url{https://martinschobben.shinyapps.io/oceanexplorer/}
   \item \url{https://www.ncei.noaa.gov/products/world-ocean-atlas}
+  \item \url{https://github.com/MartinSchobben/oceanexplorer}
   \item Report bugs at \url{https://github.com/MartinSchobben/oceanexplorer/issues}
 }
 

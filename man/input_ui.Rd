@@ -48,7 +48,7 @@ loaded.
 \examples{
 
 # run data module stand-alone
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 library(oceanexplorer)
 library(shiny)

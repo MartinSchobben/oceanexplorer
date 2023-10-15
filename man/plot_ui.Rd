@@ -29,7 +29,7 @@ interface to select location for data extraction based on a single-click.
 \examples{
 
 # run plot module stand-alone
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 library(oceanexplorer)
 library(shiny)

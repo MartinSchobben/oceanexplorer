@@ -10,12 +10,11 @@
 #' @param ivars Character vector for the variables for filtering.
 #'
 #' @return Shiny module.
-#' @export
 #'
 #' @examples
 #'
 #' # run filter module stand-alone
-#' if (curl::has_internet() && interactive()) {
+#' if (interactive()) {
 #'
 #' library(oceanexplorer)
 #' library(shiny)

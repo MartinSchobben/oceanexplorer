@@ -42,7 +42,7 @@ variable) to a custom range. For example, one can fix the color scale
 to the total range of the ocean (instead of the current depth slice).
 }
 \examples{
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 # data
 NOAA <- get_NOAA("oxygen", 1, "annual")

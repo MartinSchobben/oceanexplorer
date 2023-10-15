@@ -44,7 +44,7 @@ then reside in the package's \code{extdata} directory.
 # path to NOAA server or local data source
 url_parser("oxygen", 1, "annual")
 
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 # retrieve NOAA data
 get_NOAA("oxygen", 1, "annual")

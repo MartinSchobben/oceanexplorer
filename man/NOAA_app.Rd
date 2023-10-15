@@ -25,7 +25,7 @@ Wrapper function that launches the NOAA app.
 }
 \examples{
 
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 # run app
 NOAA_app()

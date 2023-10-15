@@ -40,7 +40,7 @@ GeoJSON conventions for the order in \code{sf} vectors with \code{x} (\code{lon}
 longitude) followed by \code{y} (\code{lat} = latitude).
 }
 \examples{
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 # get atlas
 NOAAatlas <- get_NOAA("oxygen", 1, "annual")

@@ -42,7 +42,7 @@ the currently loaded NOAA data via shiny \code{textInput()} interfaces.
 \examples{
 
 # run filter module stand-alone
-if (curl::has_internet() && interactive()) {
+if (interactive()) {
 
 library(oceanexplorer)
 library(shiny)
