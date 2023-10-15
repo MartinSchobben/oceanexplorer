@@ -2,13 +2,13 @@
 # CITATION file created with {cffr} R package, v0.3.0
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
- 
+
 cff-version: 1.2.0
 message: 'To cite package "oceanexplorer" in publications use:'
 type: software
 license: MIT
 title: 'oceanexplorer: Explore Our Planet''s Oceans with NOAA'
-version: 0.0.2.9000
+version: 0.1.0
 abstract: 'Provides tools for easy exploration of the world ocean atlas of the US
   agency National Oceanic and Atmospheric Administration (NOAA). It includes functions
   to extract NetCDF data from the repository and code to visualize several physical
