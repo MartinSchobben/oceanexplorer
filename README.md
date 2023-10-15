@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# The oceanexplorer <a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" style="float:right; height:50px;"/></a>
+# The oceanexplorer <a href="https://dplyr.tidyverse.org"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -30,7 +30,7 @@ app</figcaption>
 
 Check the app here: <https://martinschobben.shinyapps.io/oceanexplorer/>
 
-## Funding
+## Funding <a href="https://www.uu.nl/en/news/erc-grant-for-peter-bijl-to-predict-future-sea-level"><img src="man/figures/oceanice-logo.png" style="float:right; height:50px;"/></a>
 
 This project was funded by ERC Starting grant number 802835, OceaNice,
 awarded to Peter Bijl.

@@ -16,4 +16,8 @@ docs
 rsconnect
 app.R
 # development
-dev
+dev/*
+# submission
+NEWS.md
+CRAN-SUBMISSION
+cran-comments.md
