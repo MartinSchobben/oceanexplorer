@@ -5,11 +5,13 @@ test_that("reformatted table works", {
   skip_if_offline()
 
   # get data and filter
-  NOAA <- get_NOAA("oxygen", 1, "annual")
-  NOAA_point <- filter_NOAA(NOAA, 30, list(lon = c(-130, -120.54), lat = c(10.12, 12)))
+  try(NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
+
+  # point selection
+  NOAA_point <- filter_NOAA(NOAA, 30, list(lon = c(-130, -120.54), lat = c(10.12, 12)))
 
   # test table format
   expect_snapshot(

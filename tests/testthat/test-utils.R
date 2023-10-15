@@ -5,7 +5,7 @@ test_that("reprojection works", {
   skip_if_offline()
 
   # get data
-  NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+  try(NOAAatlas <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAAatlas"))
@@ -71,7 +71,7 @@ test_that("epsg check is consitent", {
   skip_if_offline()
 
   # get data
-  NOAAatlas <- get_NOAA("oxygen", 1, "annual")
+  try(NOAAatlas <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAAatlas"))
@@ -145,7 +145,7 @@ test_that("point is clipped when re-projected to 3031", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))

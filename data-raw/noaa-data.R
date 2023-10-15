@@ -15,5 +15,4 @@ NOAA_data <- tibble(
   )
 )
 
-#save(NOAA_data, file = "data/NOAA_data.rda", ascii = TRUE, version = 3)
 usethis::use_data(NOAA_data, overwrite = TRUE)

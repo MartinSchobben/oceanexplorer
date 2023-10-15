@@ -5,7 +5,7 @@ test_that("check output type", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("oxygen", 1, "annual")
+  try(NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -46,7 +46,7 @@ test_that("entries other then vectors of 1 or the same length cause an error", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -70,7 +70,7 @@ test_that("entries for class coords besides matrix, list and sfc throws error", 
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -95,7 +95,7 @@ test_that("wrong names for matrices or list of coordinates causes an error", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -118,7 +118,7 @@ test_that("check that epsg of depth plane and coordinates is similar", {
   skip_if_offline()
 
   # data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -186,7 +186,7 @@ test_that("epsg conversion works with character vector", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -211,7 +211,7 @@ test_that("epsg conversion works with 'original' keyword", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))
@@ -238,7 +238,7 @@ test_that("extraction of coords can use fuzzy search", {
   skip_if_offline()
 
   # get data
-  NOAA <- get_NOAA("temperature", 1, "annual")
+  try(NOAA <- get_NOAA("temperature", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
   skip_if_not(exists("NOAA"))

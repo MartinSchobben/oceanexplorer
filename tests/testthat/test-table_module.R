@@ -5,11 +5,13 @@ test_that("table is formatted correctly", {
   skip_on_cran()
 
   # filtered data
-  fl_NOAA <- get_NOAA("oxygen", 1, "annual") |>
-    filter_NOAA(30, list(lon = -120, lat = -10))
+  try(dt_NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
 
   # skip if not obtained
-  skip_if_not(exists("fl_NOAA"))
+  skip_if_not(exists("dt_NOAA"))
+
+  # filter to 30 meters depth
+  fl_NOAA <- filter_NOAA(dt_NOAA, 30, list(lon = -120, lat = -10))
 
   # initiate externals
   NOAA <- reactiveVal(NULL)

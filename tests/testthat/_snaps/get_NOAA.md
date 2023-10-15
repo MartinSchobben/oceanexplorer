@@ -1,7 +1,7 @@
 # files can be loaded from NOAA
 
     Code
-      get_NOAA("temperature", 1, "annual")
+      NOAA
     Output
       stars object with 3 dimensions and 1 attribute
       attribute(s), summary of first 1e+05 cells:
