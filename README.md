@@ -158,7 +158,7 @@ Shiny Apps in Seconds*. <https://deanattali.com/shinyjs/>.
 Chang, Winston, Joe Cheng, JJ Allaire, Carson Sievert, Barret Schloerke,
 Yihui Xie, Jeff Allen, Jonathan McPherson, Alan Dipert, and Barbara
 Borges. 2022. *Shiny: Web Application Framework for r*.
-<https://shiny.posit.co/>.
+<https://shiny.rstudio.com/>.
 
 </div>
 
