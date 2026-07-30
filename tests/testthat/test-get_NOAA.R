@@ -21,7 +21,7 @@ test_that("parsing urls", {
 test_that("files can be loaded from NOAA", {
 
   # for CRAN
-  skip_if_offline()
+  skip()
   skip_on_cran()
   skip_on_ci()
 

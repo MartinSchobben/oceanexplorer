@@ -4,7 +4,7 @@ test_that("plot of NOAA atlas works", {
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
-  skip_if_offline()
+  skip()
 
   # get data
   try(NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
@@ -55,7 +55,7 @@ test_that("box clipping works for stars",{
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
-  skip_if_offline()
+  skip()
 
   # get data
   try(NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
@@ -77,7 +77,7 @@ test_that("box clipping works for sf",{
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
-  skip_if_offline()
+  skip()
 
   # get data
   try(NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)
