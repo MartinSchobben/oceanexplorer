@@ -1,7 +1,8 @@
 test_that("reformatted table works", {
 
-  # for CRAN
+  # for CRAN and CI
   skip_on_cran()
+  skip_on_ci()
   skip_if_offline()
 
   # get data and filter

@@ -25,20 +25,28 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-renv@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rsconnect, any::pkgload
+          needs: deployment
 
-      - name: Install rsconnect
-        run: install.packages(c("rsconnect", "pkgload"))
-        shell: Rscript {0}
-
-      - name: Authorize and deploy app
+      - name: Deploy to ShinyApps
         env:
-          # Provide your app name, account name, and server to be deployed below
-          APPNAME: oceanexplorer
-          ACCOUNT: martinschobben
-          SERVER: shinyapps.io # server to deploy
+          RSCONNECT_USER: ${{ secrets.RSCONNECT_USER }}
+          RSCONNECT_TOKEN: ${{ secrets.RSCONNECT_TOKEN }}
+          RSCONNECT_SECRET: ${{ secrets.RSCONNECT_SECRET }}
         run: |
-          rsconnect::setAccountInfo("${{ secrets.RSCONNECT_USER }}", "${{ secrets.RSCONNECT_TOKEN }}", "${{ secrets.RSCONNECT_SECRET }}")
-          file.copy("inst/appdir/app.R", ".")
-          rsconnect::deployApp(appName = "oceanexplorer", account = "martinschobben", server = "shinyapps.io", appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd', 'renv.lock')), forceUpdate = TRUE)
+          rsconnect::setAccountInfo(
+            Sys.getenv("RSCONNECT_USER"),
+            Sys.getenv("RSCONNECT_TOKEN"),
+            Sys.getenv("RSCONNECT_SECRET")
+          )
+          file.copy("inst/appdir/app.R", ".", overwrite = TRUE)
+          rsconnect::deployApp(
+            appName = "oceanexplorer",
+            account = "martinschobben",
+            server = "shinyapps.io",
+            appFiles = setdiff(list.files(), c('.Rprofile', 'renv', 'README.Rmd', 'renv.lock')),
+            forceUpdate = TRUE
+          )
         shell: Rscript {0}

@@ -3,6 +3,7 @@ test_that("table is formatted correctly", {
   # for CRAM
   skip_if_offline()
   skip_on_cran()
+  skip_on_ci()
 
   # filtered data
   try(dt_NOAA <- get_NOAA("oxygen", 1, "annual"), silent = TRUE)

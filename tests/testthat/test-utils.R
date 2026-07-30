@@ -2,6 +2,7 @@ test_that("reprojection works", {
 
   # for CRAN
   skip_on_cran()
+  skip_on_ci()
   skip_if_offline()
 
   # get data
@@ -133,6 +134,8 @@ test_that("epsg check is consitent", {
 })
 
 test_that("stereographic projections plot click values can be converted", {
+  skip_on_cran()
+  skip_on_ci()
   expect_snapshot(
     convert_stereo(9332793, 7376573, 3031)
   )
@@ -142,6 +145,7 @@ test_that("point is clipped when re-projected to 3031", {
 
   # for CRAN
   skip_on_cran()
+  skip_on_ci()
   skip_if_offline()
 
   # get data

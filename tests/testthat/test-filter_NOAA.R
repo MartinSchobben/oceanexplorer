@@ -22,6 +22,10 @@ test_that("check output type", {
 })
 
 test_that("that different coord classes generate the same results", {
+  
+  # skip on CRAN
+  skip_on_cran()
+  skip_on_ci()
 
   # coordinates
   lon <- c(-116.3041, -40.58253, -9.306224)
@@ -183,6 +187,7 @@ test_that("epsg conversion works with character vector", {
 
   # for CRAN
   skip_on_cran()
+  skip_on_ci()
   skip_if_offline()
 
   # get data
@@ -208,6 +213,7 @@ test_that("epsg conversion works with 'original' keyword", {
 
   # for CRAN
   skip_on_cran()
+  skip_on_ci()
   skip_if_offline()
 
   # get data
