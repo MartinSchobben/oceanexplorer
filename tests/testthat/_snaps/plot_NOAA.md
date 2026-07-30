@@ -5,7 +5,7 @@
     Output
       stars object with 2 dimensions and 1 attribute
       attribute(s):
-                Min.  1st Qu.   Median     Mean  3rd Qu.     Max.  NA's
+                Min.  1st Qu.   Median     Mean  3rd Qu.     Max.   NAs
       o_an  181.1851 202.0076 213.0899 233.6797 251.1976 365.3462 15986
       dimension(s):
         from  to    offset   delta                       refsys x/y

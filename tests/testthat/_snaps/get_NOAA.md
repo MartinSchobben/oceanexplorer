@@ -5,7 +5,7 @@
     Output
       stars object with 3 dimensions and 1 attribute
       attribute(s), summary of first 1e+05 cells:
-                Min.  1st Qu.  Median     Mean  3rd Qu.     Max.  NA's
+                Min.  1st Qu.  Median     Mean  3rd Qu.     Max.   NAs
       t_an  -1.83961 2.427385 15.8746 14.24271 25.34428 30.28809 34528
       dimension(s):
             from  to offset delta refsys point                  values x/y
