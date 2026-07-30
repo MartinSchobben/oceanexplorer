@@ -1,6 +1,6 @@
 # Changelog
 
-## oceanexplorer (development version)
+## oceanexplorer 0.1.1
 
 ## oceanexplorer 0.1.0
 

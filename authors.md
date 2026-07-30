@@ -13,13 +13,13 @@ Source:
 [`DESCRIPTION`](https://github.com/MartinSchobben/oceanexplorer/blob/main/DESCRIPTION)
 
 Schobben M (2026). *oceanexplorer: Explore Our Planet's Oceans with
-NOAA*. R package version 0.1.0.9000,
+NOAA*. R package version 0.1.1,
 <https://martinschobben.github.io/oceanexplorer/>.
 
     @Manual{,
       title = {oceanexplorer: Explore Our Planet's Oceans with NOAA},
       author = {Martin Schobben},
       year = {2026},
-      note = {R package version 0.1.0.9000},
+      note = {R package version 0.1.1},
       url = {https://martinschobben.github.io/oceanexplorer/},
     }
