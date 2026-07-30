@@ -30,7 +30,7 @@ fs::file_copy(fig3, "vignettes/get-started-screenshot3.png", overwrite = TRUE)
 
 
 ## Introduction
-The [World Ocean Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) (WOA) of the US agency [NOAA](https://www.ncei.noaa.gov/) contains high-resolution and high-quality data for oceanographic variables, such as temperature, salinity and nutrients. This package facilitates easy access and exploration of this data, and targets three different audiences:
+The [World Ocean Atlas](https://www.ncei.noaa.gov/products/ocean-climate-laboratory) (WOA) of the US agency [NOAA](https://www.ncei.noaa.gov/) contains high-resolution and high-quality data for oceanographic variables, such as temperature, salinity and nutrients. This package facilitates easy access and exploration of this data, and targets three different audiences:
 
 -   Users with no programming experience by means of graphical user interface (Shiny app).
 -   Users with minimal programming experience as a hybrid graphical-programming interface that can be easily integrated in an R workflow (RStudio addin).

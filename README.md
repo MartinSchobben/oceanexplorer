@@ -16,7 +16,7 @@ coverage](https://codecov.io/gh/MartinSchobben/Oceanexplorer/branch/main/graph/b
 
 The goal of oceanexplorer is to enable easy access and exploration of
 the [World Ocean
-Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html) of
+Atlas](https://www.ncei.noaa.gov/products/ocean-climate-laboratory) of
 the US agency [NOAA](https://www.ncei.noaa.gov/).
 
 <figure>
@@ -158,7 +158,7 @@ Shiny Apps in Seconds*. <https://deanattali.com/shinyjs/>.
 Chang, Winston, Joe Cheng, JJ Allaire, Carson Sievert, Barret Schloerke,
 Yihui Xie, Jeff Allen, Jonathan McPherson, Alan Dipert, and Barbara
 Borges. 2022. *Shiny: Web Application Framework for r*.
-<https://shiny.rstudio.com/>.
+<https://shiny.posit.co/>.
 
 </div>
 
@@ -295,7 +295,7 @@ Florida: Chapman; Hall/CRC. <https://yihui.org/knitr/>.
 
 Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. *R Markdown: The
 Definitive Guide*. Boca Raton, Florida: Chapman; Hall/CRC.
-<https://bookdown.org/yihui/rmarkdown>.
+<https://pkg.yihui.org/rmarkdown-book/>.
 
 </div>
 
@@ -303,7 +303,7 @@ Definitive Guide*. Boca Raton, Florida: Chapman; Hall/CRC.
 
 Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. *R Markdown
 Cookbook*. Boca Raton, Florida: Chapman; Hall/CRC.
-<https://bookdown.org/yihui/rmarkdown-cookbook>.
+<https://pkg.yihui.org/rmarkdown-cookbook/>.
 
 </div>
 
