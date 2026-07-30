@@ -1,0 +1,204 @@
+# Get started with the oceanexplorer
+
+### Introduction
+
+The [World Ocean
+Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html)
+(WOA) of the US agency [NOAA](https://www.ncei.noaa.gov/) contains
+high-resolution and high-quality data for oceanographic variables, such
+as temperature, salinity and nutrients. This package facilitates easy
+access and exploration of this data, and targets three different
+audiences:
+
+- Users with no programming experience by means of graphical user
+  interface (Shiny app).
+- Users with minimal programming experience as a hybrid
+  graphical-programming interface that can be easily integrated in an R
+  workflow (RStudio addin).
+- Users with an R programming background.
+
+In this document I will explain the basic use cases of all three
+application types. But first a word on the back-end of this R package.
+This package heavily relies on geospatial data analysis facilitated by
+*sf* (Pebesma 2023a) for vectors and *stars* (Pebesma 2023b) for raster
+data (i.e., the native NOAA data format). I highly recommend reading the
+accompanying documentation of these packages if you intend to work with
+the NOAA datasets:
+
+- stars (<https://r-spatial.github.io/stars/>)
+- sf (<https://r-spatial.github.io/sf/>)
+
+### Shiny app
+
+The shiny app can be found here:
+<https://martinschobben.shinyapps.io/oceanexplorer/>. The app allows
+exploration of the NOAA database and selected data can be extracted as a
+csv file.
+
+#### Load NOAA data
+
+The initial screen starts at the “parameter” tab of the left-most field
+which allows the selection of the oceanographic variable of interest.
+
+![](get-started-screenshot1.png)
+
+- The drop down menu “variable” selects the oceanographic variable of
+  interest.
+- The drop down menu “averaging” selects the time period over which the
+  mean is calculated. The period can be “annual”, North Hemisphere
+  seasonal (e.g., “Spring”, three-month periods) and monthly (e.g.,
+  “January”).
+- The drop down menu “resolution” selects the grid resolution for mean
+  fields on a 1- or 5-degree longitude/latitude grid.
+
+The following document lists the technical details of the variable
+collection and presentation: [NOAA World Ocean Atlas 2018 Product
+Documentation](https://www.ncei.noaa.gov/data/oceans/woa/WOA18/DOC/woa18documentation.pdf).
+The papers on this page give in-depth information on the variable of
+interest: <https://www.ncei.noaa.gov/products/world-ocean-atlas>.
+
+Clicking the “load data” button extracts the data from the NOAA WOA
+database. This operation can take some time.
+
+#### Filter NOAA data
+
+The last action also automatically drops us in the “locations” tab (in
+the left most field), which allows us to select specific regions on the
+now displayed world map of the variable of interest.
+
+![](get-started-screenshot2.png)
+
+**Locations tab (Left)**
+
+This field allows filtering of the dataset.
+
+- The text fields: “depth”, “longitude”, and “latitude” specify the
+  location to extract oceanographic variables. Alternatively, one can
+  click on the plot (“map” tab) to obtain the values. It is possible to
+  extract multiple locations at once by providing a comma separated list
+  (e.g., 120, 130, 140) to the text field on the left (“locations” tab).
+  Note, that depth and coordinate vectors should be of the same length,
+  or one of the two should have length one. The data is extracted only
+  when all three text fields have been filled, and by subsequently
+  clicking the button “extract”.
+- Data extraction can be achieved in two modes; “point” and “fuzzy”,
+  where the former results in a very precise search, the latter option
+  searches in an area with a circumference of 50$`\,`$km around the
+  selected coordinate point. The returned value of a fuzzy search is
+  therefore an average of the search area. Currently, fuzzy search is
+  not yet implemented.
+- The button “extract” uses the information supplied in the text fields:
+  “depth”, “longitude”, and “latitude” to extract the oceanographic
+  variable. Hence, the button is only active when those fields have been
+  filled, and otherwise remains greyed-out. The buttons: “reset” and
+  “back” revert all, or the last extraction, respectively. These two
+  operations can be used for both data extracted by clicking on the
+  interactive plot and/or obtained by using the text field search.
+
+**Map tab (right)**
+
+This field allows changing visual aspects of the NOAA data. In addition
+the plot is interactive and can be clicked (single click). It is
+therefore possible to only use the right-hand side of the screen to
+select your data without touching any of the buttons and menus on the
+left-side.
+
+- The “projections” drop-down menu enables selection some of commonly
+  used projections, such as “4326”. And, two stereographic projections
+  “3031” and “3995” of the Antarctic and Arctic regions, respectively.
+- The checkbox “fix variable scale” determines whether the variable
+  scale is fixed for the current depth slice or the whole dataset.
+  Loosening the variable scale can help highlight nuanced differences in
+  certain variables (e.g., phosphate).
+- The “depth” slider allows filter for depth slices.
+
+#### Extract NOAA data
+
+Now that you have filtered the data you required you can view the
+results in a table by clicking on the “table” tab on the right side of
+the screen.
+
+![](get-started-screenshot3.png)
+
+- The button “download” enables downloading of the current table in csv
+  format.
+
+### RStudio addin
+
+The RStudio addin has more-or-less the same functionality as the Shiny
+app except that it has fewer options. This tool is, however, great for
+integration in R scripts, as the addin emits the code used for your data
+selection and filtering operations. The emitted code is the
+“behind-the-scene” code used to generate the graphical output and is
+thus the backbone of the Shiny app and RStudio addin.
+
+![](get-started-screenshot4.png)
+
+Clicking on the “done” button terminates the application and emits the
+code at the point where the cursor currently resides.
+
+### Using the oceanexplorer R code
+
+The three main functionalities of the Shiny app and RStudio addin can
+also be performed programmatically.
+
+#### Loading the package and data
+
+Imagine we are interested in phosphate concentrations in the month
+December from the Agulhas Basin at a depth 0f 1000 meter below sealevel.
+
+First, we extract the data by proving the variable, grid resolution, and
+the averaging period. Make sure to have an internet connection in order
+to connect to the NOAA server.
+
+``` r
+
+# load package
+library(oceanexplorer)
+# get data
+(WOA <- get_NOAA("phosphate", 1, "December"))
+```
+
+This operation can take a while, but it can be sped-up during future
+calls by caching the data. This can be done by setting the `cache`
+argument to `TRUE`. As a default `get_NOAA` does not cache the data.
+
+### Plot
+
+Then we can plot the phosphate data from a depth of 1000 meter below sea
+level.
+
+``` r
+
+plot_NOAA(WOA, depth = 1000)
+```
+
+![](NOAA_plot1.png)
+
+### Filter Agulhas Basin data point
+
+Finally, we can filter a data point from, for example, the Agulhas
+Basin.
+
+``` r
+
+(pts <- filter_NOAA(WOA, depth = 1000, coord = list(lon = 20, lat = -46)))
+```
+
+We can then also project these extraction points on the world map for
+future reference.
+
+``` r
+
+plot_NOAA(WOA, depth = 1000, points = pts)
+```
+
+![](NOAA_plot2.png)
+
+## References
+
+Pebesma, Edzer. 2023a. *Sf: Simple Features for r*.
+<https://r-spatial.github.io/sf/>.
+
+Pebesma, Edzer. 2023b. *Stars: Spatiotemporal Arrays, Raster and Vector
+Data Cubes*. <https://r-spatial.github.io/stars/>.
