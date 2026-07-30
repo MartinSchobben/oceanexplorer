@@ -3,7 +3,7 @@
 ### Introduction
 
 The [World Ocean
-Atlas](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html)
+Atlas](https://www.ncei.noaa.gov/products/ocean-climate-laboratory)
 (WOA) of the US agency [NOAA](https://www.ncei.noaa.gov/) contains
 high-resolution and high-quality data for oceanographic variables, such
 as temperature, salinity and nutrients. This package facilitates easy
